@@ -121,13 +121,11 @@ module-margin-right = 1
 ;https://github.com/jaagr/polybar/wiki/Fonts
 font-0 = "Noto Sans:size=12;0"
 font-1 = "FontAwesome:size=12;0"
-font-2 = "Noto Sans:size=12;0"
-font-3 = "Noto Sans Mono:size=12;0"
-font-4 = "Iosevka Nerd Font:size=12;0"
+font-2 = "Noto Sans Mono:size=12;0"
 
 modules-left = ewmh xwindow
 modules-center = date 
-modules-right = battery pavolume memory2 cpu2
+modules-right = dunst battery memory2 pavolume cpu2
 
 tray-detached = false
 tray-offset-x = 0
@@ -331,7 +329,7 @@ format-prefix = " "
 format-prefix-foreground = #cd1f3f
 format-underline = #cd1f3f
 
-label-font = 3
+label-font = 2
 
 ; Available tags:
 ;   <label> (default)
@@ -384,6 +382,17 @@ format-underline = #738adb
 click-left = discord &
 click-right = killall Discord && killall Discord
 format-prefix = ""
+
+#################################################################
+
+[module/dunst]
+type = custom/ipc
+initial = 1
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+hook-0 = echo "%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook dunst 2:}%{A}" &
+hook-1 = echo "%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook dunst 1:}%{A}" &
 
 #################################################################
 
