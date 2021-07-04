@@ -7,6 +7,10 @@
 
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
+
+
+#run pfetch on terminal launch
+pfetch
 #export PATH=/home/antimony2k/bin:$PATH
 #export ICON=/home/antimony2k/.icons:$ICON
 #export EDITOR="nvim"
