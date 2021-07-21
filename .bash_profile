@@ -14,6 +14,8 @@ export EDITOR="nvim"
 export TERMINAL="kitty"
 export BROWSER="firefox" 
 export CM_LAUNCHER="rofi" 
+export RANGER_LOAD_DEFAULT_RC="FALSE" 
+export PATH=$PATH:/home/antimony2k/.local/share/bin
 
 # cdm
 
@@ -26,6 +28,5 @@ if [[ "$(tty)" == '/dev/tty1' ]]; then
     [[ -z "$DISPLAY$SSH_TTY$(pgrep xinit)" ]] && exec cdm
 fi
 
-export PATH=$PATH:/home/antimony2k/.local/share/bin
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
