@@ -1,6 +1,6 @@
 #!/bin/sh
 xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto &
-nohup asusd-user &
+systemctl --user enable --now asusd-user
 #conky -c Downloads/Minimalis\ Conky/conky.conf & 
 export DESKTOP_SESSION=xmonad
 greenclip daemon &

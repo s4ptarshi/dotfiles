@@ -1,3 +1,3 @@
 function fish_greeting
-pfetch
+colorscript random
 end
