@@ -1,8 +1,0 @@
-#!/bin/sh
-xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto &
-systemctl --user enable --now asusd-user
-#conky -c Downloads/Minimalis\ Conky/conky.conf & 
-export DESKTOP_SESSION=xmonad
-greenclip daemon &
-xsetroot -xcf  /home/antimony2k/.icons/Vimix-cursors/cursors/left_ptr 16 &
-xrdb $HOME/.config/.Xresources &
