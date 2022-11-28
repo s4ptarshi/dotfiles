@@ -6,17 +6,11 @@ filled in as strings with either
 a global executable or a path to
 an executable
 ]]
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
 -- general
 vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 4 -- insert 2 spaces for a tab
 lvim.log.level = "warn"
-lvim.format_on_save = false
--- vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
-vim.g.leetcode_browser = 'firefox'
-lvim.colorscheme = "onedark"
-lvim.transparent_window = true
+lvim.format_on_save.enabled = false
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -24,6 +18,8 @@ lvim.transparent_window = true
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -47,18 +43,13 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 --   },
 -- }
 
--- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
+-- Change theme settings
+lvim.colorscheme = "lunar"
+-- lvim.builtin.theme.options.dim_inactive = true
+-- lvim.builtin.theme.options.style = "storm"
 
+-- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["n"] = { ":ASToggle<CR>", "Toggle autosave" }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Competitest",
     a = { "<cmd>CompetiTestAdd<cr>", "Add testcase" },
@@ -68,15 +59,14 @@ lvim.builtin.which_key.mappings["t"] = {
     g = { "<cmd>CompetiTestReceive<cr>", "Get testcases" },
 }
 
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+-- plugin config
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-lvim.builtin.treesitter.rainbow.enable = true
+lvim.builtin.terminal.shell = "/bin/fish"
+vim.g.leetcode_browser = 'firefox'
 
 -- if you don't want all the parsers change this to a table of the ones you want
 -- lvim.builtin.treesitter.ensure_installed = {
@@ -95,13 +85,12 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- }
 
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
--- lvim.builtin.treesitter.highlight.enabled = true
-
+lvim.builtin.treesitter.highlight.enable = true
 -- generic LSP settings
 
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
---     "sumeko_lua",
+--     "sumneko_lua",
 --     "jsonls",
 -- }
 -- -- change UI setting of `LspInstallInfo`
@@ -114,7 +103,7 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- }
 
 -- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
+-- lvim.lsp.installer.setup.automatic_installation = false
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
@@ -124,7 +113,7 @@ lvim.builtin.treesitter.rainbow.enable = true
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
--- vim.tbl_map(function(server)
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
 --   return server ~= "emmet_ls"
 -- end, lvim.lsp.automatic_configuration.skipped_servers)
 
@@ -175,46 +164,10 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- Additional Plugins
 lvim.plugins = {
     {
-        "norcalli/nvim-colorizer.lua",
+        'xeluxee/competitest.nvim',
+        requires = 'MunifTanjim/nui.nvim',
         config = function()
-            require("colorizer").setup({ "*" }, {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            })
-        end,
-    },
-    -- { 'tomasiser/vim-code-dark' },
-    { 'p00f/nvim-ts-rainbow', },
-    -- { "catppuccin/nvim", as = "catppuccin", },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "BufRead",
-        config = function()
-            local opts = {
-                -- char = "▏",
-                filetype_exclude = {
-                    "alpha",
-                    "help",
-                    "terminal",
-                    "dashboard",
-                    "lspinfo",
-                    "lsp-installer",
-                    "mason",
-                },
-                buftype_exclude = { "terminal" },
-                bufname_exclude = { "config.lua" },
-
-                show_trailing_blankline_indent = false,
-                show_first_indent_level = false,
-                -- use_treesitter = false,
-            }
-
-            require("indent_blankline").setup(opts)
+            require('competitest').setup()
         end
     },
     {
@@ -237,57 +190,54 @@ lvim.plugins = {
         end
     },
     {
-        'xeluxee/competitest.nvim',
-        requires = 'MunifTanjim/nui.nvim',
+        "norcalli/nvim-colorizer.lua",
         config = function()
-            require('competitest').setup()
-        end
-    },
-    {
-        'ianding1/leetcode.vim',
-    },
-    {
-        'navarasu/onedark.nvim',
-    },
-    {
-        "Pocco81/AutoSave.nvim",
-        config = function()
-            require("autosave").setup()
+            require("colorizer").setup({ "*" }, {
+                RGB = true, -- #RGB hex codes
+                RRGGBB = true, -- #RRGGBB hex codes
+                RRGGBBAA = true, -- #RRGGBBAA hex codes
+                rgb_fn = true, -- CSS rgb() and rgba() functions
+                hsl_fn = true, -- CSS hsl() and hsla() functions
+                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+            })
         end,
     },
+    { 'p00f/nvim-ts-rainbow', },
     {
-      'abecodes/tabout.nvim',
+        'abecodes/tabout.nvim',
+        config = function()
+            require('tabout').setup {
+                tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+                backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+                act_as_tab = true, -- shift content if tab out is not possible
+                act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+                default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+                default_shift_tab = '<C-d>', -- reverse shift default action,
+                enable_backwards = true, -- well ...
+                completion = true, -- if the tabkey is used in a completion pum
+                tabouts = {
+                    { open = "'", close = "'" },
+                    { open = '"', close = '"' },
+                    { open = '`', close = '`' },
+                    { open = '(', close = ')' },
+                    { open = '[', close = ']' },
+                    { open = '{', close = '}' }
+                },
+                ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+                exclude = {} -- tabout will ignore these filetypes
+            }
+        end,
+        wants = { 'nvim-treesitter' }, -- or require if not used so far
+        after = { 'nvim-cmp' } -- if a completion plugin is using tabs load it before
+    },
+    {
+      "Pocco81/auto-save.nvim",
       config = function()
-        require('tabout').setup {
-        tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
-        backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
-        act_as_tab = true, -- shift content if tab out is not possible
-        act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-        default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-        default_shift_tab = '<C-d>', -- reverse shift default action,
-        enable_backwards = true, -- well ...
-        completion = true, -- if the tabkey is used in a completion pum
-        tabouts = {
-          {open = "'", close = "'"},
-          {open = '"', close = '"'},
-          {open = '`', close = '`'},
-          {open = '(', close = ')'},
-          {open = '[', close = ']'},
-          {open = '{', close = '}'}
-        },
-        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-        exclude = {} -- tabout will ignore these filetypes
-    }
+        require("auto-save").setup()
       end,
-        wants = {'nvim-treesitter'}, -- or require if not used so far
-        after = {'completion-nvim'} -- if a completion plugin is using tabs load it before
-    }
+    },
 }
-
-require('onedark').setup({
-    style = 'warmer',
-    transparent = true,
-})
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
@@ -302,3 +252,7 @@ require('onedark').setup({
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    command = "norm zz"
+})
