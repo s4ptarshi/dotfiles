@@ -1,4 +1,4 @@
-set $term kitty
+set $term 'kitty -e fish'
 set $menu "~/.config/rofi/launchers/misc/launcher.sh" 
 
 # Start a terminal
@@ -12,7 +12,7 @@ bindsym $mod+Escape exec swaylock -c ~/.config/swaylock/config
 mode "applications" {
     # exec firefox
     bindsym b exec firefox, mode default
-    bindsym f exec thunar, mode default
+    bindsym f exec nautilus, mode default
     bindsym v exec pavucontrol, mode default
 
     # Return to default mode

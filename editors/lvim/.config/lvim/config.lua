@@ -164,6 +164,12 @@ lvim.builtin.treesitter.highlight.enable = true
 -- Additional Plugins
 lvim.plugins = {
     {
+      "Pocco81/auto-save.nvim",
+      config = function()
+        require("auto-save").setup()
+      end,
+    },
+    {
         'xeluxee/competitest.nvim',
         requires = 'MunifTanjim/nui.nvim',
         config = function()
@@ -230,13 +236,7 @@ lvim.plugins = {
         end,
         wants = { 'nvim-treesitter' }, -- or require if not used so far
         after = { 'nvim-cmp' } -- if a completion plugin is using tabs load it before
-    },
-    {
-      "Pocco81/auto-save.nvim",
-      config = function()
-        require("auto-save").setup()
-      end,
-    },
+   },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

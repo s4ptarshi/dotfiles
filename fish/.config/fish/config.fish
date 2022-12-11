@@ -1,12 +1,17 @@
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
 # set TERM "xterm-kitty"                         # Sets the terminal type
+set -gx EDITOR lvim
+set PATH $HOME/.local/bin/ $PATH
 
 # Vi mode
 function fish_user_key_bindings
   # fish_default_key_bindings
   fish_vi_key_bindings
 end
+
+# pure prompt
+set --universal pure_color_success green
 
 #ctrl f keybind
 function fish_user_key_bindings

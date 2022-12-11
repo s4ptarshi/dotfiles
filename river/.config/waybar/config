@@ -4,7 +4,7 @@
     "height": 30, // Waybar height
     "width": 1920, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["river/tags", "custom/spotify"],
+    "modules-left": ["river/tags", "custom/spotify", "river/window"],
     "modules-center": ["clock"],
     "modules-right": ["pulseaudio", "backlight" ,"network", "cpu", "memory", "battery", "battery#bat1", "tray"],
     "river/tags": {
@@ -78,5 +78,9 @@
         "interval": 30, // Remove this if your script is endless and write in loop
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep spotify"
+    },
+    "river/window": {
+        "format": "{}",
+        "max-length": 40,
     }
 }

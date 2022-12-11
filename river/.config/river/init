@@ -1,8 +1,10 @@
-#!/bin/sh
+#/bin/sh
 
 # Use the "logo" key as the primary modifier
 mod="Mod4"
 
+#exit river
+riverctl map normal $mod+Shift E exit
 # Mod+P to launch rofi
 riverctl map -repeat normal $mod P spawn "~/.config/rofi/launchers/misc/launcher.sh"
 
@@ -11,6 +13,9 @@ riverctl map normal $mod S spawn grim
 
 # Mod+B to launch browser
 riverctl map normal $mod B spawn firefox
+
+#Mod+F to launch thunar
+riverctl map normal $mod F spawn thunar
 
 #screenshots
 riverctl map normal None Print spawn 'grim ~/Pictures/screenshots/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png'
@@ -23,7 +28,7 @@ riverctl map normal Mod1 Print spawn "grim -g "$(swaymsg -t get_tree | jq -r '..
 # Mod+escape to lockscreen
 riverctl map normal $mod Escape spawn "swaylock -c ~/.config/swaylock/config"
 
-# Mod+T to start an instance of Terminal
+ # Mod+T to start an instance of Terminal
 riverctl map -repeat normal $mod T spawn 'kitty -e fish'
 
 # Mod+Q to close the focused view
@@ -31,8 +36,7 @@ riverctl map -repeat normal $mod Q close
 
 # Mod+Delete or Backspace to run wlogout
 riverctl map normal $mod Backspace spawn "wlogout -p layer-shell"
-riverctl map normal $mod Delete spawn "wlogout -p layer-shell"
-
+# riverctl map normal $mod Delete spawn "wlogout -p layer-shell"
 # Mod+Backslash to run Swaylock
 riverctl map normal $mod Backslash spawn "source ~/.config/scripts/lock"
 
@@ -118,13 +122,12 @@ riverctl map normal $mod+Shift 0 set-view-tags $all_tags
 riverctl map -repeat normal $mod TAB focus-previous-tags
 
 # Mod+Space to toggle float
-riverctl map -repeat normal $mod F toggle-float
+riverctl map -repeat normal $mod G toggle-float
+
 
 # Mod+M to toggle monocle
 riverctl map normal $mod M send-layout-cmd rivercarro "main-location monocle"
-
-
-
+# riverctl map normal $mod M toggle-fullscreen
 
 # Mod+{Up,Right,Down,Left} to change layout orientation
 riverctl map normal $mod Up    send-layout-cmd rivercarro "main-location top"
@@ -146,22 +149,19 @@ riverctl map passthrough $mod F11 enter-mode normal
 # Various media key mapping examples for both normal and locked mode which do
 # not have a modifier
 for mode in normal locked
-do
-    # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer)
-    riverctl map -repeat $mode None XF86AudioRaiseVolume  spawn 'pamixer -i 5'
-    riverctl map -repeat $mode None XF86AudioLowerVolume  spawn 'pamixer -d 5'
-    riverctl map -repeat $mode None XF86AudioMute         spawn 'pamixer --toggle-mute'
-
-    riverctl map -repeat $mode None XF86AudioMicMute spawn 'togglemic.sh'
-
-    # Control MPRIS aware media players with playerctl (https://github.com/altdesktop/playerctl)
-    riverctl map -repeat $mode None XF86AudioMedia spawn 'playerctl play-pause'
-    riverctl map -repeat $mode None XF86AudioPlay  spawn 'playerctl play-pause'
-    riverctl map -repeat $mode None XF86AudioPrev  spawn 'playerctl previous'
-    riverctl map -repeat $mode None XF86AudioNext  spawn 'playerctl next'
-
-    # Control screen backlight brighness with brightnessctl
-    riverctl map -repeat $mode None XF86MonBrightnessUp   spawn 'brightnessctl s +5%'
+do 
+    # Control pulse audio volume with pamixer (https://github.com/cdemoulins/pamixer) 
+    riverctl map -repeat $mode None XF86AudioRaiseVolume  spawn 'pamixer -i 5' 
+    riverctl map -repeat $mode None XF86AudioLowerVolume  spawn 'pamixer -d 5' 
+    riverctl map -repeat $mode None XF86AudioMute         spawn 'pamixer --toggle-mute' 
+    riverctl map -repeat $mode None XF86AudioMicMute spawn 'togglemic.sh' 
+    #Control MPRIS aware media players with playerctl (https://github.com/altdesktop/playerctl) 
+    riverctl map -repeat $mode None XF86AudioMedia spawn 'playerctl play-pause' 
+    riverctl map -repeat $mode None XF86AudioPlay  spawn 'playerctl play-pause' 
+    riverctl map -repeat $mode None XF86AudioPrev  spawn 'playerctl previous' 
+    riverctl map -repeat $mode None XF86AudioNext  spawn 'playerctl next' 
+    #Control screen backlight brighness with brightnessctl 
+    riverctl map -repeat $mode None XF86MonBrightnessUp   spawn 'brightnessctl s +5%' 
     riverctl map -repeat $mode None XF86MonBrightnessDown spawn 'brightnessctl s 5%-'
 
     #keyboard brightness with brightnessctl
@@ -178,13 +178,18 @@ riverctl border-color-unfocused 0x586e75
 riverctl set-repeat 50 300
 
 # Make certain views start floating
+riverctl csd-filter-add app-id float
 riverctl float-filter-add app-id float
+riverctl float-filter-add app-id popup 
+riverctl float-filter-add app-id swappy 
 riverctl float-filter-add title "popup title with spaces"
+riverctl float-filter-add title "Picture-in-Picture"
+riverctl float-filter-add title "rofi*"
 
 ## Autostart
 riverctl spawn "waybar"
 # Allows GUI programs to be run as root
-riverctl spawn "/usr/lib/xfce-polkit/xfce-polkit"
+riverctl spawn "/usr/libexec/polkit-gnome-authentication-agent-1 &"
 
 #for screensharing
 riverctl spawn "export XDG_CURRENT_DESKTOP=river"
@@ -192,7 +197,7 @@ riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_
 #gtk theming
 riverctl spawn import-gsettings.sh
 #wallpaper
-riverctl spawn oguri
+riverctl spawn "swaybg -i Pictures/wallpapers/mirror\ between\ hills.png"
 #for mounting
 riverctl spawn "thunar --daemon"
 #applets
@@ -206,8 +211,10 @@ TOUCHPAD=1267:12440:ELAN1201:00_04F3:3098_Touchpad
 if [ ! -z "$TOUCHPAD" ]; then
 	riverctl input $TOUCHPAD natural-scroll enabled
 	riverctl input $TOUCHPAD tap enabled
+    riverctl input $TOUCHPAD accel-profile adaptive 
 fi
 
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivercarro
-exec rivercarro -inner-gaps 6 -outer-gaps 6
+# rivertile -view-padding 2 -outer-padding 2 &
+exec rivercarro -inner-gaps 2 -outer-gaps 2 -main-ratio 0.5
