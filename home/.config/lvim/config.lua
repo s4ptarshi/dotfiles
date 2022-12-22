@@ -65,17 +65,17 @@ lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
-  "bash",
-  "c",
-  "javascript",
-  "json",
-  "lua",
-  "python",
-  "typescript",
-  "css",
-  "rust",
-  "java",
-  "yaml",
+    "bash",
+    "c",
+    "javascript",
+    "json",
+    "lua",
+    "python",
+    "typescript",
+    "css",
+    "rust",
+    "java",
+    "yaml",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -139,22 +139,22 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- }
 
 -- Additional Plugins
- lvim.plugins = {
-                    {
-                      "norcalli/nvim-colorizer.lua",
-                        config = function()
-                          require("colorizer").setup({ "*" }, {
-                              RGB = true, -- #RGB hex codes
-                              RRGGBB = true, -- #RRGGBB hex codes
-                              RRGGBBAA = true, -- #RRGGBBAA hex codes
-                              rgb_fn = true, -- CSS rgb() and rgba() functions
-                              hsl_fn = true, -- CSS hsl() and hsla() functions
-                              css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                              css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-                              })
-                      end,
-                    },
-    {'tomasiser/vim-code-dark'},
+lvim.plugins = {
+    {
+        "norcalli/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup({ "*" }, {
+                RGB = true, -- #RGB hex codes
+                RRGGBB = true, -- #RRGGBB hex codes
+                RRGGBBAA = true, -- #RRGGBBAA hex codes
+                rgb_fn = true, -- CSS rgb() and rgba() functions
+                hsl_fn = true, -- CSS hsl() and hsla() functions
+                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+            })
+        end,
+    },
+    { 'tomasiser/vim-code-dark' },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

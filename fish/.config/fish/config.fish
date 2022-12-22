@@ -1,8 +1,13 @@
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message
-# set TERM "xterm-kitty"                         # Sets the terminal type
-set -gx EDITOR lvim
+# set TERM "linux"                         # Sets the terminal type
 set PATH $HOME/.local/bin/ $PATH
+
+# fetch
+afetch
+
+#colorscheme
+source $HOME/.config/fish/themes/tokyonight_night.fish
 
 # Vi mode
 function fish_user_key_bindings
@@ -38,6 +43,9 @@ alias .5='cd ../../../../..'
 # editor
 alias e='lvim'
 
+#windowinfo
+alias wininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
+
 # TODO:change to lsd
 alias ls='lsd -A'
 alias la='lsd -A'
@@ -57,7 +65,7 @@ alias lt='lsd -At'
 #fedora aliases
 alias install='sudo dnf install -y'
 alias remove='sudo dnf remove -y'
-alias update='sudo dnf upgrade -y && flatpak update'
+alias update='sudo dnf upgrade -y && flatpak update -y'
 alias clean='sudo dnf autoremove'
 alias search='sudo dnf search'
 

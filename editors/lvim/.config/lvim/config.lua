@@ -1,10 +1,12 @@
 -- sap's lvim config
+local ascii = require("ascii")
 -- general
 vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 4 -- insert 2 spaces for a tab
+vim.opt.relativenumber = true
+vim.opt.cmdheight = 0
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = false
-
+-- lvim.format_on_save.enabled = true
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 
@@ -14,12 +16,15 @@ lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 -- colorscheme
-lvim.colorscheme = "lunar"
+lvim.colorscheme = "tokyonight-night"
+lvim.transparent_window = true
 
 -- whichkey keybinds
+--toggle autosave
 lvim.builtin.which_key.mappings["n"] = { ":ASToggle<CR>", "Toggle autosave" }
+--competitest whichkeybindings
 lvim.builtin.which_key.mappings["t"] = {
-    name = "+Competitest",
+    -- name = "+Competitest",
     a = { "<cmd>CompetiTestAdd<cr>", "Add testcase" },
     e = { "<cmd>CompetiTestEdit<cr>", "Edit testcases" },
     d = { "<cmd>CompetiTestDelete<cr>", "Delete testcases" },
@@ -29,23 +34,32 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- plugin config
 lvim.builtin.alpha.active = true
+lvim.builtin.alpha.dashboard.section.header.val = ascii.art.text.neovim.sharp
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.terminal.shell = "/bin/fish"
-vim.g.leetcode_browser = 'firefox'
-
 lvim.builtin.treesitter.highlight.enable = true
+vim.g.leetcode_browser = 'firefox'
 
 -- Additional Plugins
 lvim.plugins = {
+    -- for ascii art on dashboard
     {
-      "Pocco81/auto-save.nvim",
-      config = function()
-        require("auto-save").setup()
-      end,
+        'MaximilianLloyd/ascii.nvim',
+        requires = {
+            "MunifTanjim/nui.nvim"
+        },
     },
+    -- for autosaving
+    {
+        "Pocco81/auto-save.nvim",
+        config = function()
+            require("auto-save").setup()
+        end,
+    },
+    -- for competitive coding
     {
         'xeluxee/competitest.nvim',
         requires = 'MunifTanjim/nui.nvim',
@@ -53,6 +67,7 @@ lvim.plugins = {
             require('competitest').setup()
         end
     },
+    -- smoother scrolling
     {
         "karb94/neoscroll.nvim",
         event = "WinScrolled",
@@ -72,6 +87,7 @@ lvim.plugins = {
             })
         end
     },
+    -- rgb value and hex codes are colored
     {
         "norcalli/nvim-colorizer.lua",
         config = function()
@@ -86,7 +102,9 @@ lvim.plugins = {
             })
         end,
     },
+    -- colored brackets
     { 'p00f/nvim-ts-rainbow', },
+    -- can tab out of stuff
     {
         'abecodes/tabout.nvim',
         config = function()
@@ -113,11 +131,12 @@ lvim.plugins = {
         end,
         wants = { 'nvim-treesitter' }, -- or require if not used so far
         after = { 'nvim-cmp' } -- if a completion plugin is using tabs load it before
-   },
+    },
 }
 
 -- Autocommands
-vim.api.nvim_create_autocmd("InsertEnter", {
-    pattern = "*",
-    command = "norm zz"
-})
+--centers screen when entering insert mode
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--     pattern = "*",
+--     command = "norm zz"
+-- })
