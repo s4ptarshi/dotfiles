@@ -1,6 +1,17 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
+require('packer').init({
+    display = {
+        open_fn = function()
+            return require("packer.util").float {
+                border = "solid",
+                style = "minimal",
+            }
+        end,
+    },
+})
 
+--plugins
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -11,10 +22,9 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    use 'olivercederborg/poimandres.nvim'
+    use { "catppuccin/nvim", as = "catppuccin" }
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     use 'mbbill/undotree'
-    use 'tpope/vim-fugitive'
     use {
         'VonHeikemen/lsp-zero.nvim',
         requires = {
@@ -62,4 +72,25 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     }
+    use {
+        'xeluxee/competitest.nvim',
+        requires = 'MunifTanjim/nui.nvim',
+        config = function() require 'competitest'.setup() end
+    }
+    use {
+        'goolord/alpha-nvim',
+        config = function()
+            require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+        end,
+        requires = {'BlakeJC94/alpha-nvim-fortune'},
+    }
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+    use 'p00f/nvim-ts-rainbow'
+    use {"shortcuts/no-neck-pain.nvim", tag = "*" }
+    use({ "MaximilianLloyd/ascii.nvim", requires = {
+        "MunifTanjim/nui.nvim"
+    } })
 end)

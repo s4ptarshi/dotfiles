@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+local wk = require("which-key")
 
 -- write
 vim.keymap.set("n", "<leader>w", vim.cmd.w, { desc = "write" })
@@ -19,14 +20,14 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- paste over visual doesnt replace copy register
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "paste w/o register" })
 
 -- yank to system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank to clipboard" })
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "yank line to clipboard" })
 
 -- delete to void register
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], {desc = "del to void"})
 
 --fuck Q
 vim.keymap.set("n", "Q", "<nop>")
@@ -72,3 +73,11 @@ vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 
 
 vim.keymap.set({ "n", "v" }, "<leader>e", "<cmd>NvimTreeToggle<cr>",{desc="open file tree"})
+
+
+--delete buffer
+wk.register({
+    ["<leader>b"] = { name = "+buffer", },
+    ["<leader>bd"] = {"<cmd>Bdelete!<cr>", "buffer delete"},
+    ["<leader>bw"] = {"<cmd>Bwipeout!<cr>", "buffer wipeout"},
+})

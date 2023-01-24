@@ -1,6 +1,7 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.cmd.colorscheme("poimandres")
+vim.cmd.colorscheme("catppuccin")
+vim.opt.mouse = "a"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -30,3 +31,6 @@ vim.opt.incsearch = true
 vim.opt.updatetime = 50
 
 vim.wo.fillchars = 'eob: '
+
+-- whichkey timeout in ms
+vim.opt.timeoutlen = 0;
