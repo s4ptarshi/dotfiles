@@ -50,6 +50,7 @@ SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
 SETUVAR nvm_data:/home/s4ptarshi/\x2elocal/share/nvm
+SETUVAR nvm_default_version:latest
 SETUVAR nvm_mirror:https\x3a//nodejs\x2eorg/dist
 SETUVAR pure_begin_prompt_with_current_directory:true
 SETUVAR pure_check_for_new_release:false
