@@ -4,7 +4,7 @@ set fish_greeting                                 # Supresses fish's intro messa
 set PATH $HOME/.local/bin/ $PATH
 
 # fetch
-afetch
+# afetch
 
 #colorscheme
 source $HOME/.config/fish/themes/tokyonight_night.fish
