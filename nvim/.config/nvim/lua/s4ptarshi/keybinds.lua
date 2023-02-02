@@ -75,9 +75,11 @@ vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 vim.keymap.set({ "n", "v" }, "<leader>e", "<cmd>NvimTreeToggle<cr>",{desc="open file tree"})
 
 
---delete buffer
+--which-key bindings
 wk.register({
     ["<leader>b"] = { name = "+buffer", },
+    ["<leader>l"] = { name = "+lsp", },
     ["<leader>bd"] = {"<cmd>Bdelete!<cr>", "buffer delete"},
     ["<leader>bw"] = {"<cmd>Bwipeout!<cr>", "buffer wipeout"},
+
 })
