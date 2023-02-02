@@ -82,15 +82,22 @@ return require('packer').startup(function(use)
         config = function()
             require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
         end,
-        requires = {'BlakeJC94/alpha-nvim-fortune'},
+        requires = { 'BlakeJC94/alpha-nvim-fortune' },
     }
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
     use 'p00f/nvim-ts-rainbow'
-    use {"shortcuts/no-neck-pain.nvim", tag = "*" }
+    use { "shortcuts/no-neck-pain.nvim", tag = "*" }
     use({ "MaximilianLloyd/ascii.nvim", requires = {
         "MunifTanjim/nui.nvim"
     } })
+
+    use({
+        "ggandor/leap.nvim",
+        requires = {
+            "tpope/vim-repeat"
+        }
+    })
 end)
