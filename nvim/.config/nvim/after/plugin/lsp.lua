@@ -1,10 +1,9 @@
 local lsp = require('lsp-zero')
-local wk = require("which-key")
---
 lsp.preset('recommended')
 
--- enable snippets for ejs
+-- extended snippets
 require 'luasnip'.filetype_extend("html", { "ejs" })
+require 'luasnip'.filetype_extend("javascript", { "react","react-es7","html" })
 
 -- Fix Undefined global 'vim'
 lsp.configure('sumneko_lua', {
@@ -27,6 +26,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ["<C-Space>"] = cmp.mapping.complete(),
 })
 
+-- free up tab for tabout
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 
@@ -36,7 +36,7 @@ lsp.setup_nvim_cmp({
 
 -- vim does it's best to do these following commands if no lsp is attached to a buffer
 --
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
 
     vim.keymap.set("n", "<leader>l",function() end,
         { desc = "+lsp" })
