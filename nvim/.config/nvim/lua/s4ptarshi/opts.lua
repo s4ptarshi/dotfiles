@@ -34,3 +34,9 @@ vim.wo.fillchars = 'eob: '
 
 -- whichkey timeout in ms
 vim.opt.timeoutlen = 0;
+
+--converts ejs to html for compatibility with lsp and treesitter
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.ejs",
+  command = "set filetype=html"
+})
