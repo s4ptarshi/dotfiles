@@ -6,6 +6,11 @@ wk.register({
         e = { "<cmd>CompetiTestEdit<cr>", "Edit testcases" },
         d = { "<cmd>CompetiTestDelete<cr>", "Delete testcases" },
         r = { "<cmd>CompetiTestRun<cr>", "Run and test code" },
-        g = { "<cmd>CompetiTestReceive<cr>", "Get testcases" },
+        g = {
+            name = "+fetch from competitive companion",
+            t = { "<cmd>CompetiTestReceive testcases<cr>", "Add testcase" },
+            p = { "<cmd>CompetiTestReceive problem<cr>", "Add problem" },
+            c = { "<cmd>CompetiTestReceive contest<cr>", "Add contest" },
+        },
     },
 })
