@@ -78,10 +78,20 @@ vim.keymap.set({ "n", "v" }, "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "o
 
 --which-key bindings
 wk.register({
+<<<<<<< HEAD:nvim_archived/.config/nvim/lua/s4ptarshi/keybinds.lua
 	["<leader>b"] = { name = "+buffer" },
 	["<leader>l"] = { name = "+lsp" },
 	["<leader>bd"] = { "<cmd>Bdelete!<cr>", "buffer delete" },
 	["<leader>bw"] = { "<cmd>Bwipeout!<cr>", "buffer wipeout" },
 	["<leader>bn"] = { "<cmd>BufferLineMoveNext<cr>", "buffer move to right" },
 	["<leader>bp"] = { "<cmd>BufferLineMovePrev<cr>", "buffer move to left" },
+=======
+    ["<leader>b"] = { name = "+buffer", },
+    ["<leader>l"] = { name = "+lsp", },
+    ["<leader>bd"] = {"<cmd>Bdelete!<cr>", "buffer delete"},
+    ["<leader>bw"] = {"<cmd>Bwipeout!<cr>", "buffer wipeout"},
+    ["<leader>bn"] = {"<cmd>BufferLineMoveNext<cr>", "buffer move to right"},
+    ["<leader>bp"] = {"<cmd>BufferLineMovePrev<cr>", "buffer move to left"},
+
+>>>>>>> 4f27205094b55b34d3ff315e601ce9d5cb34adbf:nvim/.config/nvim/lua/s4ptarshi/keybinds.lua
 })
