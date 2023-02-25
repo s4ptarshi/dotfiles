@@ -4,7 +4,7 @@ set fish_greeting                                 # Supresses fish's intro messa
 set PATH $HOME/.local/bin/ $PATH
 
 # fetch
-# afetch
+afetch
 
 #colorscheme
 source $HOME/.config/fish/themes/tokyonight_night.fish
@@ -50,7 +50,7 @@ alias wininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
 alias ls='lsd -A'
 alias la='lsd -A'
 alias ll='lsd -Al'
-alias lt='lsd -At'
+alias lt='lsd -A --tree'
 
 # # pacman and yay
 # # alias pacsyu='sudo pacman -Syu'                 # update only standard pkgs
@@ -63,11 +63,19 @@ alias lt='lsd -At'
 # alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
 
 #fedora aliases
-alias install='sudo dnf install -y'
-alias remove='sudo dnf remove -y'
-alias update='sudo dnf upgrade -y && flatpak update -y'
-alias clean='sudo dnf autoremove'
-alias search='sudo dnf search'
+# alias install='sudo dnf install -y'
+# alias remove='sudo dnf remove -y'
+# alias update='sudo dnf upgrade -y && flatpak update -y'
+# alias clean='sudo dnf autoremove'
+# alias search='sudo dnf search'
+
+alias install='yay -Sy'
+alias remove='yay -Rns'
+alias update='yay -Syu && flatpak update -y'
+alias clean='pacman -Qtdq | pacman -Rns -'
+
+#reload waybar
+alias reload_waybar='killall -SIGUSR2 waybar'
 
 
 # Colorize grep output (good for log files)
