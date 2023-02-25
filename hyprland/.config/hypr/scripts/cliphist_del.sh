@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cliphist list | rofi -dmenu | cliphist delete
+cliphist list | tofi | cliphist delete

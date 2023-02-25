@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cliphist list | rofi -dmenu | cliphist decode | wl-copy
+cliphist list | tofi | cliphist decode | wl-copy
