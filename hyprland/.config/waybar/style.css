@@ -20,33 +20,6 @@ tooltip {
     border-color: #11111b;
 }
 
-#workspaces button {
-    padding: 5px;
-    color: #45475a;
-    margin-right: 5px;
-}
-
-#workspaces button.active {
-    color: #a6adc8;
-}
-
-#workspaces button.focused {
-    color: #a6adc8;
-    background: #eba0ac;
-    border-radius: 10px;
-}
-
-#workspaces button.urgent {
-    color: #11111b;
-    background: #a6e3a1;
-    border-radius: 10px;
-}
-
-#workspaces button:hover {
-    background: #11111b;
-    color: #cdd6f4;
-    border-radius: 10px;
-}
 
 #custom-language,
 #custom-caffeine,
@@ -103,6 +76,34 @@ tooltip {
     margin-left: 10px;
     padding-right: 0px;
     padding-left: 5px;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: #45475a;
+    margin-right: 5px;
+}
+
+#workspaces button.active {
+    color: #a6adc8;
+}
+
+#workspaces button.focused {
+    color: #a6adc8;
+    background: #eba0ac;
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    color: #11111b;
+    background: #a6e3a1;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: #11111b;
+    color: #cdd6f4;
+    border-radius: 10px;
 }
 
 #custom-caffeine {
