@@ -42,7 +42,7 @@ tooltip {
     border: 1px solid #181825;
 }
 
-#window {
+#clock {
 	background: transparent;
     /* background: #1e1e2e; */
     /* border-radius: 10px; */
@@ -121,7 +121,7 @@ tooltip {
 
 
 
-#clock {
+#cpu {
     color: #fab387;
     border-radius: 10px 0px 0px 10px;
     margin-left: 5px;

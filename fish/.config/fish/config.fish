@@ -8,6 +8,7 @@ afetch
 
 #colorscheme
 source $HOME/.config/fish/themes/tokyonight_night.fish
+source $HOME/.config/fish/scripts/timer.fish
 
 # Vi mode
 function fish_user_key_bindings

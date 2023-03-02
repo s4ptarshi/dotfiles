@@ -7,14 +7,13 @@
     "gtk-layer-shell": true,
     "height": 0,
     "modules-left": [
-        "clock",
-        "custom/weather",
         "cpu",
         "memory",
         "wlr/workspaces"
     ],
     "modules-center": [
-        "hyprland/window"
+        // "hyprland/window",
+        "clock"
     ],
     "modules-right": [
         "tray",
@@ -76,8 +75,8 @@
         "spacing": 10
     },
     "clock": {
-        "format": " {:%I:%M %p}",
-        "format-alt": " {:%A, %B %d, %Y (%I:%M %p)}",
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%A, %B %d, %Y (%I:%M %p)}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "month",
