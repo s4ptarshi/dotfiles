@@ -2,6 +2,8 @@
 set fish_greeting                                 # Supresses fish's intro message
 # set TERM "linux"                         # Sets the terminal type
 set PATH $HOME/.local/bin/ $PATH
+set -gx LANG en_IN.UTF-8    # Adjust this to your language!
+set -gx LC_ALL en_IN.UTF-8  # Adjust this to your locale!
 
 # fetch
 afetch
