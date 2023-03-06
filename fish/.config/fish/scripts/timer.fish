@@ -10,5 +10,6 @@ function pomodoro
 end
 
 alias po="pomodoro"
-alias wo="pomodoro work 45"
-alias br="pomodoro break 10"
+alias wo="pomodoro work 25"
+alias sbr="pomodoro 'short break' 5"
+alias lbr="pomodoro 'long break' 20"
