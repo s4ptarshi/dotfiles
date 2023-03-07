@@ -20,17 +20,17 @@ vim.keymap.set("n", "N", "Nzzzv")
 --mark as executable right from neovim
 vim.keymap.set("n", "<leader>bx", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Mark as executable" })
 wk.register({
-  ["<leader>t"] = {
-    name = "+Competitest",
-    a = { "<cmd>CompetiTestAdd<cr>", "Add testcase" },
-    e = { "<cmd>CompetiTestEdit<cr>", "Edit testcases" },
-    d = { "<cmd>CompetiTestDelete<cr>", "Delete testcases" },
-    r = { "<cmd>CompetiTestRun<cr>", "Run and test code" },
-    g = {
-      name = "+fetch from competitive companion",
-      t = { "<cmd>CompetiTestReceive testcases<cr>", "Add testcase" },
-      p = { "<cmd>CompetiTestReceive problem<cr>", "Add problem" },
-      c = { "<cmd>CompetiTestReceive contest<cr>", "Add contest" },
+    ["<leader>t"] = {
+        name = "+Competitest",
+        a = { "<cmd>CompetiTestAdd<cr>", "Add testcase" },
+        e = { "<cmd>CompetiTestEdit<cr>", "Edit testcases" },
+        d = { "<cmd>CompetiTestDelete<cr>", "Delete testcases" },
+        r = { "<cmd>CompetiTestRun<cr>", "Run and test code" },
+        g = {
+            name = "+fetch from competitive companion",
+            t = { "<cmd>CompetiTestReceive testcases<cr>", "Add testcase" },
+            p = { "<cmd>CompetiTestReceive problem<cr>", "Add problem" },
+            c = { "<cmd>CompetiTestReceive contest<cr>", "Add contest" },
+        },
     },
-  },
 })
