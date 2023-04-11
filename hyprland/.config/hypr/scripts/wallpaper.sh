@@ -2,4 +2,4 @@
 
 killall swww
 swww init
-swww img ~/Pictures/wallpapers/pixel\ city.gif
+swww img ~/Pictures/wallpapers/spooky_spill.jpg

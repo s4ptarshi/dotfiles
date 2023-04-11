@@ -1,88 +1,166 @@
 * {
     border: none;
     border-radius: 0;
-    font-weight: 400;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 14px;
+    font-family: Cartograph CF Nerd Font, monospace;
+    font-weight: bold;
+    font-size: 16px;
     min-height: 0;
 }
 
-window {
-    background: linear-gradient(to top, rgba(0,0,0,0.1), rgba(0, 0, 0, 0.7));
-    /* background: rgba(0,0,0,0.75); */
-    color: honeydew;
+window#waybar {
+    background: rgba(30, 30, 46, 0.7);
+    color: #cdd6f4;
 }
 
-#workspaces button {
-    padding: 0 0.75em;
-    color: grey;
+tooltip {
+    background: #313244;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #11111b;
 }
 
-#workspaces button.focused {
-    color: grey;
-}
 
-#workspaces button.active {
-    color: white;
-}
-
-#window {
-    color: white;
-    background-color: transparent;
-    padding: 0 10px;
-    margin: 0 2px;
-}
-
-#clock, #battery, #backlight, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode, #workspaces, #bluetooth {
-    padding: 0 10px;
-    margin: 0 2px;
-    color: white;
-    /* background-color: rgba(80,80,80,0.5); */
-    /* border-radius: 4px; */
+#custom-language,
+#custom-caffeine,
+#custom-weather,
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#workspaces,
+#tray,
+#cpu,
+#memory,
+#backlight {
+    background: #313244;
+    padding: 0px 10px;
+    margin: 3px 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #181825;
 }
 
 #clock {
-    font-weight: 600;
-    color: white;
-    background-color: rgba(71,77,89,0.5);
-    padding: 5 20;
-    border-radius: 20px;
+	background: transparent;
+    /* background: #1e1e2e; */
+    /* border-radius: 10px; */
+    border: 0;
+    /* border: 1px solid #181825; */
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
+#cpu {
+  color: #89B4FA;
+  border-left: 0;
+  border-right: 0;
+}
+
+#memory {
+  color: #F9E2AF;
+  border-radius: 0 10px 10px 0;
+  border-left: 0;
+}
+
+
+#tray {
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+#workspaces {
+    background: #313244;
+    border-radius: 10px;
+    margin-left: 10px;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: #45475a;
+    margin-right: 5px;
+}
+
+#workspaces button.active {
+    color: #a6adc8;
+}
+
+#workspaces button.focused {
+    color: #a6adc8;
+    background: #eba0ac;
+    border-radius: 10px;
+}
+
+#workspaces button.urgent {
+    color: #11111b;
+    background: #a6e3a1;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: #11111b;
+    color: #cdd6f4;
+    border-radius: 10px;
+}
+
+#custom-caffeine {
+    color: #89dceb;
+    border-radius: 10px 0px 0px 10px;
+    border-right: 0px;
+    margin-left: 10px;
+}
+
+#custom-language {
+    color: #f38ba8;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+
+
+#cpu {
+    color: #fab387;
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 5px;
+    border-right: 0px;
+}
+
+#network {
+    color: #f9e2af;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#pulseaudio {
+    color: #89b4fa;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 10px 0px 0px 10px;;
+}
+
+#pulseaudio.microphone {
+    color: #cba6f7;
+    /* margin-right: 5px; */
+    /* border-radius: 0 10px 10px 0; */
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px;
+}
 
 #battery {
+    color: #a6e3a1;
+    border-radius: 0 10px 10px 0;
+    border-left: 0px;
+    border-right: 0px;
+    padding-right: 0px;
+    margin-right: 5px
 }
 
-#battery icon {
-    color: red;
+#custom-weather {
+    border-radius: 0px 10px 10px 0px;
+    border-right: 0px;
+    margin-left: 0px;
 }
-
-#battery.charging {
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: black;
-    }
-}
-
-#battery.warning:not(.charging) {
-    color: white;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-
-#network.disconnected {
-    background: #f53c3c;
-}
-
-
-#custom-spotify {
-    color: rgb(102, 220, 105);
-}
-
