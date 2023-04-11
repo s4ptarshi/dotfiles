@@ -81,5 +81,7 @@ wk.register({
     ["<leader>l"] = { name = "+lsp", },
     ["<leader>bd"] = {"<cmd>Bdelete!<cr>", "buffer delete"},
     ["<leader>bw"] = {"<cmd>Bwipeout!<cr>", "buffer wipeout"},
+    ["<leader>bn"] = {"<cmd>BufferLineMoveNext<cr>", "buffer move to right"},
+    ["<leader>bp"] = {"<cmd>BufferLineMovePrev<cr>", "buffer move to left"},
 
 })

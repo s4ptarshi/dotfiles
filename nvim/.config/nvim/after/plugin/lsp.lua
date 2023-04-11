@@ -3,19 +3,19 @@ lsp.preset('recommended')
 
 -- extended snippets
 require 'luasnip'.filetype_extend("html", { "ejs" })
-require 'luasnip'.filetype_extend("javascript", { "react","react-es7","html" })
+require 'luasnip'.filetype_extend("javascript", { "javascriptreact", "javascriptreact-es7", "html" })
 
 -- Fix Undefined global 'vim'
-lsp.configure('sumneko_lua', {
+require 'lspconfig'.lua_ls.setup {
     settings = {
         Lua = {
             diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
-})
-
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+            },
+        },
+    },
+}
 -- some custom remaps
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -37,8 +37,8 @@ lsp.setup_nvim_cmp({
 -- vim does it's best to do these following commands if no lsp is attached to a buffer
 --
 lsp.on_attach(function(_, bufnr)
-
-    vim.keymap.set("n", "<leader>l",function() end,
+    vim.keymap.set("n", "<leader>l", function()
+    end,
         { desc = "+lsp" })
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
         { buffer = bufnr, remap = false, desc = "definition" })
