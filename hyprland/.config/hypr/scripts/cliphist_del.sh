@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cliphist list | tofi | cliphist delete
+cliphist list | fuzzel -d | cliphist delete
