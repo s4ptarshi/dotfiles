@@ -17,9 +17,11 @@
     ],
     "modules-right": [
         "tray",
+        "idle_inhibitor",
         // "custom/language",
         "pulseaudio",
         "pulseaudio#microphone",
+        "backlight",
         "network",
         "battery"
     ],
@@ -42,7 +44,17 @@
             "urgent": "",
             "active": "",
             "default": ""
-        }
+        },
+        // "format-icons": {
+        //     "1": "",
+        //     "2": "",
+        //     "3": "",
+        //     "4": "",
+        //     "5": "",
+        //     "urgent": "",
+        //     "active": "",
+        //     "default": ""
+        // },
     },
     "cpu": {
         "interval": 10,
@@ -97,8 +109,8 @@
         "format-muted": " Muted",
         "on-click": "pamixer -t",
         "on-click-right": "blueman-manager",
-        "on-scroll-up": "pamixer -i 5",
-        "on-scroll-down": "pamixer -d 5",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -127,31 +139,73 @@
         "max-length": 70,
         "on-click": "nm-connection-editor"
     },
+    // "battery": {
+    //     "states": {
+    //         // "good": 95,
+    //         "warning": 30,
+    //         "critical": 15
+    //     },
+    //     "format": " {icon} {capacity}%",
+    //     "format-charging": "{icon} {capacity}%",
+    //     "format-plugged": "{ {capacity}%",
+    //     // "format-good": "", // An empty format will hide the module
+    //     // "format-full": "",
+    //     "format-icons": ["", "", "", "", ""]
+    // },
+
     "battery": {
-        "bat": "BAT0",
         "interval": 60,
+        "align": 0,
+        "rotate": 0,
+        // "full-at": 100,
+        "design-capacity": true,
         "states": {
-            "warning": 30,
-            "critical": 15
+          "good": 95,
+          "warning": 30,
+          "critical": 15
         },
-        "format": "{icon} {capacity}% ",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "max-length": 25
-    },
+        // "format": "<span font='11' rise='1000'>{icon}</span> {capacity}",
+        // "format-charging": "<span font='11' rise='1000'> </span>{capacity}",
+        // "format-plugged": "<span font='10' rise='1300'></span> {capacity}",
+        // "format-full": "<span font='11' rise='500'>{icon}</span>",
+        // "format-alt": "<span font='11' rise='1000'>{icon}</span> {time}",
+        "format": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}%",
+        "format-plugged": "{icon} {capacity}%",
+        "format-full": "{icon}",
+        "format-alt": "{icon} {time}",
+        "format-icons": {
+            // ["", "", "", "", ""],
+            "charging": ["", "", "", "", "", "", ""],
+            "default": ["", "", "", "", "", "", "", "", "", ""],
+            "plugged": [""]
+        },
+        "format-time": "{H}h {M}min",
+        "tooltip": true
+      },
+
+  "backlight": {
+      "device": "amdgpu_bl1",
+      "format": "{icon} {percent}%",
+      "format-icons": ["󰃝","󰃞","󰃟","󰃠"],
+      "on-scroll-up": "brightnessctl -q set 2%+",
+      "on-scroll-down": "brightnessctl -q set 2%-"
+  },
     "pulseaudio#microphone": {
         "format": "{format_source}",
         "tooltip": false,
         "format-source": " {volume}%",
         "format-source-muted": " Muted",
-        "on-click": "pamixer --default-source -t",
-        "on-scroll-up": "pamixer --default-source -i 5",
-        "on-scroll-down": "pamixer --default-source -d 5",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
         "scroll-step": 5
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     }
 }
