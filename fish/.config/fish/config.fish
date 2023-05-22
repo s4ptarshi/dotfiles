@@ -1,8 +1,8 @@
 ### EXPORT ###
-set fish_greeting                                 # Supresses fish's intro message
+set fish_greeting # Supresses fish's intro message
 fortune | cowsay | lolcat
-set -gx LANG en_IN.UTF-8    # Adjust this to your language!
-set -gx LC_ALL en_IN.UTF-8  # Adjust this to your locale!
+set -gx LANG en_IN.UTF-8 # Adjust this to your language!
+set -gx LC_ALL en_IN.UTF-8 # Adjust this to your locale!
 
 #colorscheme
 source $HOME/.config/fish/themes/tokyonight_night.fish
@@ -10,11 +10,11 @@ source $HOME/.config/fish/scripts/timer.fish
 
 # Vi mode
 function fish_user_key_bindings
-  # fish_default_key_bindings
-  fish_vi_key_bindings
-  bind yy fish_clipboard_copy
-  bind Y fish_clipboard_copy
-  bind p fish_clipboard_paste
+    # fish_default_key_bindings
+    fish_vi_key_bindings
+    bind yy fish_clipboard_copy
+    bind Y fish_clipboard_copy
+    bind p fish_clipboard_paste
 end
 
 # pure prompt
@@ -28,10 +28,10 @@ function fish_user_key_bindings
 end
 
 # Set the cursor shapes for the different vi modes.
-set fish_cursor_default     block      blink
-set fish_cursor_insert      line       blink
+set fish_cursor_default block blink
+set fish_cursor_insert line blink
 set fish_cursor_replace_one underscore blink
-set fish_cursor_visual      block
+set fish_cursor_visual block
 
 ### ALIASES ###
 
