@@ -7,13 +7,13 @@
     "gtk-layer-shell": true,
     "height": 0,
     "modules-left": [
+        "clock",
         "cpu",
         "memory",
         "wlr/workspaces"
     ],
     "modules-center": [
-        // "hyprland/window",
-        "clock"
+        "custom/activewindow"
     ],
     "modules-right": [
         "tray",
@@ -28,34 +28,40 @@
     "hyprland/window": {
         "format": "{}"
     },
+"custom/activewindow": {
+	"return-type": "json",
+	"format": "{}",
+	"tooltip-format": "{}",
+
+        "exec": "sh ~/.config/waybar/scripts/activewindow/active-window.sh",
+        // "interval": 1,
+        "max-length": 40
+    },
     "wlr/workspaces": {
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "active-only": false,
         "all-outputs": true,
         "sort-by-number": true,
         "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
-        // "format-icons": {
-        //     "1": "",
-        //     "2": "",
-        //     "3": "",
-        //     "4": "",
-        //     "5": "",
-        //     "urgent": "",
-        //     "active": "",
-        //     "default": ""
-        // },
+      "1": "I",
+      "2": "II",
+      "3": "III",
+      "4": "IV",
+      "5": "V",
+      "6": "VI",
+      "7": "VII",
+      "8": "VIII",
+      "9": "IX",
+      "10": "X",
+            // "urgent": "",
+            // "active": "",
+            // "default": ""
+        }
     },
+
     "cpu": {
         "interval": 10,
         "format": " {}%",
@@ -129,11 +135,14 @@
     "network": {
         //"interface": "wlp4s0",
         "format": "{ifname}",
-        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-wifi": "{icon} {essid}",
         "format-ethernet": " {ifname}",
         "format-disconnected": "󱚵 Disconnected", //An empty format will hide the module.
+        "format-icons": {
+            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+        },
         "tooltip-format": "{ifname}",
-        "tooltip-format-wifi": " {essid} ({signalStrength}%)",
+        "tooltip-format-wifi": "Strength: {signalStrength}%",
         "tooltip-format-ethernet": " {ifname}",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 70,
@@ -161,21 +170,15 @@
         "design-capacity": true,
         "states": {
           "good": 95,
-          "warning": 30,
+          "warning": 60,
           "critical": 15
         },
-        // "format": "<span font='11' rise='1000'>{icon}</span> {capacity}",
-        // "format-charging": "<span font='11' rise='1000'> </span>{capacity}",
-        // "format-plugged": "<span font='10' rise='1300'></span> {capacity}",
-        // "format-full": "<span font='11' rise='500'>{icon}</span>",
-        // "format-alt": "<span font='11' rise='1000'>{icon}</span> {time}",
         "format": "{icon} {capacity}%",
         "format-charging": "{icon} {capacity}%",
         "format-plugged": "{icon} {capacity}%",
         "format-full": "{icon}",
         "format-alt": "{icon} {time}",
         "format-icons": {
-            // ["", "", "", "", ""],
             "charging": ["", "", "", "", "", "", ""],
             "default": ["", "", "", "", "", "", "", "", "", ""],
             "plugged": [""]
@@ -191,6 +194,7 @@
       "on-scroll-up": "brightnessctl -q set 2%+",
       "on-scroll-down": "brightnessctl -q set 2%-"
   },
+
     "pulseaudio#microphone": {
         "format": "{format_source}",
         "tooltip": false,
