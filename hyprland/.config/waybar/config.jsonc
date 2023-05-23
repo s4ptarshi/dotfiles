@@ -28,11 +28,10 @@
     "hyprland/window": {
         "format": "{}"
     },
-"custom/activewindow": {
-	"return-type": "json",
-	"format": "{}",
-	"tooltip-format": "{}",
-
+    "custom/activewindow": {
+        "return-type": "json",
+        "format": "{}",
+        "tooltip-format": "{}",
         "exec": "sh ~/.config/waybar/scripts/activewindow/active-window.sh",
         // "interval": 1,
         "max-length": 40
@@ -46,22 +45,21 @@
         "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-      "1": "I",
-      "2": "II",
-      "3": "III",
-      "4": "IV",
-      "5": "V",
-      "6": "VI",
-      "7": "VII",
-      "8": "VIII",
-      "9": "IX",
-      "10": "X",
+            "1": "I",
+            "2": "II",
+            "3": "III",
+            "4": "IV",
+            "5": "V",
+            "6": "VI",
+            "7": "VII",
+            "8": "VIII",
+            "9": "IX",
+            "10": "X",
             // "urgent": "",
             // "active": "",
             // "default": ""
         }
     },
-
     "cpu": {
         "interval": 10,
         "format": " {}%",
@@ -139,7 +137,13 @@
         "format-ethernet": " {ifname}",
         "format-disconnected": "󱚵 Disconnected", //An empty format will hide the module.
         "format-icons": {
-            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+            "wifi": [
+                "󰤯",
+                "󰤟",
+                "󰤢",
+                "󰤥",
+                "󰤨"
+            ]
         },
         "tooltip-format": "{ifname}",
         "tooltip-format-wifi": "Strength: {signalStrength}%",
@@ -161,40 +165,61 @@
     //     // "format-full": "",
     //     "format-icons": ["", "", "", "", ""]
     // },
-
     "battery": {
         "interval": 60,
         "align": 0,
         "rotate": 0,
-        // "full-at": 100,
-        "design-capacity": true,
+        "full-at": 100,
+        // "design-capacity": true,
         "states": {
-          "good": 95,
-          "warning": 60,
-          "critical": 15
+            "good": 95,
+            "warning": 60,
+            "critical": 15
         },
         "format": "{icon} {capacity}%",
         "format-charging": "{icon} {capacity}%",
-        "format-plugged": "{icon} {capacity}%",
+        "format-plugged": " {icon} {capacity}%",
         "format-full": "{icon}",
         "format-alt": "{icon} {time}",
         "format-icons": {
-            "charging": ["", "", "", "", "", "", ""],
-            "default": ["", "", "", "", "", "", "", "", "", ""],
-            "plugged": [""]
+            "charging": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "default": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "format-time": "{H}h {M}min",
-        "tooltip": true
-      },
-
-  "backlight": {
-      "device": "amdgpu_bl1",
-      "format": "{icon} {percent}%",
-      "format-icons": ["󰃝","󰃞","󰃟","󰃠"],
-      "on-scroll-up": "brightnessctl -q set 2%+",
-      "on-scroll-down": "brightnessctl -q set 2%-"
-  },
-
+        "tooltip": true,
+        "tooltip-format": "{timeTo}"
+    },
+    "backlight": {
+        "device": "amdgpu_bl1",
+        "format": "{icon} {percent}%",
+        "format-icons": [
+            "󰃝",
+            "󰃞",
+            "󰃟",
+            "󰃠"
+        ],
+        "on-scroll-up": "brightnessctl -q set 2%+",
+        "on-scroll-down": "brightnessctl -q set 2%-"
+    },
     "pulseaudio#microphone": {
         "format": "{format_source}",
         "tooltip": false,

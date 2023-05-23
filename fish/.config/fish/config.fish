@@ -1,6 +1,6 @@
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message
-fortune | cowsay | lolcat
+# fortune | cowsay | lolcat
 set -gx LANG en_IN.UTF-8 # Adjust this to your language!
 set -gx LC_ALL en_IN.UTF-8 # Adjust this to your locale!
 
@@ -9,6 +9,7 @@ source $HOME/.config/fish/themes/tokyonight_night.fish
 source $HOME/.config/fish/scripts/timer.fish
 
 # Vi mode
+set -g fish_vi_force_cursor 1
 function fish_user_key_bindings
     # fish_default_key_bindings
     fish_vi_key_bindings
@@ -46,7 +47,7 @@ alias .5='cd ../../../../..'
 alias e='nvim'
 
 #windowinfo
-alias wininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
+alias kwininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
 
 # TODO:change to lsd
 alias ls='lsd -A'
@@ -65,12 +66,11 @@ alias lt='lsd -A --tree'
 # alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
 
 #fedora aliases
-alias dnf='dnf5'
 alias install='sudo dnf install -y'
 alias remove='sudo dnf remove -y'
 alias update='sudo dnf upgrade -y && flatpak update -y'
 alias clean='sudo dnf autoremove'
-alias search='dnf search'
+alias search='sudo dnf search'
 
 # alias install='yay -Sy'
 # alias remove='yay -Rns'
@@ -90,6 +90,7 @@ alias fgrep='fgrep --color=auto'
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
+alias mkdir='mkdir -p'
 
 
 # Merge Xresources
