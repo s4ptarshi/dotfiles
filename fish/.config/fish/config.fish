@@ -49,33 +49,46 @@ alias e='nvim'
 #windowinfo
 alias kwininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
 
-# TODO:change to lsd
+#ls
 alias ls='lsd -A'
 alias la='lsd -A'
 alias ll='lsd -Al'
 alias lt='lsd -A --tree'
 
-# # pacman and yay
-# # alias pacsyu='sudo pacman -Syu'                 # update only standard pkgs
-# # alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
-# # alias yaysua='yay -Sua --noconfirm'              # update only AUR pkgs (yay)
-# # alias yaysyu='yay -Syu --noconfirm'              # update standard pkgs and AUR pkgs (yay)
-# # alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)
-# # alias parsyu='paru -Syu --noconfirm'             # update standard pkgs and AUR pkgs (paru)
-# alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
-# alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
+#mkdir
+alias mkdir='mkdir -p'
 
-#fedora aliases
-alias install='sudo dnf install -y'
-alias remove='sudo dnf remove -y'
-alias update='sudo dnf upgrade -y && flatpak update -y'
-alias clean='sudo dnf autoremove'
-alias search='sudo dnf search'
-
-# alias install='yay -Sy'
-# alias remove='yay -Rns'
-# alias update='yay -Syu && flatpak update -y'
-# alias clean='pacman -Qtdq | pacman -Rns -'
+#aliases (distro specific)
+set distro (cat /etc/os-release | grep "^ID=" | cut -d= -f2 | tr -d '"')
+switch (uname)
+    case Linux
+        switch $distro
+            case opensuse-tumbleweed
+                # openSUSE aliases
+                alias install='sudo zypper in -y'
+                alias remove='sudo zypper rm'
+                alias update='sudo zypper dup -y && flatpak update -y'
+                alias clean="zypper packages --unneeded | awk -F' | ' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove --clean-deps"
+                alias search='zypper search'
+            case fedora
+                # Fedora aliases
+                alias install='sudo dnf install -y'
+                alias remove='sudo dnf remove -y'
+                alias update='sudo dnf upgrade -y && flatpak update -y'
+                alias clean='sudo dnf autoremove'
+                alias search='sudo dnf search'
+            case arch
+                # Arch Linux aliases
+                alias install='yay -Sy'
+                alias remove='yay -Rns'
+                alias update='yay -Syu && flatpak update -y'
+                alias clean='pacman -Qtdq | pacman -Rns -'
+                alias search='search'
+                alias unlock='sudo rm /var/lib/pacman/db.lck' # remove pacman lock
+        end
+    case "*"
+        echo "Unsupported operating system."
+end
 
 #reload waybar
 alias reload_waybar='killall -SIGUSR2 waybar'
