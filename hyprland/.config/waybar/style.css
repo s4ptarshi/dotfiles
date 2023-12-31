@@ -1,14 +1,30 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "FiraCode Nerd Font";
-    font-size: 13px;
+    font-family: "Droid Sans","FiraCode Nerd Font";
+    font-size: 16px;
     min-height: 0;
 }
 
 window#waybar {
     background: transparent;
     color: @theme_fg_color;
+}
+
+window#waybar.empty #window {
+    background: transparent;
+    color: @theme_fg_color;
+}
+
+window#waybar.solo {
+    background: alpha(@theme_base_color,1);
+}
+
+#window {
+    background: alpha(@theme_base_color,0.2);
+    padding: 2px 10px;
+    margin: 5px;
+    border-radius: 10px;
 }
 
 tooltip {
@@ -19,12 +35,13 @@ tooltip {
     border-color: #11111b;
 }
 
-.modules-center, .modules-right {
+.modules-right {
     background: alpha(@theme_base_color,0.2);
     padding: 2px 10px;
     margin: 5px;
     border-radius: 10px;
 }
+
 
 #clock, #cpu, #memory, #workspaces {
     background: alpha(@theme_base_color,0.2);
@@ -72,7 +89,8 @@ tooltip {
     }
 
 
-#tray, #memory, #idle_inhibitor, #pulseaudio, #pulseaudio.microphone, #backlight, #network {
+
+#tray, #memory, #idle_inhibitor, #pulseaudio, #bluetooth, #pulseaudio.microphone, #backlight, #network {
     margin-right: 10px;
 }
 
