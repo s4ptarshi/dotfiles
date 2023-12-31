@@ -1,20 +1,21 @@
-image=~/Pictures/wallpapers/catcity.jpg
+# image=~/Pictures/wallpapers/catcity.jpg
+screenshots
 daemonize
 clock
 indicator
 line-uses-ring
 
 effect-blur=9x9
-effect-greyscale
-#fade-in=0.5
-effect-vignette=0.3:0.9
+# effect-greyscale
+# fade-in=0.5
+# effect-vignette=0.3:0.9
 
-timestr=%H:%M
+timestr=%I:%M %p
 datestr=%a %e %b
 
 text-color=#cba6f7
-indicator-radius=200
-indicator-thickness=10
+indicator-radius=100
+indicator-thickness=5
 inside-color=#1b1b1b00
 key-hl-color=#ffffff
 ring-color=#cba6f7
@@ -32,3 +33,5 @@ ring-wrong-color=#cba6f7
 text-ver-color=#595959
 inside-ver-color=#00000000
 ring-ver-color=#595959
+
+# vim:ft=config:
