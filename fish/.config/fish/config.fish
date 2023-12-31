@@ -58,6 +58,9 @@ alias lt='lsd -A --tree'
 #mkdir
 alias mkdir='mkdir -p'
 
+#chrome
+alias chrome='flatpak run com.google.Chrome'
+
 #aliases (distro specific)
 set distro (cat /etc/os-release | grep "^ID=" | cut -d= -f2 | tr -d '"')
 switch (uname)
