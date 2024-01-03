@@ -1,0 +1,32 @@
+# clipboard manager
+flatpak se copyq
+
+# package manager
+hyprland
+dunst #noti daemon
+xdg-desktop-portal-hyprland #screensharing
+hyprshot
+qt5ct
+qt6ct
+rofi #app launcher
+swww #wallpaper tool
+hyprpaper
+waybar
+swaylock
+playerctl
+brightnessctl
+swayidle
+pamixer
+NetworkManager-connection-editor 
+blueman
+kdeconnect-kde
+google-droid-fonts
+
+#audio
+wf-recorder
+inotify-tools
+
+# support left
+clipboard manager
+wlogout
+blur in lockscreen (swaylock-effects)
