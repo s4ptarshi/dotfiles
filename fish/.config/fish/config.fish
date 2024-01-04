@@ -3,6 +3,8 @@ set fish_greeting # Supresses fish's intro message
 # fortune | cowsay | lolcat
 set -gx LANG en_IN.UTF-8 # Adjust this to your language!
 set -gx LC_ALL en_IN.UTF-8 # Adjust this to your locale!
+set SHELL fish
+export NNN_PLUG="p:preview-tui"
 
 #colorscheme
 source $HOME/.config/fish/themes/tokyonight_night.fish
@@ -35,6 +37,11 @@ set fish_cursor_replace_one underscore blink
 set fish_cursor_visual block
 
 ### ALIASES ###
+#applications
+alias nnn='nnn -a'
+alias e='nvim'
+alias chrome='flatpak run com.google.Chrome'
+
 
 # navigation
 alias ..='cd ..'
@@ -42,9 +49,6 @@ alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
-
-# editor
-alias e='nvim'
 
 #windowinfo
 alias kwininfo="qdbus org.kde.KWin /KWin queryWindowInfo"
@@ -58,8 +62,6 @@ alias lt='lsd -A --tree'
 #mkdir
 alias mkdir='mkdir -p'
 
-#chrome
-alias chrome='flatpak run com.google.Chrome'
 
 #aliases (distro specific)
 set distro (cat /etc/os-release | grep "^ID=" | cut -d= -f2 | tr -d '"')
