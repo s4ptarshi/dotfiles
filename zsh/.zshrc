@@ -17,7 +17,7 @@ compinit
 
 #random greeter at start of terminal
 # colorscript random
-pfetch
+# pfetch
 
 #plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -61,8 +61,8 @@ _comp_options+=(globdots)
     alias lla='ls -lA'
     alias lt='ls --tree'
 
-    #lunarvim
-    alias e='/home/antimony2k/.local/bin/lvim'
+    #nvim
+    alias e='nvim'
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
