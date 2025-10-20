@@ -132,3 +132,5 @@ if status is-interactive # Commands to run in interactive sessions can go here
     alias jctl="journalctl -p 3 -xb"
 
 end
+
+zoxide init fish | source
