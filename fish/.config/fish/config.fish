@@ -10,9 +10,9 @@ if status is-interactive # Commands to run in interactive sessions can go here
 
     # Vi mode
     set -g fish_vi_force_cursor 1
+    fish_vi_key_bindings
     function fish_user_key_bindings
         # fish_default_key_bindings
-        fish_vi_key_bindings
         bind yy fish_clipboard_copy
         bind Y fish_clipboard_copy
         bind p fish_clipboard_paste
@@ -134,3 +134,24 @@ if status is-interactive # Commands to run in interactive sessions can go here
 end
 
 zoxide init fish | source
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+#
+# Uses the first conda installation found in the following list
+set -x CONDA_PATH /data/miniconda3/bin/conda $HOME/miniconda3/bin/conda
+
+function conda
+    echo "Lazy loading conda upon first invocation..."
+    functions --erase conda
+    for conda_path in $CONDA_PATH
+        if test -f $conda_path
+            echo "Using Conda installation found in $conda_path"
+            eval $conda_path "shell.fish" hook | source
+            conda $argv
+            return
+        end
+    end
+    echo "No conda installation found in $CONDA_PATH"
+end
+# <<< conda initialize <<<
