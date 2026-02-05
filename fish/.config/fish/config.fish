@@ -8,24 +8,26 @@ end
 
 if status is-interactive # Commands to run in interactive sessions can go here
 
-    # Vi mode
     set -g fish_vi_force_cursor 1
-    fish_vi_key_bindings
-    function fish_user_key_bindings
-        # fish_default_key_bindings
-        bind yy fish_clipboard_copy
-        bind Y fish_clipboard_copy
-        bind p fish_clipboard_paste
-    end
-
     # Set the cursor shapes for the different vi modes.
     set fish_cursor_default block blink
     set fish_cursor_insert line blink
     set fish_cursor_replace_one underscore blink
     set fish_cursor_visual block
 
+    # Vi mode
     #ctrl f keybind
     function fish_user_key_bindings
+        # Initialize the default Vi bindings
+        fish_vi_key_bindings
+        # Visual Mode: press 'y' to copy selection
+        bind -M visual y fish_clipboard_copy
+        # Normal Mode: 'yy' to copy line, 'Y' to copy to end of line
+        bind -M default yy fish_clipboard_copy
+        bind -M default Y fish_clipboard_copy
+
+        # Normal Mode: 'p' to paste
+        bind -M default p fish_clipboard_paste
         for mode in insert default visual
             bind -M $mode \cf forward-char
         end
@@ -36,9 +38,6 @@ if status is-interactive # Commands to run in interactive sessions can go here
 
     # Use starship
     starship init fish | source
-    if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
-        cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
-    end
 
     # Aliases
     alias pamcan pacman
