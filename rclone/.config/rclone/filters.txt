@@ -1,0 +1,19 @@
+# Ignore Python Virtual Environments (anywhere in the tree)
+- **/venv/**
+- **/.venv/**
+
+# Ignore Python Cache files
+- **/__pycache__/**
+- **/*.pyc
+
+# Ignore Git folders (highly recommended for performance)
+- **/.git/**
+
+# Ignore Large Datasets/Shared folders causing permission errors
+- **/Lecture_Datasets/**
+- **/data/Lecture_Datasets/**
+
+# Ignore standard temporary/trash files
+- **/.DS_Store
+- **/.cache/**
+- **/node_modules/**
