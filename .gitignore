@@ -1,2 +1,6 @@
 hyprland/.config/xfce4/xfconf/
 kitty/.config/kitty/kitty.conf.bak
+dms_hypr/.config/hypr/dms/colors.conf
+ghostty/.config/ghostty/themes/dankcolors
+kitty/.config/kitty/dank-tabs.conf
+kitty/.config/kitty/dank-theme.conf
