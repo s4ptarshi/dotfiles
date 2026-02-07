@@ -17,10 +17,13 @@ echo "$(date +'%Y/%m/%d %H:%M:%S') Sync started" >>"$log_file"
 output=$(rclone bisync \
     "$remote_dir" "$local_dir" \
     --filters-file "$filter_file" \
-    --compare size,modtime,checksum \
+    --fast-list \
+    --transfers 16 \
+    --checkers 32 \
+    --drive-chunk-size 64M \
+    --compare size,modtime \
     --modify-window 1s \
     --create-empty-src-dirs \
-    --drive-acknowledge-abuse \
     --drive-skip-gdocs \
     --drive-skip-shortcuts \
     --drive-skip-dangling-shortcuts \
@@ -48,7 +51,7 @@ if [ $result -eq 0 ]; then
     echo "$(date +'%Y/%m/%d %H:%M:%S') Sync done" >>"$log_file"
 
     if echo "$output" | grep -Eq "Transferred:[[:space:]]+[1-9]|Deleted:[[:space:]]+[1-9]"; then
-        notify-send "Google Drive" "Sync finished: Files were updated." -i cloud
+        notify-send "Google Drive" "Sync finished: Files were updated." -i drive
     else
         echo "$(date +'%Y/%m/%d %H:%M:%S') No changes detected." >>"$log_file"
     fi
