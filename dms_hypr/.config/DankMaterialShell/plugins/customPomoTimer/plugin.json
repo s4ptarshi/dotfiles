@@ -1,0 +1,16 @@
+{
+    "id": "customPomoTimer",
+    "name": "Custom Pomodoro Timer",
+    "description": "Productivity timer with 25-minute work sessions and breaks",
+    "version": "0.0.0",
+    "license": "",
+    "author": "Saptarshi",
+    "icon": "timer",
+    "firstParty": false,
+    "component": "./CustomPomoWidget.qml",
+    "settings": "./CustomPomoSettings.qml",
+    "permissions": [
+        "settings_read",
+        "settings_write"
+    ]
+}
