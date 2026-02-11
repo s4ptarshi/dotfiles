@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# 1. Get the color (Passed as argument $1, or read from file)
+COLOR="$1"
+
+# If no color passed, try to read from a standard file (like Matugen export)
+if [ -z "$COLOR" ]; then
+    # Fallback to reading a file if you set up Matugen to export one
+    COLOR_FILE="$HOME/.cache/matugen/hex_color.txt"
+    if [ -f "$COLOR_FILE" ]; then
+        COLOR=$(cat "$COLOR_FILE")
+    else
+        echo "Error: No color provided."
+        exit 1
+    fi
+fi
+
+# 2. Detect System Light/Dark Mode
+current_mode=$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | tr -d "'")
+if [[ "$current_mode" == "prefer-dark" ]]; then
+    mode_flag="-l"
+else
+    mode_flag="-d"
+fi
+
+# 3. Apply to KDE
+# We default to 'scheme-tonal-spot' (5) which is the standard Material You look
+echo "Applying color $COLOR to KDE ($current_mode)..."
+kde-material-you-colors "$mode_flag" --color "$COLOR" -sv 5 >/dev/null 2>&1 &
+sleep 0.1
+dbus-send --session --type=signal /KGlobalSettings org.kde.KGlobalSettings.forceRefresh

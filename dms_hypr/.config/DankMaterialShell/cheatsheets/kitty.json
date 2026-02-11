@@ -1,0 +1,248 @@
+{
+  "title": "Kitty Keybinds",
+  "provider": "kitty",
+  "binds": {
+    "Scrolling": [
+      {
+        "key": "Ctrl+Shift+Up",
+        "desc": "Scroll line up",
+        "subcat": "Line"
+      },
+      {
+        "key": "Ctrl+Shift+Down",
+        "desc": "Scroll line down",
+        "subcat": "Line"
+      },
+      {
+        "key": "Ctrl+Shift+Page_Up",
+        "desc": "Scroll page up",
+        "subcat": "Page"
+      },
+      {
+        "key": "Ctrl+Shift+Page_Down",
+        "desc": "Scroll page down",
+        "subcat": "Page"
+      },
+      {
+        "key": "Ctrl+Shift+Home",
+        "desc": "Scroll to top",
+        "subcat": "Extremes"
+      },
+      {
+        "key": "Ctrl+Shift+End",
+        "desc": "Scroll to bottom",
+        "subcat": "Extremes"
+      }
+    ],
+    "Tabs Management": [
+      {
+        "key": "Ctrl+Shift+T",
+        "desc": "New tab",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Shift+Q",
+        "desc": "Close tab",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Shift+Right",
+        "desc": "Next tab",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+Left",
+        "desc": "Previous tab",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+.",
+        "desc": "Move tab forward",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+Shift+,",
+        "desc": "Move tab backward",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+Shift+Alt+T",
+        "desc": "Set tab title",
+        "subcat": "Configuration"
+      }
+    ],
+    "Windows Management": [
+      {
+        "key": "Ctrl+Shift+Enter",
+        "desc": "New window",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Shift+N",
+        "desc": "New OS window",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Shift+W",
+        "desc": "Close window",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Shift+L",
+        "desc": "Switch to next layout",
+        "subcat": "Layout"
+      },
+      {
+        "key": "Ctrl+Shift+]",
+        "desc": "Next window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+[",
+        "desc": "Previous window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+1...0",
+        "desc": "Focus specific window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+F",
+        "desc": "Move window forward",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+Shift+B",
+        "desc": "Move window backward",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+Shift+`",
+        "desc": "Move window to top",
+        "subcat": "Arrangement"
+      }
+    ],
+    "Other Shortcuts": [
+      {
+        "key": "Ctrl+Shift+C",
+        "desc": "Copy to clipboard",
+        "subcat": "Clipboard"
+      },
+      {
+        "key": "Ctrl+Shift+V",
+        "desc": "Paste from clipboard",
+        "subcat": "Clipboard"
+      },
+      {
+        "key": "Ctrl+Shift+S",
+        "desc": "Paste from selection",
+        "subcat": "Clipboard"
+      },
+      {
+        "key": "Ctrl+Shift+O",
+        "desc": "Pass selection to program",
+        "subcat": "Clipboard"
+      },
+      {
+        "key": "Ctrl+Shift+Equal",
+        "desc": "Increase font size",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+Minus",
+        "desc": "Decrease font size",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+Backspace",
+        "desc": "Restore font size",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+A, M",
+        "desc": "Increase background opacity",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+A, L",
+        "desc": "Decrease background opacity",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+A, 1",
+        "desc": "Full background opacity",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+A, D",
+        "desc": "Reset background opacity",
+        "subcat": "Appearance"
+      },
+      {
+        "key": "Ctrl+Shift+F11",
+        "desc": "Toggle fullscreen",
+        "subcat": "Window State"
+      },
+      {
+        "key": "Ctrl+Shift+F10",
+        "desc": "Toggle maximized",
+        "subcat": "Window State"
+      },
+      {
+        "key": "Ctrl+Shift+U",
+        "desc": "Input unicode character",
+        "subcat": "Utility"
+      },
+      {
+        "key": "Ctrl+Shift+E",
+        "desc": "Click URL with keyboard",
+        "subcat": "Utility"
+      },
+      {
+        "key": "Ctrl+Shift+Delete",
+        "desc": "Reset the terminal",
+        "subcat": "System"
+      },
+      {
+        "key": "Ctrl+Shift+F5",
+        "desc": "Reload kitty.conf",
+        "subcat": "Configuration"
+      },
+      {
+        "key": "Ctrl+Shift+F6",
+        "desc": "Debug kitty.conf",
+        "subcat": "Configuration"
+      },
+      {
+        "key": "Ctrl+Shift+F2",
+        "desc": "Edit kitty config file",
+        "subcat": "Configuration"
+      },
+      {
+        "key": "Ctrl+Shift+F1",
+        "desc": "View kitty docs in browser",
+        "subcat": "Help"
+      },
+      {
+        "key": "Ctrl+Shift+Escape",
+        "desc": "Open a kitty shell",
+        "subcat": "Help"
+      }
+    ],
+    "Shell Integration": [
+      {
+        "key": "Ctrl+Shift+G",
+        "desc": "View output of last command"
+      },
+      {
+        "key": "Ctrl+Shift+Z",
+        "desc": "Previous prompt in scrollback"
+      },
+      {
+        "key": "Ctrl+Shift+X",
+        "desc": "Next prompt in scrollback"
+      }
+    ]
+  }
+}

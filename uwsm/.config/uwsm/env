@@ -1,7 +1,8 @@
 export XDG_MENU_PREFIX=plasma-
 export EDITOR=nvim
 export BROWSER='flatpak run app.zen_browser.zen'
-ELECTRON_OZONE_PLATFORM_HINT=auto
-TERMINAL=kitty
-QT_QPA_PLATFORMTHEME=qt6ct
-QT_QPA_PLATFORMTHEME_QT6=qt6ct
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+export TERMINAL=kitty
+export QT_QPA_PLATFORMTHEME=kde
+export QT_QPA_PLATFORMTHEME_QT6=kde
+export QT_STYLE_OVERRIDE=kvantum

@@ -686,7 +686,7 @@ PluginComponent {
                                 id: newTaskEst
                                 Layout.preferredWidth: 60
                                 placeholderText: "#"
-                                text: "4"
+                                text: "1"
                                 font.pixelSize: Theme.fontSizeSmall
                                 color: Theme.surfaceText
                                 inputMethodHints: Qt.ImhDigitsOnly
@@ -703,7 +703,7 @@ PluginComponent {
                                 onClicked: {
                                     root.addTask(newTaskName.text, newTaskEst.text)
                                     newTaskName.text = ""
-                                    newTaskEst.text = "4"
+                                    newTaskEst.text = "1"
                                 }
                             }
                         }

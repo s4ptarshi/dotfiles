@@ -1,0 +1,391 @@
+{
+  "title": "tmux Keybinds",
+  "provider": "tmux",
+  "binds": {
+    "Sessions": [
+      {
+        "key": "new-session",
+        "desc": "New session (tmux, tmux new, :new)",
+        "subcat": "Creation"
+      },
+      {
+        "key": "new-session -A -s <name>",
+        "desc": "New session or attach to existing",
+        "subcat": "Creation"
+      },
+      {
+        "key": "new -s <name>",
+        "desc": "New session(:new -s <name>)",
+        "subcat": "Creation"
+      },
+      {
+        "key": ":kill-session",
+        "desc": "Kill current session",
+        "subcat": "Deletion"
+      },
+      {
+        "key": "kill-session -t <name>",
+        "desc": "Kill session(kill-ses -t <name>)",
+        "subcat": "Deletion"
+      },
+      {
+        "key": "kill-session -a",
+        "desc": "Kill all sessions except current(or add -t <name>)",
+        "subcat": "Deletion"
+      },
+      {
+        "key": "Ctrl+B, $",
+        "desc": "Rename session",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, d",
+        "desc": "Detach from session",
+        "subcat": "Management"
+      },
+      {
+        "key": ":attach -d",
+        "desc": "Detach others on the session",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, s",
+        "desc": "Show all sessions (ls,list-sessions)",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "attach",
+        "desc": "Attach to last session (a,at,attach-session)",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "attach -t <name>",
+        "desc": "Attach to session named <name>",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, w",
+        "desc": "Session and Window Preview",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, (",
+        "desc": "Move to previous session",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, )",
+        "desc": "Move to next session",
+        "subcat": "Navigation"
+      }
+    ],
+    "Windows": [
+      {
+        "key": "new -s <name> -n <name2>",
+        "desc": "Start a new session named <name> and window <name2>",
+        "subcat": "Creation"
+      },
+      {
+        "key": "Ctrl+B, c",
+        "desc": "Create window",
+        "subcat": "Creation"
+      },
+      {
+        "key": "Ctrl+B, ,",
+        "desc": "Rename current window",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, &",
+        "desc": "Close current window",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, w",
+        "desc": "List windows",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, p",
+        "desc": "Previous window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, n",
+        "desc": "Next window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, 0...9",
+        "desc": "Switch/select window by number",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, l",
+        "desc": "Toggle last active window",
+        "subcat": "Navigation"
+      },
+      {
+        "key": ": swap-window -s 2 -t 1",
+        "desc": "Reorder window, swap window number 2(src) and 1(dst)",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": ": swap-window -t -1",
+        "desc": "Move current window to the left by one position",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": ": move-window -s src_ses:win -t target_ses:win",
+        "desc": "Move window from source to target",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": ": move-window -s src_session:src_window",
+        "desc": "Reposition window in the current session",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": ": move-window -r",
+        "desc": "Renumber windows to remove gap in the sequence",
+        "subcat": "Arrangement"
+      }
+    ],
+    "Panes": [
+      {
+        "key": "Ctrl+B, %",
+        "desc": "Split the current pane vertically (Alias: : split-window -h)",
+        "subcat": "Creation"
+      },
+      {
+        "key": "Ctrl+B, \"",
+        "desc": "Split the current pane horizontally (Alias: : split-window -v)",
+        "subcat": "Creation"
+      },
+      {
+        "key": ": join-pane -s 2 -t 1",
+        "desc": "Join two windows as panes",
+        "subcat": "Creation"
+      },
+      {
+        "key": ": join-pane -s 2.1 -t 1.0",
+        "desc": "Move pane from one window to another",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, x",
+        "desc": "Close current pane",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, !",
+        "desc": "Convert pane into a window",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, z",
+        "desc": "Toggle pane zoom",
+        "subcat": "Management"
+      },
+      {
+        "key": "Ctrl+B, {",
+        "desc": "Move the current pane left",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+B, }",
+        "desc": "Move the current pane right",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": ": setw synchronize-panes",
+        "desc": "Toggle synchronize-panes (send command to all panes)",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+B, Spacebar",
+        "desc": "Toggle between pane layouts",
+        "subcat": "Arrangement"
+      },
+      {
+        "key": "Ctrl+B, ;",
+        "desc": "Toggle last active pane",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, o",
+        "desc": "Switch to next pane",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, <Arrow Key>",
+        "desc": "Switch to pane in the direction",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, q",
+        "desc": "Show pane numbers",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, q, 0...9",
+        "desc": "Switch/select pane by number",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+B, Ctrl+<Arrow Key>",
+        "desc": "Resize current pane width/height",
+        "subcat": "Resizing"
+      }
+    ],
+    "Copy Mode": [
+      {
+        "key": "Ctrl+B, [",
+        "desc": "Enter copy mode",
+        "subcat": "Entering/Exiting"
+      },
+      {
+        "key": "Ctrl+B, PgUp",
+        "desc": "Enter copy mode and scroll one page up",
+        "subcat": "Entering/Exiting"
+      },
+      {
+        "key": "q",
+        "desc": "Quit mode",
+        "subcat": "Entering/Exiting"
+      },
+      {
+        "key": ": setw -g mode-keys vi",
+        "desc": "Use vi keys in buffer",
+        "subcat": "Configuration"
+      },
+      {
+        "key": "h / j / k / l",
+        "desc": "Move cursor left / down / up / right",
+        "subcat": "Movement"
+      },
+      {
+        "key": "w",
+        "desc": "Move cursor forward one word at a time",
+        "subcat": "Movement"
+      },
+      {
+        "key": "b",
+        "desc": "Move cursor backward one word at a time",
+        "subcat": "Movement"
+      },
+      {
+        "key": "g",
+        "desc": "Go to top line",
+        "subcat": "Movement"
+      },
+      {
+        "key": "G",
+        "desc": "Go to bottom line",
+        "subcat": "Movement"
+      },
+      {
+        "key": "/",
+        "desc": "Search forward",
+        "subcat": "Search"
+      },
+      {
+        "key": "?",
+        "desc": "Search backward",
+        "subcat": "Search"
+      },
+      {
+        "key": "n",
+        "desc": "Next keyword occurance",
+        "subcat": "Search"
+      },
+      {
+        "key": "N",
+        "desc": "Previous keyword occurance",
+        "subcat": "Search"
+      },
+      {
+        "key": "Spacebar",
+        "desc": "Start selection",
+        "subcat": "Selection & Copy"
+      },
+      {
+        "key": "Esc",
+        "desc": "Clear selection",
+        "subcat": "Selection & Copy"
+      },
+      {
+        "key": "Enter",
+        "desc": "Copy selection",
+        "subcat": "Selection & Copy"
+      },
+      {
+        "key": "Ctrl+B, ]",
+        "desc": "Paste contents of buffer_0",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": show-buffer",
+        "desc": "Display buffer_0 contents",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": capture-pane",
+        "desc": "Copy entire visible contents of pane to a buffer",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": list-buffers",
+        "desc": "Show all buffers",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": choose-buffer",
+        "desc": "Show all buffers and paste selected",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": save-buffer buf.txt",
+        "desc": "Save buffer contents to buf.txt",
+        "subcat": "Buffers"
+      },
+      {
+        "key": ": delete-buffer -b 1",
+        "desc": "Delete buffer_1",
+        "subcat": "Buffers"
+      }
+    ],
+    "Misc & Help": [
+      {
+        "key": "Ctrl+B, :",
+        "desc": "Enter command mode",
+        "subcat": "Commands"
+      },
+      {
+        "key": ": set -g OPTION",
+        "desc": "Set OPTION for all sessions",
+        "subcat": "Commands"
+      },
+      {
+        "key": ": setw -g OPTION",
+        "desc": "Set OPTION for all windows",
+        "subcat": "Commands"
+      },
+      {
+        "key": ": set mouse on",
+        "desc": "Enable mouse mode",
+        "subcat": "Commands"
+      },
+      {
+        "key": "Ctrl+B, ?",
+        "desc": "List key bindings/shortcuts (Aliases: $ tmux list-keys, : list-keys)",
+        "subcat": "Help"
+      },
+      {
+        "key": "$ tmux info",
+        "desc": "Show every session, window, pane, etc.",
+        "subcat": "Help"
+      }
+    ]
+  }
+}
