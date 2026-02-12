@@ -1,0 +1,17 @@
+[config]
+
+[templates.kvantum_kvconfig]
+input_path = '~/.config/matugen/templates/kvantum-colors.kvconfig'
+output_path = '~/.config/Kvantum/matugen/matugen.kvconfig'
+
+[templates.kvantum_svg]
+input_path = '~/.config/matugen/templates/kvantum-colors.svg'
+output_path = '~/.config/Kvantum/matugen/matugen.svg'
+
+[templates.obsidian]
+input_path = "~/.config/matugen/templates/obsidian-shimmer.css"
+output_path = "~/gdrive/300 - Resources/Obsidian Vault/.obsidian/snippets/matugen.css"
+
+[templates.kde_export]
+input_path = "~/.config/DankMaterialShell/plugins/dms-kde-sync/color_template.txt"
+output_path = "~/.cache/dms-kde-sync/current_color.txt"

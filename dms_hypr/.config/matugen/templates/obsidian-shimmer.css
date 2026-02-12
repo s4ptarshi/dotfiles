@@ -1,0 +1,60 @@
+/* * Shimmering Focus Theme - Matugen Template
+ * Generated from: {{image}}
+ */
+
+.theme-light.theme-light {
+    /* Background: Uses wallpaper hue, fixed low saturation for light mode */
+    --bg-hue: {{colors.surface.default.hue}};
+    --bg-sat: 20%; 
+
+    /* Accent: Primary color (Fixed darker lightness for contrast on white) */
+    --color-accent: hsl({{colors.primary.default.hue}} {{colors.primary.default.saturation}}% 35%);
+    --color-accent-hsl: {{colors.primary.default.hue}}, {{colors.primary.default.saturation}}%, 35%;
+    --interactive-accent: hsl({{colors.primary.default.hue}} {{colors.primary.default.saturation}}% 30%);
+
+    /* Secondary/Tertiary Colors */
+    --alt-heading-color: hsl({{colors.secondary.default.hue}} {{colors.secondary.default.saturation}}% 40%);
+    --secondary-accent: hsl({{colors.tertiary.default.hue}} {{colors.tertiary.default.saturation}}% 45%);
+    --hover-accent: hsl({{colors.error.default.hue}} {{colors.error.default.saturation}}% 55%);
+    --link-unresolved-color: hsl({{colors.outline.default.hue}} {{colors.outline.default.saturation}}% 40%);
+}
+
+.theme-dark.theme-dark {
+    /* BACKGROUND
+       Keeps a hint of color (Hue) but very dark/desaturated for contrast.
+    */
+    --bg-hue: {{colors.surface.default.hue}};
+    --bg-sat: 10%;
+
+    /* ACCENT (The Fix)
+       We use the wallpaper's Hue and Saturation, but FORCE Lightness to 75%.
+       This ensures Blue is "Bright Blue" and Red is "Bright Red", never "Navy" or "Maroon".
+    */
+    --color-accent: hsl({{colors.primary.default.hue}} {{colors.primary.default.saturation}}% 75%);
+    --color-accent-hsl: {{colors.primary.default.hue}}, {{colors.primary.default.saturation}}%, 75%;
+    
+    /* INTERACTIVE ACCENT
+       Made slightly darker (65%) or different hue (Secondary) to distinguish it from the main accent.
+    */
+    --interactive-accent: hsl({{colors.secondary.default.hue}} {{colors.secondary.default.saturation}}% 70%);
+
+    /* HEADINGS
+       Uses Tertiary (the "fun" color) for variety, locked at 75% brightness.
+    */
+    --alt-heading-color: hsl({{colors.tertiary.default.hue}} {{colors.tertiary.default.saturation}}% 75%);
+
+    /* TAGS
+       Uses Secondary color, locked at 65% brightness (readable but distinct).
+    */
+    --secondary-accent: hsl({{colors.secondary.default.hue}} {{colors.secondary.default.saturation}}% 65%);
+
+    /* HOVER
+       Bright and high saturation (100%) for a "glow" effect on hover.
+    */
+    --hover-accent: hsl({{colors.primary.default.hue}} 100% 75%);
+
+    /* UNRESOLVED LINKS
+       Keeps a distinct color (Error/Red-ish usually) but makes it readable.
+    */
+    --link-unresolved-color: hsl({{colors.error.default.hue}} {{colors.error.default.saturation}}% 70%);
+}
