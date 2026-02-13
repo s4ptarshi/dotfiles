@@ -25,7 +25,7 @@ fi
 
 # 3. Apply to KDE
 # We default to 'scheme-tonal-spot' (5) which is the standard Material You look
-echo "Applying color $COLOR to KDE ($current_mode)..."
+# echo "Applying color $COLOR to KDE ($current_mode)..."
 kde-material-you-colors "$mode_flag" --color "$COLOR" -sv 5 >/dev/null 2>&1 &
 sleep 0.1
 dbus-send --session --type=signal /KGlobalSettings org.kde.KGlobalSettings.forceRefresh
