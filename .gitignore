@@ -5,3 +5,5 @@ ghostty/.config/ghostty/themes/dankcolors
 kitty/.config/kitty/dank-tabs.conf
 kitty/.config/kitty/dank-theme.conf
 nvim/.config/nvim/lazy-lock.json
+dms_hypr/.config/Kvantum/matugen/matugen.kvconfig
+dms_hypr/.config/Kvantum/matugen/matugen.svg
