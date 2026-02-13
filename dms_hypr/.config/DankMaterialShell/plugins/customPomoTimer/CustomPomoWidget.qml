@@ -902,6 +902,8 @@ PluginComponent {
                             font.pixelSize: Theme.fontSizeSmall
                             color: Theme.surfaceVariantText
                             leftPadding: Theme.iconSize + Theme.spacingM
+
+                            visible: root.shortBreakDuration !== root.longBreakDuration
                         }
                     }
                 }
