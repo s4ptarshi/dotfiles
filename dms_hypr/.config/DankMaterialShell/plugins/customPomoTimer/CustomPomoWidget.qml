@@ -84,6 +84,14 @@ PluginComponent {
         saveTasks()
     }
 
+    function updateTaskEstimate(index, delta) {
+        var newEst = taskList[index].estimated + delta
+        if (newEst > 0) { // Prevent the estimate from dropping below 1
+            taskList[index].estimated = newEst
+            saveTasks()
+        }
+    }
+
     function toggleTaskFinished(index) {
         taskList[index].isFinished = !taskList[index].isFinished
         saveTasks()
@@ -610,38 +618,50 @@ PluginComponent {
                     width: parent.width
                     spacing: Theme.spacingS
 
-                    StyledText {
-                        text: "Quick Actions"
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceVariantText
-                    }
-
-                    Row {
+                    RowLayout {
                         id: quickActionsRow
                         width: parent.width
                         spacing: Theme.spacingS
 
-                        property real buttonWidth: (width - spacing * 2) / 3
+                        // Check if durations match
+                        property bool sameBreaks: root.shortBreakDuration === root.longBreakDuration
 
                         DankButton {
+                            Layout.fillWidth: true
                             text: "Work"
                             iconName: "work"
-                            width: quickActionsRow.buttonWidth
                             onClicked: root.startWork(false)
                         }
 
                         DankButton {
+                            Layout.fillWidth: true
+                            visible: !quickActionsRow.sameBreaks
                             text: "Short Break"
                             iconName: "coffee"
-                            width: quickActionsRow.buttonWidth
                             onClicked: root.startShortBreak(false)
                         }
 
                         DankButton {
+                            Layout.fillWidth: true
+                            visible: !quickActionsRow.sameBreaks
                             text: "Long Break"
                             iconName: "weekend"
-                            width: quickActionsRow.buttonWidth
                             onClicked: root.startLongBreak(false)
+                        }
+
+                        DankButton {
+                            Layout.fillWidth: true
+                            visible: quickActionsRow.sameBreaks
+                            text: "Break"
+                            iconName: "coffee"
+                            onClicked: {
+                                // Keep the underlying Pomodoro logic intact when using the combined button
+                                if (globalCompletedPomodoros.value > 0 && globalCompletedPomodoros.value % 4 === 0) {
+                                    root.startLongBreak(false)
+                                } else {
+                                    root.startShortBreak(false)
+                                }
+                            }
                         }
                     }
                 }
@@ -659,12 +679,6 @@ PluginComponent {
                         anchors.margins: Theme.spacingM
                         spacing: Theme.spacingS
 
-                        StyledText {
-                            text: "Tasks"
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.surfaceVariantText
-                        }
-
                         // Add Task Input
                         RowLayout {
                             width: parent.width
@@ -674,6 +688,7 @@ PluginComponent {
                                 id: newTaskName
                                 Layout.fillWidth: true
                                 placeholderText: "Task Name"
+                                placeholderTextColor: Theme.surfaceVariantText
                                 font.pixelSize: Theme.fontSizeSmall
                                 color: Theme.surfaceText
                                 background: Rectangle {
@@ -686,6 +701,7 @@ PluginComponent {
                                 id: newTaskEst
                                 Layout.preferredWidth: 60
                                 placeholderText: "#"
+                                placeholderTextColor: Theme.surfaceVariantText
                                 text: "1"
                                 font.pixelSize: Theme.fontSizeSmall
                                 color: Theme.surfaceText
@@ -759,10 +775,59 @@ PluginComponent {
                                             font.strikeout: modelData.isFinished
                                         }
                                         
-                                        StyledText {
-                                            text: modelData.completed + "/" + modelData.estimated + " Pomodoros"
-                                            font.pixelSize: Theme.fontSizeXSmall
-                                            color: Theme.surfaceVariantText
+                                        RowLayout {
+                                            spacing: 4
+                                            
+                                            StyledText {
+                                                text: modelData.completed + " /"
+                                                font.pixelSize: Theme.fontSizeXSmall
+                                                color: Theme.surfaceVariantText
+                                            }
+                                            
+                                            // Decrease Estimate
+                                            DankIcon {
+                                                Layout.preferredWidth: 14
+                                                Layout.preferredHeight: 14
+                                                name: "remove"
+                                                size: 14
+                                                // Hide the icon if dropping below 1 isn't allowed
+                                                color: modelData.estimated > 1 ? Theme.surfaceVariantText : "transparent"
+                                                
+                                                MouseArea {
+                                                    anchors.fill: parent
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    enabled: modelData.estimated > 1
+                                                    onClicked: root.updateTaskEstimate(index, -1)
+                                                }
+                                            }
+                                            
+                                            StyledText {
+                                                text: modelData.estimated
+                                                font.pixelSize: Theme.fontSizeXSmall
+                                                color: Theme.surfaceText
+                                                font.weight: Font.Medium
+                                            }
+                                            
+                                            // Increase Estimate
+                                            DankIcon {
+                                                Layout.preferredWidth: 14
+                                                Layout.preferredHeight: 14
+                                                name: "add"
+                                                size: 14
+                                                color: Theme.surfaceVariantText
+                                                
+                                                MouseArea {
+                                                    anchors.fill: parent
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    onClicked: root.updateTaskEstimate(index, 1)
+                                                }
+                                            }
+                                            
+                                            StyledText {
+                                                text: "Pomodoros"
+                                                font.pixelSize: Theme.fontSizeXSmall
+                                                color: Theme.surfaceVariantText
+                                            }
                                         }
                                     }
 
