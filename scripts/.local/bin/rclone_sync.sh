@@ -1,14 +1,15 @@
 #!/bin/bash
 # rclone_sync.sh
+export PATH=/usr/local/bin:/usr/bin:/bin:$PATH
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export DBUS_SESSION_BUS_ADDRESS=unix:path=${XDG_RUNTIME_DIR}/bus
+export DISPLAY=:0
+export WAYLAND_DISPLAY=wayland-0
 
 local_dir=$HOME/gdrive
 remote_dir=gdrive:/
 log_file="$HOME/.config/rclone/rclone.log"
 filter_file="$HOME/.config/rclone/filters.txt"
-
-# Needed for notifications to appear on your desktop from cron
-export DISPLAY=:0
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 
 echo "$(date +'%Y/%m/%d %H:%M:%S') Sync started" >>"$log_file"
 

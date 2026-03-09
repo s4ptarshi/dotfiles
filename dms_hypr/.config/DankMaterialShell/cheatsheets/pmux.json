@@ -1,0 +1,51 @@
+{
+  "title": "pmux Keybinds",
+  "provider": "pmux",
+  "binds": {
+    "Sessions": [
+      {
+        "key": "Ctrl+B, $",
+        "desc": "Rename session"
+      },
+      {
+        "key": "Ctrl+B, d",
+        "desc": "Detach from session"
+      }
+    ],
+    "Windows": [
+      {
+        "key": "Ctrl+B, c",
+        "desc": "Create new window"
+      },
+      {
+        "key": "Ctrl+B, ,",
+        "desc": "Rename window"
+      },
+      {
+        "key": "Ctrl+B, n",
+        "desc": "Next window"
+      },
+      {
+        "key": "Ctrl+B, p",
+        "desc": "Previous window"
+      }
+    ],
+    "Panes": [
+      {
+        "key": "Ctrl+B, %",
+        "desc": "Split vertically",
+        "subcat": "Split"
+      },
+      {
+        "key": "Ctrl+B, \"",
+        "desc": "Split horizontally",
+        "subcat": "Split"
+      },
+      {
+        "key": "Ctrl+B, x",
+        "desc": "Close pane",
+        "subcat": "Management"
+      }
+    ]
+  }
+}

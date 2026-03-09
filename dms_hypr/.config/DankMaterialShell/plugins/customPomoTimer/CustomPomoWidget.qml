@@ -38,8 +38,9 @@ PluginComponent {
         if (pluginService) {
             currentDateKey = formatDateKey(new Date())
             globalCompletedPomodoros.set(pluginService.loadPluginData("customPomoTimer", "completedPomodoros-" + currentDateKey, 0))
+            globalWorkedSecondsToday.set(pluginService.loadPluginData("customPomoTimer", "workedSeconds-" + currentDateKey, 0)) // New line
             loadLast7Days()
-            loadTasks() // Load tasks on startup
+            if (typeof loadTasks === "function") loadTasks()
         }
     }
 
@@ -113,6 +114,7 @@ PluginComponent {
                 root.currentDateKey = newDateKey
                 if (pluginService) {
                     globalCompletedPomodoros.set(pluginService.loadPluginData("customPomoTimer", "completedPomodoros-" + newDateKey, 0))
+                    globalWorkedSecondsToday.set(pluginService.loadPluginData("customPomoTimer", "workedSeconds-" + newDateKey, 0)) // New line
                     loadLast7Days()
                 }
             }
@@ -139,15 +141,28 @@ PluginComponent {
             const dateKey = formatDateKey(date)
             
             let count = 0
+            let workedSeconds = 0
+            
             if (dateKey === todayKey) {
                 count = globalCompletedPomodoros.value
+                workedSeconds = globalWorkedSecondsToday.value
             } else {
                 count = pluginService.loadPluginData("customPomoTimer", "completedPomodoros-" + dateKey, 0)
+                workedSeconds = pluginService.loadPluginData("customPomoTimer", "workedSeconds-" + dateKey, 0)
+            }
+
+            // Calculate minutes based on EXACT seconds worked instead of fully completed pomodoros
+            const totalMins = Math.floor(workedSeconds / 60)
+            let timeStr = ""
+            if (totalMins > 0) {
+                timeStr = totalMins >= 60 ? parseFloat((totalMins / 60).toFixed(1)) + "h" : totalMins + "m"
             }
 
             data.push({
                 date: dateKey,
                 count: count,
+                minutes: totalMins,
+                timeLabel: timeStr,
                 dayLabel: i === 0 ? "Today" : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
             })
         }
@@ -167,11 +182,18 @@ PluginComponent {
             const date = new Date(today)
             date.setDate(today.getDate() - daysAgo)
             const dateKey = formatDateKey(date)
+            
             const key = "completedPomodoros-" + dateKey
-
             const value = pluginService.loadPluginData("customPomoTimer", key, null)
             if (value !== null) {
                 pluginService.savePluginData("customPomoTimer", key, undefined)
+            }
+            
+            // Clean up exact seconds data
+            const workedKey = "workedSeconds-" + dateKey
+            const workedValue = pluginService.loadPluginData("customPomoTimer", workedKey, null)
+            if (workedValue !== null) {
+                pluginService.savePluginData("customPomoTimer", workedKey, undefined)
             }
         }
     }
@@ -231,6 +253,12 @@ PluginComponent {
         varName: "completedPomodoros"
         defaultValue: 0
     }
+    
+    PluginGlobalVar {
+        id: globalWorkedSecondsToday
+        varName: "workedSecondsToday"
+        defaultValue: 0
+    }
 
     PluginGlobalVar {
         id: globalTimerOwnerId
@@ -246,11 +274,30 @@ PluginComponent {
         repeat: true
         running: globalIsRunning.value && globalTimerOwnerId.value === root.instanceId
         onTriggered: {
+            // Track real-time exact seconds worked
+            if (globalTimerState.value === "work") {
+                globalWorkedSecondsToday.set(globalWorkedSecondsToday.value + 1)
+                // Persist the exact seconds to disk every 10 seconds to prevent data loss
+                if (globalWorkedSecondsToday.value % 10 === 0) {
+                    root.saveWorkedSeconds()
+                }
+                // Update the chart visually when a full new minute is reached
+                if (globalWorkedSecondsToday.value % 60 === 0) {
+                    root.loadLast7Days()
+                }
+            }
+
             if (globalRemainingSeconds.value > 0) {
                 globalRemainingSeconds.set(globalRemainingSeconds.value - 1)
             } else {
                 root.timerComplete()
             }
+        }
+    }
+
+    function saveWorkedSeconds() {
+        if (pluginService) {
+            pluginService.savePluginData("customPomoTimer", "workedSeconds-" + root.currentDateKey, globalWorkedSecondsToday.value)
         }
     }
 
@@ -345,6 +392,12 @@ PluginComponent {
     function toggleTimer() {
         if (!globalIsRunning.value) {
             globalTimerOwnerId.set(root.instanceId)
+        } else {
+            // We are pausing the timer. Save exact progress instantly.
+            if (globalTimerState.value === "work") {
+                root.saveWorkedSeconds()
+                root.loadLast7Days()
+            }
         }
         globalIsRunning.set(!globalIsRunning.value)
         if (root.autoSetDND && globalTimerState.value === "work") {
@@ -353,6 +406,11 @@ PluginComponent {
     }
 
     function resetTimer() {
+        // If resetting while running, capture the final seconds before it resets
+        if (globalIsRunning.value && globalTimerState.value === "work") {
+            root.saveWorkedSeconds()
+            root.loadLast7Days()
+        }
         globalIsRunning.set(false)
         if (root.autoSetDND && globalTimerState.value === "work") {
             SessionData.setDoNotDisturb(false)
@@ -930,7 +988,6 @@ PluginComponent {
                             width: parent.width
                             spacing: Theme.spacingXS
                             height: 60
-
                             Repeater {
                                 model: root.last7DaysData
 
@@ -957,25 +1014,25 @@ PluginComponent {
                                             Rectangle {
                                                 width: parent.width
                                                 height: {
-                                                    let maxCount = 1
+                                                    let maxMins = 1
                                                     for (let i = 0; i < root.last7DaysData.length; i++) {
-                                                        if (root.last7DaysData[i].count > maxCount) {
-                                                            maxCount = root.last7DaysData[i].count
+                                                        if (root.last7DaysData[i].minutes > maxMins) {
+                                                            maxMins = root.last7DaysData[i].minutes
                                                         }
                                                     }
-                                                    const barHeight = (modelData.count / maxCount) * (parent.height - 2)
-                                                    return Math.max(barHeight, modelData.count > 0 ? 4 : 0)
+                                                    const barHeight = (modelData.minutes / maxMins) * (parent.height - 2)
+                                                    return Math.max(barHeight, modelData.minutes > 0 ? 4 : 0)
                                                 }
                                                 anchors.bottom: parent.bottom
                                                 radius: 2
                                                 color: modelData.dayLabel === "Today" ? root.getStateColor() : Qt.rgba(root.getStateColor().r, root.getStateColor().g, root.getStateColor().b, 0.6)
 
                                                 StyledText {
-                                                    text: modelData.count > 0 ? modelData.count : ""
+                                                    text: modelData.timeLabel
                                                     font.pixelSize: Theme.fontSizeXSmall
                                                     color: Theme.surfaceText
                                                     anchors.centerIn: parent
-                                                    visible: modelData.count > 0 && parent.height > 12
+                                                    visible: modelData.minutes > 0 && parent.height > 12
                                                 }
                                             }
                                         }

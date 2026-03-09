@@ -15,3 +15,11 @@ output_path = "~/gdrive/300 - Resources/Obsidian Vault/.obsidian/snippets/matuge
 [templates.kde_export]
 input_path = "~/.config/DankMaterialShell/plugins/dms-kde-sync/color_template.txt"
 output_path = "~/.cache/dms-kde-sync/current_color.txt"
+
+[templates.zathura]
+input_path = '~/.config/matugen/templates/zathura-colors'
+output_path = '~/.config/zathura/zathurarc'
+
+[templates.sioyek]
+input_path = '~/.config/matugen/templates/sioyek-colors'
+output_path = '~/.config/sioyek/prefs_user.config'

@@ -1,0 +1,33 @@
+# -----------------------------------------------------------------------------
+# Sioyek Settings (Matugen Template)
+# -----------------------------------------------------------------------------
+
+# Automatically apply the custom colors on startup
+startup_commands             toggle_custom_color
+
+# App Background (the space outside the document pages)
+background_color             {{colors.on_primary.default.hex}}
+
+# Custom Page Colors (the actual document pages)
+custom_background_color      {{colors.on_primary.default.hex}}
+custom_text_color            {{colors.primary.default.hex}}
+
+# Status Bar
+status_bar_color             {{colors.on_primary.default.hex}}
+status_bar_text_color        {{colors.primary.default.hex}}
+
+# UI Colors (File browser, search menus, table of contents)
+ui_background_color          {{colors.on_primary.default.hex}}
+ui_text_color                {{colors.primary.default.hex}}
+ui_selected_text_color       {{colors.on_primary.default.hex}}
+ui_selected_background_color {{colors.primary.default.hex}}
+
+# Reading Guides and Highlights
+text_highlight_color         {{colors.primary_fixed.default.hex}}
+visual_mark_color            {{colors.primary_fixed_dim.default.hex}}
+search_highlight_color       {{colors.primary_fixed.default.hex}}
+link_highlight_color         {{colors.primary_fixed_dim.default.hex}}
+synctex_highlight_color      {{colors.primary.default.hex}}
+
+# Page separator
+page_separator_color         {{colors.on_primary.default.hex}}

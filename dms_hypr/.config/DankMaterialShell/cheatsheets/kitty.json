@@ -4,244 +4,194 @@
   "binds": {
     "Scrolling": [
       {
-        "key": "Ctrl+Shift+Up",
-        "desc": "Scroll line up",
-        "subcat": "Line"
+        "key": "Page_Up",
+        "desc": "k: Scroll page up",
+        "subcat": "Page"
       },
       {
-        "key": "Ctrl+Shift+Down",
-        "desc": "Scroll line down",
-        "subcat": "Line"
+        "key": "Page_Down",
+        "desc": "k: Scroll page down",
+        "subcat": "Page"
       },
       {
         "key": "Ctrl+Shift+Page_Up",
-        "desc": "Scroll page up",
-        "subcat": "Page"
+        "desc": "k: Scroll line up",
+        "subcat": "Line"
       },
       {
         "key": "Ctrl+Shift+Page_Down",
-        "desc": "Scroll page down",
-        "subcat": "Page"
+        "desc": "k: Scroll line down",
+        "subcat": "Line"
       },
       {
         "key": "Ctrl+Shift+Home",
-        "desc": "Scroll to top",
+        "desc": "k: Scroll to top",
         "subcat": "Extremes"
       },
       {
         "key": "Ctrl+Shift+End",
-        "desc": "Scroll to bottom",
+        "desc": "k: Scroll to bottom",
         "subcat": "Extremes"
+      },
+      {
+        "key": "Ctrl+Alt+Home",
+        "desc": "k: Scroll to previous prompt",
+        "subcat": "Prompts"
+      },
+      {
+        "key": "Ctrl+Alt+End",
+        "desc": "k: Scroll to next prompt",
+        "subcat": "Prompts"
       }
     ],
     "Tabs Management": [
       {
-        "key": "Ctrl+Shift+T",
-        "desc": "New tab",
+        "key": "Ctrl+T",
+        "desc": "k: New tab",
         "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+Q",
-        "desc": "Close tab",
+        "key": "Ctrl+W",
+        "desc": "k: Close tab",
         "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+Right",
-        "desc": "Next tab",
+        "key": "Ctrl+Shift+N",
+        "desc": "k: New tab with current directory",
+        "subcat": "Creation & Deletion"
+      },
+      {
+        "key": "Ctrl+Tab",
+        "desc": "k: Next tab",
         "subcat": "Navigation"
       },
       {
-        "key": "Ctrl+Shift+Left",
-        "desc": "Previous tab",
+        "key": "Ctrl+Shift+Tab",
+        "desc": "k: Previous tab",
         "subcat": "Navigation"
       },
       {
-        "key": "Ctrl+Shift+.",
-        "desc": "Move tab forward",
+        "key": "Alt+1...0",
+        "desc": "k: Go to specific tab index",
+        "subcat": "Navigation"
+      },
+      {
+        "key": "Ctrl+Shift+Page_Down",
+        "desc": "k: Move tab forward",
         "subcat": "Arrangement"
       },
       {
-        "key": "Ctrl+Shift+,",
-        "desc": "Move tab backward",
+        "key": "Ctrl+Shift+Page_Up",
+        "desc": "k: Move tab backward",
         "subcat": "Arrangement"
-      },
-      {
-        "key": "Ctrl+Shift+Alt+T",
-        "desc": "Set tab title",
-        "subcat": "Configuration"
       }
     ],
     "Windows Management": [
       {
         "key": "Ctrl+Shift+Enter",
-        "desc": "New window",
+        "desc": "k: New window with current directory",
         "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+N",
-        "desc": "New OS window",
+        "key": "Alt+\\",
+        "desc": "k: New vertical split",
         "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+W",
-        "desc": "Close window",
+        "key": "Alt+-",
+        "desc": "k: New horizontal split",
         "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+L",
-        "desc": "Switch to next layout",
-        "subcat": "Layout"
+        "key": "Ctrl+Shift+Q",
+        "desc": "k: Close window",
+        "subcat": "Creation & Deletion"
       },
       {
-        "key": "Ctrl+Shift+]",
-        "desc": "Next window",
+        "key": "Alt+H/J/K/L",
+        "desc": "k: Navigate between panes (Vim keys)",
         "subcat": "Navigation"
       },
       {
-        "key": "Ctrl+Shift+[",
-        "desc": "Previous window",
+        "key": "Ctrl+1...0",
+        "desc": "k: Focus specific window",
         "subcat": "Navigation"
       },
       {
-        "key": "Ctrl+Shift+1...0",
-        "desc": "Focus specific window",
-        "subcat": "Navigation"
+        "key": "Alt+Shift+H/J/K/L",
+        "desc": "k: Resize panes",
+        "subcat": "Arrangement"
       },
       {
         "key": "Ctrl+Shift+F",
-        "desc": "Move window forward",
-        "subcat": "Arrangement"
+        "desc": "k: Next layout",
+        "subcat": "Layout"
+      },
+      {
+        "key": "Ctrl+Shift+Space",
+        "desc": "k: Toggle stack layout (Zoom)",
+        "subcat": "Layout"
+      }
+    ],
+    "Appearance & Fonts": [
+      {
+        "key": "Ctrl+Plus / Ctrl+Equal",
+        "desc": "k: Increase font size",
+        "subcat": "Font"
+      },
+      {
+        "key": "Ctrl+Minus",
+        "desc": "k: Decrease font size",
+        "subcat": "Font"
+      },
+      {
+        "key": "Ctrl+0",
+        "desc": "k: Reset font size",
+        "subcat": "Font"
+      },
+      {
+        "key": "F11",
+        "desc": "k: Toggle fullscreen",
+        "subcat": "Window State"
+      }
+    ],
+    "Shell & Plugins": [
+      {
+        "key": "Ctrl+Shift+H",
+        "desc": "k: Browse scrollback in nvim (Plugin)",
+        "subcat": "kitty-scrollback"
+      },
+      {
+        "key": "Ctrl+Shift+G",
+        "desc": "k: View last command output in nvim",
+        "subcat": "kitty-scrollback"
       },
       {
         "key": "Ctrl+Shift+B",
-        "desc": "Move window backward",
-        "subcat": "Arrangement"
-      },
-      {
-        "key": "Ctrl+Shift+`",
-        "desc": "Move window to top",
-        "subcat": "Arrangement"
-      }
-    ],
-    "Other Shortcuts": [
-      {
-        "key": "Ctrl+Shift+C",
-        "desc": "Copy to clipboard",
-        "subcat": "Clipboard"
-      },
-      {
-        "key": "Ctrl+Shift+V",
-        "desc": "Paste from clipboard",
-        "subcat": "Clipboard"
-      },
-      {
-        "key": "Ctrl+Shift+S",
-        "desc": "Paste from selection",
-        "subcat": "Clipboard"
-      },
-      {
-        "key": "Ctrl+Shift+O",
-        "desc": "Pass selection to program",
-        "subcat": "Clipboard"
-      },
-      {
-        "key": "Ctrl+Shift+Equal",
-        "desc": "Increase font size",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+Minus",
-        "desc": "Decrease font size",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+Backspace",
-        "desc": "Restore font size",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+A, M",
-        "desc": "Increase background opacity",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+A, L",
-        "desc": "Decrease background opacity",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+A, 1",
-        "desc": "Full background opacity",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+A, D",
-        "desc": "Reset background opacity",
-        "subcat": "Appearance"
-      },
-      {
-        "key": "Ctrl+Shift+F11",
-        "desc": "Toggle fullscreen",
-        "subcat": "Window State"
-      },
-      {
-        "key": "Ctrl+Shift+F10",
-        "desc": "Toggle maximized",
-        "subcat": "Window State"
+        "desc": "k: Open broadcast kitten",
+        "subcat": "Utility"
       },
       {
         "key": "Ctrl+Shift+U",
-        "desc": "Input unicode character",
+        "desc": "k: Unicode input",
         "subcat": "Utility"
+      }
+    ],
+    "System & Config": [
+      {
+        "key": "Ctrl+Alt+R",
+        "desc": "k: Reload kitty.conf",
+        "subcat": "Configuration"
       },
       {
-        "key": "Ctrl+Shift+E",
-        "desc": "Click URL with keyboard",
-        "subcat": "Utility"
+        "key": "Ctrl+Shift+Alt+,",
+        "desc": "k: Edit config file",
+        "subcat": "Configuration"
       },
       {
         "key": "Ctrl+Shift+Delete",
-        "desc": "Reset the terminal",
+        "desc": "k: Clear terminal and reset",
         "subcat": "System"
-      },
-      {
-        "key": "Ctrl+Shift+F5",
-        "desc": "Reload kitty.conf",
-        "subcat": "Configuration"
-      },
-      {
-        "key": "Ctrl+Shift+F6",
-        "desc": "Debug kitty.conf",
-        "subcat": "Configuration"
-      },
-      {
-        "key": "Ctrl+Shift+F2",
-        "desc": "Edit kitty config file",
-        "subcat": "Configuration"
-      },
-      {
-        "key": "Ctrl+Shift+F1",
-        "desc": "View kitty docs in browser",
-        "subcat": "Help"
-      },
-      {
-        "key": "Ctrl+Shift+Escape",
-        "desc": "Open a kitty shell",
-        "subcat": "Help"
-      }
-    ],
-    "Shell Integration": [
-      {
-        "key": "Ctrl+Shift+G",
-        "desc": "View output of last command"
-      },
-      {
-        "key": "Ctrl+Shift+Z",
-        "desc": "Previous prompt in scrollback"
-      },
-      {
-        "key": "Ctrl+Shift+X",
-        "desc": "Next prompt in scrollback"
       }
     ]
   }

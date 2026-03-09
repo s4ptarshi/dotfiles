@@ -58,3 +58,4 @@
     */
     --link-unresolved-color: hsl({{colors.error.default.hue}} {{colors.error.default.saturation}}% 70%);
 }
+
