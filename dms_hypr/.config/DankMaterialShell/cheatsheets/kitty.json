@@ -5,193 +5,229 @@
     "Scrolling": [
       {
         "key": "Page_Up",
-        "desc": "k: Scroll page up",
-        "subcat": "Page"
+        "desc": "Scroll page up",
+        "action": "Scroll page up",
+        "source": "kitty"
       },
       {
         "key": "Page_Down",
-        "desc": "k: Scroll page down",
-        "subcat": "Page"
+        "desc": "Scroll page down",
+        "action": "Scroll page down",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Page_Up",
-        "desc": "k: Scroll line up",
-        "subcat": "Line"
+        "desc": "Scroll line up",
+        "action": "Scroll line up",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Page_Down",
-        "desc": "k: Scroll line down",
-        "subcat": "Line"
+        "desc": "Scroll line down",
+        "action": "Scroll line down",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Home",
-        "desc": "k: Scroll to top",
-        "subcat": "Extremes"
+        "desc": "Scroll to top",
+        "action": "Scroll to top",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+End",
-        "desc": "k: Scroll to bottom",
-        "subcat": "Extremes"
+        "desc": "Scroll to bottom",
+        "action": "Scroll to bottom",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Alt+Home",
-        "desc": "k: Scroll to previous prompt",
-        "subcat": "Prompts"
+        "desc": "Scroll to previous prompt",
+        "action": "Scroll to previous prompt",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Alt+End",
-        "desc": "k: Scroll to next prompt",
-        "subcat": "Prompts"
+        "desc": "Scroll to next prompt",
+        "action": "Scroll to next prompt",
+        "source": "kitty"
       }
     ],
     "Tabs Management": [
       {
         "key": "Ctrl+T",
-        "desc": "k: New tab",
-        "subcat": "Creation & Deletion"
+        "desc": "New tab",
+        "action": "New tab",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+W",
-        "desc": "k: Close tab",
-        "subcat": "Creation & Deletion"
+        "desc": "Close tab",
+        "action": "Close tab",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+N",
-        "desc": "k: New tab with current directory",
-        "subcat": "Creation & Deletion"
+        "desc": "New tab with directory",
+        "action": "New tab with directory",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Tab",
-        "desc": "k: Next tab",
-        "subcat": "Navigation"
+        "desc": "Next tab",
+        "action": "Next tab",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Tab",
-        "desc": "k: Previous tab",
-        "subcat": "Navigation"
+        "desc": "Previous tab",
+        "action": "Previous tab",
+        "source": "kitty"
       },
       {
-        "key": "Alt+1...0",
-        "desc": "k: Go to specific tab index",
-        "subcat": "Navigation"
+        "key": "Alt+1",
+        "desc": "Go to specific tab index",
+        "action": "Go to specific tab index",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Page_Down",
-        "desc": "k: Move tab forward",
-        "subcat": "Arrangement"
+        "desc": "Move tab forward",
+        "action": "Move tab forward",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Page_Up",
-        "desc": "k: Move tab backward",
-        "subcat": "Arrangement"
+        "desc": "Move tab backward",
+        "action": "Move tab backward",
+        "source": "kitty"
       }
     ],
     "Windows Management": [
       {
         "key": "Ctrl+Shift+Enter",
-        "desc": "k: New window with current directory",
-        "subcat": "Creation & Deletion"
+        "desc": "New window with directory",
+        "action": "New window with directory",
+        "source": "kitty"
       },
       {
-        "key": "Alt+\\",
-        "desc": "k: New vertical split",
-        "subcat": "Creation & Deletion"
+        "key": "Alt+Backslash",
+        "desc": "New vertical split",
+        "action": "New vertical split",
+        "source": "kitty"
       },
       {
-        "key": "Alt+-",
-        "desc": "k: New horizontal split",
-        "subcat": "Creation & Deletion"
+        "key": "Alt+Minus",
+        "desc": "New horizontal split",
+        "action": "New horizontal split",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Q",
-        "desc": "k: Close window",
-        "subcat": "Creation & Deletion"
+        "desc": "Close window",
+        "action": "Close window",
+        "source": "kitty"
       },
       {
-        "key": "Alt+H/J/K/L",
-        "desc": "k: Navigate between panes (Vim keys)",
-        "subcat": "Navigation"
+        "key": "Alt+H",
+        "desc": "Navigate between panes",
+        "action": "Navigate between panes",
+        "source": "kitty"
       },
       {
-        "key": "Ctrl+1...0",
-        "desc": "k: Focus specific window",
-        "subcat": "Navigation"
+        "key": "Ctrl+1",
+        "desc": "Focus specific window",
+        "action": "Focus specific window",
+        "source": "kitty"
       },
       {
-        "key": "Alt+Shift+H/J/K/L",
-        "desc": "k: Resize panes",
-        "subcat": "Arrangement"
+        "key": "Alt+Shift+H",
+        "desc": "Resize panes",
+        "action": "Resize panes",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+F",
-        "desc": "k: Next layout",
-        "subcat": "Layout"
+        "desc": "Next layout",
+        "action": "Next layout",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Space",
-        "desc": "k: Toggle stack layout (Zoom)",
-        "subcat": "Layout"
+        "desc": "Toggle stack layout",
+        "action": "Toggle stack layout",
+        "source": "kitty"
       }
     ],
-    "Appearance & Fonts": [
+    "Appearance and Fonts": [
       {
-        "key": "Ctrl+Plus / Ctrl+Equal",
-        "desc": "k: Increase font size",
-        "subcat": "Font"
+        "key": "Ctrl+Plus",
+        "desc": "Increase font size",
+        "action": "Increase font size",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Minus",
-        "desc": "k: Decrease font size",
-        "subcat": "Font"
+        "desc": "Decrease font size",
+        "action": "Decrease font size",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+0",
-        "desc": "k: Reset font size",
-        "subcat": "Font"
+        "desc": "Reset font size",
+        "action": "Reset font size",
+        "source": "kitty"
       },
       {
         "key": "F11",
-        "desc": "k: Toggle fullscreen",
-        "subcat": "Window State"
+        "desc": "Toggle fullscreen",
+        "action": "Toggle fullscreen",
+        "source": "kitty"
       }
     ],
-    "Shell & Plugins": [
+    "Shell and Plugins": [
       {
         "key": "Ctrl+Shift+H",
-        "desc": "k: Browse scrollback in nvim (Plugin)",
-        "subcat": "kitty-scrollback"
+        "desc": "Browse scrollback",
+        "action": "Browse scrollback",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+G",
-        "desc": "k: View last command output in nvim",
-        "subcat": "kitty-scrollback"
+        "desc": "View last command",
+        "action": "View last command",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+B",
-        "desc": "k: Open broadcast kitten",
-        "subcat": "Utility"
+        "desc": "Open broadcast kitten",
+        "action": "Open broadcast kitten",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+U",
-        "desc": "k: Unicode input",
-        "subcat": "Utility"
+        "desc": "Unicode input",
+        "action": "Unicode input",
+        "source": "kitty"
       }
     ],
-    "System & Config": [
+    "System and Config": [
       {
         "key": "Ctrl+Alt+R",
-        "desc": "k: Reload kitty.conf",
-        "subcat": "Configuration"
+        "desc": "Reload config",
+        "action": "Reload config",
+        "source": "kitty"
       },
       {
-        "key": "Ctrl+Shift+Alt+,",
-        "desc": "k: Edit config file",
-        "subcat": "Configuration"
+        "key": "Ctrl+Shift+Alt+Comma",
+        "desc": "Edit config file",
+        "action": "Edit config file",
+        "source": "kitty"
       },
       {
         "key": "Ctrl+Shift+Delete",
-        "desc": "k: Clear terminal and reset",
-        "subcat": "System"
+        "desc": "Clear terminal and reset",
+        "action": "Clear terminal and reset",
+        "source": "kitty"
       }
     ]
   }

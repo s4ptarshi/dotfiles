@@ -5,386 +5,419 @@
     "Sessions": [
       {
         "key": "new-session",
-        "desc": "New session (tmux, tmux new, :new)",
-        "subcat": "Creation"
+        "desc": "New session",
+        "action": "New session",
+        "source": "tmux"
       },
       {
-        "key": "new-session -A -s <name>",
+        "key": "new-session -A -s [name]",
         "desc": "New session or attach to existing",
-        "subcat": "Creation"
+        "action": "New session or attach to existing",
+        "source": "tmux"
       },
       {
-        "key": "new -s <name>",
-        "desc": "New session(:new -s <name>)",
-        "subcat": "Creation"
+        "key": "new -s [name]",
+        "desc": "New session",
+        "action": "New session",
+        "source": "tmux"
       },
       {
         "key": ":kill-session",
         "desc": "Kill current session",
-        "subcat": "Deletion"
+        "action": "Kill current session",
+        "source": "tmux"
       },
       {
-        "key": "kill-session -t <name>",
-        "desc": "Kill session(kill-ses -t <name>)",
-        "subcat": "Deletion"
+        "key": "kill-session -t [name]",
+        "desc": "Kill specific session",
+        "action": "Kill specific session",
+        "source": "tmux"
       },
       {
         "key": "kill-session -a",
-        "desc": "Kill all sessions except current(or add -t <name>)",
-        "subcat": "Deletion"
+        "desc": "Kill all sessions except current",
+        "action": "Kill all sessions except current",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, $",
+        "key": "Ctrl+B+Dollar",
         "desc": "Rename session",
-        "subcat": "Management"
+        "action": "Rename session",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, d",
+        "key": "Ctrl+B+D",
         "desc": "Detach from session",
-        "subcat": "Management"
+        "action": "Detach from session",
+        "source": "tmux"
       },
       {
         "key": ":attach -d",
         "desc": "Detach others on the session",
-        "subcat": "Management"
+        "action": "Detach others on the session",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, s",
-        "desc": "Show all sessions (ls,list-sessions)",
-        "subcat": "Navigation"
+        "key": "Ctrl+B+S",
+        "desc": "Show all sessions",
+        "action": "Show all sessions",
+        "source": "tmux"
       },
       {
         "key": "attach",
-        "desc": "Attach to last session (a,at,attach-session)",
-        "subcat": "Navigation"
+        "desc": "Attach to last session",
+        "action": "Attach to last session",
+        "source": "tmux"
       },
       {
-        "key": "attach -t <name>",
-        "desc": "Attach to session named <name>",
-        "subcat": "Navigation"
+        "key": "attach -t [name]",
+        "desc": "Attach to session named [name]",
+        "action": "Attach to session named [name]",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, w",
+        "key": "Ctrl+B+W",
         "desc": "Session and Window Preview",
-        "subcat": "Navigation"
+        "action": "Session and Window Preview",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, (",
+        "key": "Ctrl+B+ParenLeft",
         "desc": "Move to previous session",
-        "subcat": "Navigation"
+        "action": "Move to previous session",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, )",
+        "key": "Ctrl+B+ParenRight",
         "desc": "Move to next session",
-        "subcat": "Navigation"
+        "action": "Move to next session",
+        "source": "tmux"
       }
     ],
     "Windows": [
       {
-        "key": "new -s <name> -n <name2>",
-        "desc": "Start a new session named <name> and window <name2>",
-        "subcat": "Creation"
+        "key": "new -s [name] -n [name2]",
+        "desc": "Start new session and window",
+        "action": "Start new session and window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, c",
+        "key": "Ctrl+B+C",
         "desc": "Create window",
-        "subcat": "Creation"
+        "action": "Create window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, ,",
+        "key": "Ctrl+B+Comma",
         "desc": "Rename current window",
-        "subcat": "Management"
+        "action": "Rename current window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, &",
+        "key": "Ctrl+B+Ampersand",
         "desc": "Close current window",
-        "subcat": "Management"
+        "action": "Close current window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, w",
+        "key": "Ctrl+B+W",
         "desc": "List windows",
-        "subcat": "Navigation"
+        "action": "List windows",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, p",
+        "key": "Ctrl+B+P",
         "desc": "Previous window",
-        "subcat": "Navigation"
+        "action": "Previous window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, n",
+        "key": "Ctrl+B+N",
         "desc": "Next window",
-        "subcat": "Navigation"
+        "action": "Next window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, 0...9",
-        "desc": "Switch/select window by number",
-        "subcat": "Navigation"
+        "key": "Ctrl+B+0",
+        "desc": "Switch to window by number",
+        "action": "Switch to window by number",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, l",
+        "key": "Ctrl+B+L",
         "desc": "Toggle last active window",
-        "subcat": "Navigation"
+        "action": "Toggle last active window",
+        "source": "tmux"
       },
       {
         "key": ": swap-window -s 2 -t 1",
-        "desc": "Reorder window, swap window number 2(src) and 1(dst)",
-        "subcat": "Arrangement"
+        "desc": "Swap windows 2 and 1",
+        "action": "Swap windows 2 and 1",
+        "source": "tmux"
       },
       {
         "key": ": swap-window -t -1",
-        "desc": "Move current window to the left by one position",
-        "subcat": "Arrangement"
+        "desc": "Move window left one position",
+        "action": "Move window left one position",
+        "source": "tmux"
       },
       {
-        "key": ": move-window -s src_ses:win -t target_ses:win",
+        "key": ": move-window -s src -t dest",
         "desc": "Move window from source to target",
-        "subcat": "Arrangement"
-      },
-      {
-        "key": ": move-window -s src_session:src_window",
-        "desc": "Reposition window in the current session",
-        "subcat": "Arrangement"
+        "action": "Move window from source to target",
+        "source": "tmux"
       },
       {
         "key": ": move-window -r",
-        "desc": "Renumber windows to remove gap in the sequence",
-        "subcat": "Arrangement"
+        "desc": "Renumber windows to remove gaps",
+        "action": "Renumber windows to remove gaps",
+        "source": "tmux"
       }
     ],
     "Panes": [
       {
-        "key": "Ctrl+B, %",
-        "desc": "Split the current pane vertically (Alias: : split-window -h)",
-        "subcat": "Creation"
+        "key": "Ctrl+B+Percent",
+        "desc": "Split pane vertically",
+        "action": "Split pane vertically",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, \"",
-        "desc": "Split the current pane horizontally (Alias: : split-window -v)",
-        "subcat": "Creation"
+        "key": "Ctrl+B+Quote",
+        "desc": "Split pane horizontally",
+        "action": "Split pane horizontally",
+        "source": "tmux"
       },
       {
         "key": ": join-pane -s 2 -t 1",
         "desc": "Join two windows as panes",
-        "subcat": "Creation"
+        "action": "Join two windows as panes",
+        "source": "tmux"
       },
       {
-        "key": ": join-pane -s 2.1 -t 1.0",
-        "desc": "Move pane from one window to another",
-        "subcat": "Management"
-      },
-      {
-        "key": "Ctrl+B, x",
+        "key": "Ctrl+B+X",
         "desc": "Close current pane",
-        "subcat": "Management"
+        "action": "Close current pane",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, !",
+        "key": "Ctrl+B+Exclamation",
         "desc": "Convert pane into a window",
-        "subcat": "Management"
+        "action": "Convert pane into a window",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, z",
+        "key": "Ctrl+B+Z",
         "desc": "Toggle pane zoom",
-        "subcat": "Management"
+        "action": "Toggle pane zoom",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, {",
-        "desc": "Move the current pane left",
-        "subcat": "Arrangement"
+        "key": "Ctrl+B+BraceLeft",
+        "desc": "Move pane left",
+        "action": "Move pane left",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, }",
-        "desc": "Move the current pane right",
-        "subcat": "Arrangement"
+        "key": "Ctrl+B+BraceRight",
+        "desc": "Move pane right",
+        "action": "Move pane right",
+        "source": "tmux"
       },
       {
         "key": ": setw synchronize-panes",
-        "desc": "Toggle synchronize-panes (send command to all panes)",
-        "subcat": "Arrangement"
+        "desc": "Toggle synchronize-panes",
+        "action": "Toggle synchronize-panes",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, Spacebar",
-        "desc": "Toggle between pane layouts",
-        "subcat": "Arrangement"
+        "key": "Ctrl+B+Space",
+        "desc": "Toggle pane layouts",
+        "action": "Toggle pane layouts",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, ;",
+        "key": "Ctrl+B+Semicolon",
         "desc": "Toggle last active pane",
-        "subcat": "Navigation"
+        "action": "Toggle last active pane",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, o",
+        "key": "Ctrl+B+O",
         "desc": "Switch to next pane",
-        "subcat": "Navigation"
+        "action": "Switch to next pane",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, <Arrow Key>",
-        "desc": "Switch to pane in the direction",
-        "subcat": "Navigation"
+        "key": "Ctrl+B+Arrow",
+        "desc": "Switch pane by direction",
+        "action": "Switch pane by direction",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, q",
+        "key": "Ctrl+B+Q",
         "desc": "Show pane numbers",
-        "subcat": "Navigation"
+        "action": "Show pane numbers",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, q, 0...9",
-        "desc": "Switch/select pane by number",
-        "subcat": "Navigation"
-      },
-      {
-        "key": "Ctrl+B, Ctrl+<Arrow Key>",
-        "desc": "Resize current pane width/height",
-        "subcat": "Resizing"
+        "key": "Ctrl+B+Ctrl+Arrow",
+        "desc": "Resize pane",
+        "action": "Resize pane",
+        "source": "tmux"
       }
     ],
     "Copy Mode": [
       {
-        "key": "Ctrl+B, [",
+        "key": "Ctrl+B+BracketLeft",
         "desc": "Enter copy mode",
-        "subcat": "Entering/Exiting"
+        "action": "Enter copy mode",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, PgUp",
-        "desc": "Enter copy mode and scroll one page up",
-        "subcat": "Entering/Exiting"
+        "key": "Ctrl+B+Page_Up",
+        "desc": "Enter copy mode and scroll up",
+        "action": "Enter copy mode and scroll up",
+        "source": "tmux"
       },
       {
-        "key": "q",
+        "key": "Q",
         "desc": "Quit mode",
-        "subcat": "Entering/Exiting"
+        "action": "Quit mode",
+        "source": "tmux"
       },
       {
         "key": ": setw -g mode-keys vi",
         "desc": "Use vi keys in buffer",
-        "subcat": "Configuration"
+        "action": "Use vi keys in buffer",
+        "source": "tmux"
       },
       {
-        "key": "h / j / k / l",
-        "desc": "Move cursor left / down / up / right",
-        "subcat": "Movement"
+        "key": "H",
+        "desc": "Move cursor",
+        "action": "Move cursor",
+        "source": "tmux"
       },
       {
-        "key": "w",
-        "desc": "Move cursor forward one word at a time",
-        "subcat": "Movement"
+        "key": "W",
+        "desc": "Move cursor forward one word",
+        "action": "Move cursor forward one word",
+        "source": "tmux"
       },
       {
-        "key": "b",
-        "desc": "Move cursor backward one word at a time",
-        "subcat": "Movement"
-      },
-      {
-        "key": "g",
-        "desc": "Go to top line",
-        "subcat": "Movement"
+        "key": "B",
+        "desc": "Move cursor backward one word",
+        "action": "Move cursor backward one word",
+        "source": "tmux"
       },
       {
         "key": "G",
+        "desc": "Go to top line",
+        "action": "Go to top line",
+        "source": "tmux"
+      },
+      {
+        "key": "Shift+G",
         "desc": "Go to bottom line",
-        "subcat": "Movement"
+        "action": "Go to bottom line",
+        "source": "tmux"
       },
       {
-        "key": "/",
+        "key": "Slash",
         "desc": "Search forward",
-        "subcat": "Search"
+        "action": "Search forward",
+        "source": "tmux"
       },
       {
-        "key": "?",
+        "key": "Question",
         "desc": "Search backward",
-        "subcat": "Search"
+        "action": "Search backward",
+        "source": "tmux"
       },
       {
-        "key": "n",
-        "desc": "Next keyword occurance",
-        "subcat": "Search"
-      },
-      {
-        "key": "N",
-        "desc": "Previous keyword occurance",
-        "subcat": "Search"
-      },
-      {
-        "key": "Spacebar",
+        "key": "Space",
         "desc": "Start selection",
-        "subcat": "Selection & Copy"
+        "action": "Start selection",
+        "source": "tmux"
       },
       {
         "key": "Esc",
         "desc": "Clear selection",
-        "subcat": "Selection & Copy"
+        "action": "Clear selection",
+        "source": "tmux"
       },
       {
         "key": "Enter",
         "desc": "Copy selection",
-        "subcat": "Selection & Copy"
+        "action": "Copy selection",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, ]",
+        "key": "Ctrl+B+BracketRight",
         "desc": "Paste contents of buffer_0",
-        "subcat": "Buffers"
+        "action": "Paste contents of buffer_0",
+        "source": "tmux"
       },
       {
         "key": ": show-buffer",
         "desc": "Display buffer_0 contents",
-        "subcat": "Buffers"
+        "action": "Display buffer_0 contents",
+        "source": "tmux"
       },
       {
         "key": ": capture-pane",
-        "desc": "Copy entire visible contents of pane to a buffer",
-        "subcat": "Buffers"
+        "desc": "Copy visible pane to buffer",
+        "action": "Copy visible pane to buffer",
+        "source": "tmux"
       },
       {
         "key": ": list-buffers",
         "desc": "Show all buffers",
-        "subcat": "Buffers"
-      },
-      {
-        "key": ": choose-buffer",
-        "desc": "Show all buffers and paste selected",
-        "subcat": "Buffers"
+        "action": "Show all buffers",
+        "source": "tmux"
       },
       {
         "key": ": save-buffer buf.txt",
-        "desc": "Save buffer contents to buf.txt",
-        "subcat": "Buffers"
-      },
-      {
-        "key": ": delete-buffer -b 1",
-        "desc": "Delete buffer_1",
-        "subcat": "Buffers"
+        "desc": "Save buffer to buf.txt",
+        "action": "Save buffer to buf.txt",
+        "source": "tmux"
       }
     ],
-    "Misc & Help": [
+    "Misc and Help": [
       {
-        "key": "Ctrl+B, :",
+        "key": "Ctrl+B+Colon",
         "desc": "Enter command mode",
-        "subcat": "Commands"
+        "action": "Enter command mode",
+        "source": "tmux"
       },
       {
         "key": ": set -g OPTION",
         "desc": "Set OPTION for all sessions",
-        "subcat": "Commands"
+        "action": "Set OPTION for all sessions",
+        "source": "tmux"
       },
       {
         "key": ": setw -g OPTION",
         "desc": "Set OPTION for all windows",
-        "subcat": "Commands"
+        "action": "Set OPTION for all windows",
+        "source": "tmux"
       },
       {
         "key": ": set mouse on",
         "desc": "Enable mouse mode",
-        "subcat": "Commands"
+        "action": "Enable mouse mode",
+        "source": "tmux"
       },
       {
-        "key": "Ctrl+B, ?",
-        "desc": "List key bindings/shortcuts (Aliases: $ tmux list-keys, : list-keys)",
-        "subcat": "Help"
+        "key": "Ctrl+B+Question",
+        "desc": "List key bindings",
+        "action": "List key bindings",
+        "source": "tmux"
       },
       {
         "key": "$ tmux info",
-        "desc": "Show every session, window, pane, etc.",
-        "subcat": "Help"
+        "desc": "Show info for sessions and panes",
+        "action": "Show info for sessions and panes",
+        "source": "tmux"
       }
     ]
   }
