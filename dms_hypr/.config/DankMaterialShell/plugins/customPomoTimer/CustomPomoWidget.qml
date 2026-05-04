@@ -13,23 +13,23 @@ PluginComponent {
 
     property int workDuration: pluginData.workDuration || 25
     property int shortBreakDuration: pluginData.shortBreakDuration || 5
-    property int longBreakDuration: pluginData.longBreakDuration || 15
+    property int longBreakDuration: pluginData.longBreakDuration || 20
     property bool autoStartBreaks: pluginData.autoStartBreaks ?? false
     property bool autoStartPomodoros: pluginData.autoStartPomodoros ?? false
     property bool autoSetDND: pluginData.autoSetDND ?? false
-    property var last7DaysData: []
+    property var last7DaysData:[]
     property string currentDateKey: ""
     property string workSoundPath: pluginData.workSoundPath || ""
     property string breakSoundPath: pluginData.breakSoundPath || ""
 
     // --- New Task Properties ---
-    property var taskList: []
+    property var taskList:[]
     property string activeTaskId: ""
     
     // Helper to refresh the list view
     function refreshTaskList() {
         var temp = taskList
-        taskList = []
+        taskList =[]
         taskList = temp
     }
     // ---------------------------
@@ -51,7 +51,7 @@ PluginComponent {
         try {
             taskList = JSON.parse(tasksJson)
         } catch (e) {
-            taskList = []
+            taskList =[]
         }
     }
 
@@ -131,7 +131,7 @@ PluginComponent {
     function loadLast7Days() {
         if (!pluginService) return
 
-        let data = []
+        let data =[]
         const today = new Date()
         const todayKey = formatDateKey(today)
 
@@ -163,7 +163,7 @@ PluginComponent {
                 count: count,
                 minutes: totalMins,
                 timeLabel: timeStr,
-                dayLabel: i === 0 ? "Today" : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
+                dayLabel: i === 0 ? "Today" :["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
             })
         }
 
@@ -197,6 +197,7 @@ PluginComponent {
             }
         }
     }
+    
     onWorkDurationChanged: {
         if (globalTimerState.value === "work" && globalTotalSeconds.value > 0) {
             const newTotal = workDuration * 60
@@ -675,6 +676,74 @@ PluginComponent {
                 Column {
                     width: parent.width
                     spacing: Theme.spacingS
+
+                    // --- PRESETS ---
+                    RowLayout {
+                        width: parent.width
+                        spacing: Theme.spacingS
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 32
+                            radius: Theme.cornerRadius
+                            color: (root.workDuration === 25 && root.shortBreakDuration === 5) ? Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.1) : Theme.surfaceContainerHighest
+                            border.width: 1
+                            border.color: (root.workDuration === 25 && root.shortBreakDuration === 5) ? Theme.primary : "transparent"
+
+                            StyledText {
+                                anchors.centerIn: parent
+                                text: "Classic (25/5/20)"
+                                color: (root.workDuration === 25 && root.shortBreakDuration === 5) ? Theme.primary : Theme.surfaceText
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: (root.workDuration === 25 && root.shortBreakDuration === 5) ? Font.Medium : Font.Normal
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    root.workDuration = 25
+                                    root.shortBreakDuration = 5
+                                    root.longBreakDuration = 20
+                                    if (pluginService) {
+                                        pluginService.savePluginData("customPomoTimer", "workDuration", "25")
+                                        pluginService.savePluginData("customPomoTimer", "shortBreakDuration", "5")
+                                        pluginService.savePluginData("customPomoTimer", "longBreakDuration", "20")
+                                    }
+                                }
+                            }
+                        }
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 32
+                            radius: Theme.cornerRadius
+                            color: (root.workDuration === 52 && root.shortBreakDuration === 17) ? Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.1) : Theme.surfaceContainerHighest
+                            border.width: 1
+                            border.color: (root.workDuration === 52 && root.shortBreakDuration === 17) ? Theme.primary : "transparent"
+
+                            StyledText {
+                                anchors.centerIn: parent
+                                text: "52/17 Mode"
+                                color: (root.workDuration === 52 && root.shortBreakDuration === 17) ? Theme.primary : Theme.surfaceText
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: (root.workDuration === 52 && root.shortBreakDuration === 17) ? Font.Medium : Font.Normal
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    root.workDuration = 52
+                                    root.shortBreakDuration = 17
+                                    root.longBreakDuration = 17
+                                    if (pluginService) {
+                                        pluginService.savePluginData("customPomoTimer", "workDuration", "52")
+                                        pluginService.savePluginData("customPomoTimer", "shortBreakDuration", "17")
+                                        pluginService.savePluginData("customPomoTimer", "longBreakDuration", "17")
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     RowLayout {
                         id: quickActionsRow

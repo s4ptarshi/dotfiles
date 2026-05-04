@@ -3,232 +3,90 @@
   "provider": "kitty",
   "binds": {
     "Scrolling": [
-      {
-        "key": "Page_Up",
-        "desc": "Scroll page up",
-        "action": "Scroll page up",
-        "source": "kitty"
-      },
-      {
-        "key": "Page_Down",
-        "desc": "Scroll page down",
-        "action": "Scroll page down",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Page_Up",
-        "desc": "Scroll line up",
-        "action": "Scroll line up",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Page_Down",
-        "desc": "Scroll line down",
-        "action": "Scroll line down",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Home",
-        "desc": "Scroll to top",
-        "action": "Scroll to top",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+End",
-        "desc": "Scroll to bottom",
-        "action": "Scroll to bottom",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Alt+Home",
-        "desc": "Scroll to previous prompt",
-        "action": "Scroll to previous prompt",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Alt+End",
-        "desc": "Scroll to next prompt",
-        "action": "Scroll to next prompt",
-        "source": "kitty"
-      }
+      { "key": "Page_Up", "desc": "Scroll page up", "action": "Scroll page up", "source": "kitty" },
+      { "key": "Page_Down", "desc": "Scroll page down", "action": "Scroll page down", "source": "kitty" },
+      { "key": "C+S+Page_Up", "desc": "Scroll line up", "action": "Scroll line up", "source": "kitty" },
+      { "key": "C+S+Page_Down", "desc": "Scroll line down", "action": "Scroll line down", "source": "kitty" },
+      { "key": "C+S+Home", "desc": "Scroll to top", "action": "Scroll to top", "source": "kitty" },
+      { "key": "C+S+End", "desc": "Scroll to bottom", "action": "Scroll to bottom", "source": "kitty" },
+      { "key": "C+Alt+Home", "desc": "Scroll to prev prompt", "action": "Scroll to previous prompt", "source": "kitty" },
+      { "key": "C+Alt+End", "desc": "Scroll to next prompt", "action": "Scroll to next prompt", "source": "kitty" }
     ],
     "Tabs Management": [
-      {
-        "key": "Ctrl+T",
-        "desc": "New tab",
-        "action": "New tab",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+W",
-        "desc": "Close tab",
-        "action": "Close tab",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+N",
-        "desc": "New tab with directory",
-        "action": "New tab with directory",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Tab",
-        "desc": "Next tab",
-        "action": "Next tab",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Tab",
-        "desc": "Previous tab",
-        "action": "Previous tab",
-        "source": "kitty"
-      },
-      {
-        "key": "Alt+1",
-        "desc": "Go to specific tab index",
-        "action": "Go to specific tab index",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Page_Down",
-        "desc": "Move tab forward",
-        "action": "Move tab forward",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Page_Up",
-        "desc": "Move tab backward",
-        "action": "Move tab backward",
-        "source": "kitty"
-      }
+      { "key": "Ctrl+T", "desc": "New tab", "action": "New tab", "source": "kitty" },
+      { "key": "Ctrl+W", "desc": "Close tab", "action": "Close tab", "source": "kitty" },
+      { "key": "C+S+N", "desc": "New tab (cwd)", "action": "New tab with cwd", "source": "kitty" },
+      { "key": "Ctrl+Tab", "desc": "Next tab", "action": "Next tab", "source": "kitty" },
+      { "key": "C+S+Tab", "desc": "Previous tab", "action": "Previous tab", "source": "kitty" },
+      { "key": "Alt+[1-0]", "desc": "Go to specific tab", "action": "Go to tab", "source": "kitty" },
+      { "key": "C+S+PgDown", "desc": "Move tab forward", "action": "Move tab forward", "source": "kitty" },
+      { "key": "C+S+PgUp", "desc": "Move tab backward", "action": "Move tab backward", "source": "kitty" },
+      { "key": "Ctrl+F4", "desc": "Detach tab (ask)", "action": "Detach tab", "source": "kitty" }
     ],
     "Windows Management": [
-      {
-        "key": "Ctrl+Shift+Enter",
-        "desc": "New window with directory",
-        "action": "New window with directory",
-        "source": "kitty"
-      },
-      {
-        "key": "Alt+Backslash",
-        "desc": "New vertical split",
-        "action": "New vertical split",
-        "source": "kitty"
-      },
-      {
-        "key": "Alt+Minus",
-        "desc": "New horizontal split",
-        "action": "New horizontal split",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Q",
-        "desc": "Close window",
-        "action": "Close window",
-        "source": "kitty"
-      },
-      {
-        "key": "Alt+H",
-        "desc": "Navigate between panes",
-        "action": "Navigate between panes",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+1",
-        "desc": "Focus specific window",
-        "action": "Focus specific window",
-        "source": "kitty"
-      },
-      {
-        "key": "Alt+Shift+H",
-        "desc": "Resize panes",
-        "action": "Resize panes",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+F",
-        "desc": "Next layout",
-        "action": "Next layout",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Space",
-        "desc": "Toggle stack layout",
-        "action": "Toggle stack layout",
-        "source": "kitty"
-      }
+      { "key": "C+S+Enter", "desc": "New window (cwd)", "action": "New window with cwd", "source": "kitty" },
+      { "key": "Alt+\\", "desc": "New vertical split", "action": "New vertical split", "source": "kitty" },
+      { "key": "Alt+-", "desc": "New horizontal split", "action": "New horizontal split", "source": "kitty" },
+      { "key": "C+S+Q", "desc": "Close window", "action": "Close window", "source": "kitty" },
+      { "key": "C+S+X", "desc": "Detach window", "action": "Detach window", "source": "kitty" },
+      { "key": "Alt+[hjkl]", "desc": "Navigate panes", "action": "Navigate panes", "source": "kitty" },
+      { "key": "C+S+Arrows", "desc": "Navigate panes", "action": "Navigate panes", "source": "kitty" },
+      { "key": "Ctrl+[1-0]", "desc": "Focus specific window", "action": "Focus window", "source": "kitty" },
+      { "key": "Alt+S+[hjkl]", "desc": "Resize panes", "action": "Resize panes", "source": "kitty" },
+      { "key": "C+S+A+Arrows", "desc": "Coarse window resize", "action": "Coarse window resize", "source": "kitty" },
+      { "key": "C+S+R", "desc": "Interactive resize", "action": "Interactive resize", "source": "kitty" },
+      { "key": "C+S+A+[hjkl]", "desc": "Move window", "action": "Move window", "source": "kitty" },
+      { "key": "C+S+M", "desc": "Move window to top", "action": "Move window top", "source": "kitty" },
+      { "key": "C+S+Comma", "desc": "Move window forward", "action": "Move window forward", "source": "kitty" },
+      { "key": "C+S+Period", "desc": "Move window backward", "action": "Move window backward", "source": "kitty" },
+      { "key": "C+S+A+Space", "desc": "Swap focused window", "action": "Swap window", "source": "kitty" }
+    ],
+    "Layout Management": [
+      { "key": "C+S+F", "desc": "Next layout", "action": "Next layout", "source": "kitty" },
+      { "key": "C+S+D", "desc": "Previous layout", "action": "Previous layout", "source": "kitty" },
+      { "key": "C+S+A+[Layout]", "desc": "Direct layout selection", "action": "Select specific layout", "source": "kitty" },
+      { "key": "C+S+Space", "desc": "Toggle stack layout", "action": "Toggle stack", "source": "kitty" },
+      { "key": "C+Alt+Space", "desc": "Rotate layout", "action": "Rotate layout", "source": "kitty" },
+      { "key": "C+A+S+Space", "desc": "Toggle layout mirror", "action": "Mirror toggle", "source": "kitty" },
+      { "key": "Ctrl+Alt+M", "desc": "Mirror layout (true)", "action": "Mirror layout", "source": "kitty" },
+      { "key": "Ctrl+Alt+B", "desc": "Layout bias 50/50", "action": "Layout bias", "source": "kitty" },
+      { "key": "C+S+A+Arrows", "desc": "Move to screen edge", "action": "Move to edge", "source": "kitty" },
+      { "key": "C+S+Equal", "desc": "Focus visible (Stack)", "action": "Focus visible", "source": "kitty" },
+      { "key": "C+S+Minus", "desc": "Focus nth -1 (Stack)", "action": "Focus previous hidden", "source": "kitty" }
+    ],
+    "OS Windows": [
+      { "key": "C+S+A+N", "desc": "New OS window", "action": "New OS window", "source": "kitty" },
+      { "key": "C+S+A+W", "desc": "Close OS window", "action": "Close OS window", "source": "kitty" },
+      { "key": "C+S+A+]", "desc": "Next OS window", "action": "Next OS window", "source": "kitty" },
+      { "key": "C+S+A+[", "desc": "Previous OS window", "action": "Previous OS window", "source": "kitty" }
     ],
     "Appearance and Fonts": [
-      {
-        "key": "Ctrl+Plus",
-        "desc": "Increase font size",
-        "action": "Increase font size",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Minus",
-        "desc": "Decrease font size",
-        "action": "Decrease font size",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+0",
-        "desc": "Reset font size",
-        "action": "Reset font size",
-        "source": "kitty"
-      },
-      {
-        "key": "F11",
-        "desc": "Toggle fullscreen",
-        "action": "Toggle fullscreen",
-        "source": "kitty"
-      }
+      { "key": "Ctrl+Plus", "desc": "Increase font size", "action": "Increase font size", "source": "kitty" },
+      { "key": "Ctrl+Minus", "desc": "Decrease font size", "action": "Decrease font size", "source": "kitty" },
+      { "key": "Ctrl+0", "desc": "Reset font size", "action": "Reset font size", "source": "kitty" },
+      { "key": "F11", "desc": "Toggle fullscreen", "action": "Toggle fullscreen", "source": "kitty" }
     ],
     "Shell and Plugins": [
-      {
-        "key": "Ctrl+Shift+H",
-        "desc": "Browse scrollback",
-        "action": "Browse scrollback",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+G",
-        "desc": "View last command",
-        "action": "View last command",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+B",
-        "desc": "Open broadcast kitten",
-        "action": "Open broadcast kitten",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+U",
-        "desc": "Unicode input",
-        "action": "Unicode input",
-        "source": "kitty"
-      }
+      { "key": "C+S+H", "desc": "Browse scrollback", "action": "Browse scrollback", "source": "kitty" },
+      { "key": "C+S+G", "desc": "View last cmd output", "action": "View last command", "source": "kitty" },
+      { "key": "C+S+B", "desc": "Broadcast kitten", "action": "Broadcast", "source": "kitty" },
+      { "key": "C+S+E", "desc": "Open URL with hints", "action": "URL hints", "source": "kitty" },
+      { "key": "C+S+U", "desc": "Unicode input", "action": "Unicode input", "source": "kitty" }
     ],
     "System and Config": [
-      {
-        "key": "Ctrl+Alt+R",
-        "desc": "Reload config",
-        "action": "Reload config",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Alt+Comma",
-        "desc": "Edit config file",
-        "action": "Edit config file",
-        "source": "kitty"
-      },
-      {
-        "key": "Ctrl+Shift+Delete",
-        "desc": "Clear terminal and reset",
-        "action": "Clear terminal and reset",
-        "source": "kitty"
-      }
+      { "key": "Ctrl+Alt+R", "desc": "Reload config", "action": "Reload config", "source": "kitty" },
+      { "key": "C+S+A+Comma", "desc": "Edit config file", "action": "Edit config file", "source": "kitty" },
+      { "key": "C+S+A+D", "desc": "Debug configuration", "action": "Debug config", "source": "kitty" },
+      { "key": "C+S+Delete", "desc": "Clear terminal & reset", "action": "Clear and reset", "source": "kitty" }
+    ],
+    "Legend": [
+      { "key": "C", "desc": "Ctrl (Control key)", "action": "Modifier", "source": "legend" },
+      { "key": "S", "desc": "Shift key", "action": "Modifier", "source": "legend" },
+      { "key": "A", "desc": "Alt key", "action": "Modifier", "source": "legend" },
+      { "key": "PgUp", "desc": "Page Up", "action": "Key", "source": "legend" },
+      { "key": "PgDown", "desc": "Page Down", "action": "Key", "source": "legend" },
+      { "key": "cwd", "desc": "Current working directory", "action": "Term", "source": "legend" },
+      { "key": "cmd", "desc": "Command", "action": "Term", "source": "legend" }
     ]
   }
 }

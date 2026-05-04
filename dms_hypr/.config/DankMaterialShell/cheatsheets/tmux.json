@@ -3,422 +3,89 @@
   "provider": "tmux",
   "binds": {
     "Sessions": [
-      {
-        "key": "new-session",
-        "desc": "New session",
-        "action": "New session",
-        "source": "tmux"
-      },
-      {
-        "key": "new-session -A -s [name]",
-        "desc": "New session or attach to existing",
-        "action": "New session or attach to existing",
-        "source": "tmux"
-      },
-      {
-        "key": "new -s [name]",
-        "desc": "New session",
-        "action": "New session",
-        "source": "tmux"
-      },
-      {
-        "key": ":kill-session",
-        "desc": "Kill current session",
-        "action": "Kill current session",
-        "source": "tmux"
-      },
-      {
-        "key": "kill-session -t [name]",
-        "desc": "Kill specific session",
-        "action": "Kill specific session",
-        "source": "tmux"
-      },
-      {
-        "key": "kill-session -a",
-        "desc": "Kill all sessions except current",
-        "action": "Kill all sessions except current",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Dollar",
-        "desc": "Rename session",
-        "action": "Rename session",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+D",
-        "desc": "Detach from session",
-        "action": "Detach from session",
-        "source": "tmux"
-      },
-      {
-        "key": ":attach -d",
-        "desc": "Detach others on the session",
-        "action": "Detach others on the session",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+S",
-        "desc": "Show all sessions",
-        "action": "Show all sessions",
-        "source": "tmux"
-      },
-      {
-        "key": "attach",
-        "desc": "Attach to last session",
-        "action": "Attach to last session",
-        "source": "tmux"
-      },
-      {
-        "key": "attach -t [name]",
-        "desc": "Attach to session named [name]",
-        "action": "Attach to session named [name]",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+W",
-        "desc": "Session and Window Preview",
-        "action": "Session and Window Preview",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+ParenLeft",
-        "desc": "Move to previous session",
-        "action": "Move to previous session",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+ParenRight",
-        "desc": "Move to next session",
-        "action": "Move to next session",
-        "source": "tmux"
-      }
+      { "key": "new-session", "desc": "New session", "action": "New session", "source": "tmux" },
+      { "key": "new -A -s [name]", "desc": "New/attach session", "action": "New session or attach", "source": "tmux" },
+      { "key": "new -s [name]", "desc": "New named session", "action": "New session", "source": "tmux" },
+      { "key": ":kill-session", "desc": "Kill current session", "action": "Kill current session", "source": "tmux" },
+      { "key": "kill-sess -t [name]", "desc": "Kill specific session", "action": "Kill specific session", "source": "tmux" },
+      { "key": "kill-session -a", "desc": "Kill other sessions", "action": "Kill all sessions except current", "source": "tmux" },
+      { "key": "C+B+$", "desc": "Rename session", "action": "Rename session", "source": "tmux" },
+      { "key": "C+B+D", "desc": "Detach from session", "action": "Detach from session", "source": "tmux" },
+      { "key": ":attach -d", "desc": "Detach others", "action": "Detach others on the session", "source": "tmux" },
+      { "key": "C+B+S", "desc": "Show all sessions", "action": "Show all sessions", "source": "tmux" },
+      { "key": "attach", "desc": "Attach to last session", "action": "Attach to last session", "source": "tmux" },
+      { "key": "attach -t [name]", "desc": "Attach to named session", "action": "Attach to session named [name]", "source": "tmux" },
+      { "key": "C+B+W", "desc": "Preview sessions/windows", "action": "Session and Window Preview", "source": "tmux" },
+      { "key": "C+B+(", "desc": "Previous session", "action": "Move to previous session", "source": "tmux" },
+      { "key": "C+B+)", "desc": "Next session", "action": "Move to next session", "source": "tmux" }
     ],
     "Windows": [
-      {
-        "key": "new -s [name] -n [name2]",
-        "desc": "Start new session and window",
-        "action": "Start new session and window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+C",
-        "desc": "Create window",
-        "action": "Create window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Comma",
-        "desc": "Rename current window",
-        "action": "Rename current window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Ampersand",
-        "desc": "Close current window",
-        "action": "Close current window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+W",
-        "desc": "List windows",
-        "action": "List windows",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+P",
-        "desc": "Previous window",
-        "action": "Previous window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+N",
-        "desc": "Next window",
-        "action": "Next window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+0",
-        "desc": "Switch to window by number",
-        "action": "Switch to window by number",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+L",
-        "desc": "Toggle last active window",
-        "action": "Toggle last active window",
-        "source": "tmux"
-      },
-      {
-        "key": ": swap-window -s 2 -t 1",
-        "desc": "Swap windows 2 and 1",
-        "action": "Swap windows 2 and 1",
-        "source": "tmux"
-      },
-      {
-        "key": ": swap-window -t -1",
-        "desc": "Move window left one position",
-        "action": "Move window left one position",
-        "source": "tmux"
-      },
-      {
-        "key": ": move-window -s src -t dest",
-        "desc": "Move window from source to target",
-        "action": "Move window from source to target",
-        "source": "tmux"
-      },
-      {
-        "key": ": move-window -r",
-        "desc": "Renumber windows to remove gaps",
-        "action": "Renumber windows to remove gaps",
-        "source": "tmux"
-      }
+      { "key": "new -s [n] -n [n2]", "desc": "New session & window", "action": "Start new session and window", "source": "tmux" },
+      { "key": "C+B+C", "desc": "Create window", "action": "Create window", "source": "tmux" },
+      { "key": "C+B+,", "desc": "Rename window", "action": "Rename current window", "source": "tmux" },
+      { "key": "C+B+&", "desc": "Close window", "action": "Close current window", "source": "tmux" },
+      { "key": "C+B+W", "desc": "List windows", "action": "List windows", "source": "tmux" },
+      { "key": "C+B+P", "desc": "Previous window", "action": "Previous window", "source": "tmux" },
+      { "key": "C+B+N", "desc": "Next window", "action": "Next window", "source": "tmux" },
+      { "key": "C+B+0", "desc": "Switch to window 0", "action": "Switch to window by number", "source": "tmux" },
+      { "key": "C+B+L", "desc": "Last active window", "action": "Toggle last active window", "source": "tmux" },
+      { "key": ":swap-window -s 2 -t 1", "desc": "Swap windows 2 & 1", "action": "Swap windows 2 and 1", "source": "tmux" },
+      { "key": ":swap-window -t -1", "desc": "Move window left", "action": "Move window left one position", "source": "tmux" },
+      { "key": ":move-window -s s -t d", "desc": "Move window", "action": "Move window from source to target", "source": "tmux" },
+      { "key": ":move-window -r", "desc": "Renumber windows", "action": "Renumber windows to remove gaps", "source": "tmux" }
     ],
     "Panes": [
-      {
-        "key": "Ctrl+B+Percent",
-        "desc": "Split pane vertically",
-        "action": "Split pane vertically",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Quote",
-        "desc": "Split pane horizontally",
-        "action": "Split pane horizontally",
-        "source": "tmux"
-      },
-      {
-        "key": ": join-pane -s 2 -t 1",
-        "desc": "Join two windows as panes",
-        "action": "Join two windows as panes",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+X",
-        "desc": "Close current pane",
-        "action": "Close current pane",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Exclamation",
-        "desc": "Convert pane into a window",
-        "action": "Convert pane into a window",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Z",
-        "desc": "Toggle pane zoom",
-        "action": "Toggle pane zoom",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+BraceLeft",
-        "desc": "Move pane left",
-        "action": "Move pane left",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+BraceRight",
-        "desc": "Move pane right",
-        "action": "Move pane right",
-        "source": "tmux"
-      },
-      {
-        "key": ": setw synchronize-panes",
-        "desc": "Toggle synchronize-panes",
-        "action": "Toggle synchronize-panes",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Space",
-        "desc": "Toggle pane layouts",
-        "action": "Toggle pane layouts",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Semicolon",
-        "desc": "Toggle last active pane",
-        "action": "Toggle last active pane",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+O",
-        "desc": "Switch to next pane",
-        "action": "Switch to next pane",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Arrow",
-        "desc": "Switch pane by direction",
-        "action": "Switch pane by direction",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Q",
-        "desc": "Show pane numbers",
-        "action": "Show pane numbers",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Ctrl+Arrow",
-        "desc": "Resize pane",
-        "action": "Resize pane",
-        "source": "tmux"
-      }
+      { "key": "C+B+%", "desc": "Split vertically", "action": "Split pane vertically", "source": "tmux" },
+      { "key": "C+B+\"", "desc": "Split horizontally", "action": "Split pane horizontally", "source": "tmux" },
+      { "key": ":join-pane -s 2 -t 1", "desc": "Join windows as panes", "action": "Join two windows as panes", "source": "tmux" },
+      { "key": "C+B+X", "desc": "Close pane", "action": "Close current pane", "source": "tmux" },
+      { "key": "C+B+!", "desc": "Pane to window", "action": "Convert pane into a window", "source": "tmux" },
+      { "key": "C+B+Z", "desc": "Toggle pane zoom", "action": "Toggle pane zoom", "source": "tmux" },
+      { "key": "C+B+{", "desc": "Move pane left", "action": "Move pane left", "source": "tmux" },
+      { "key": "C+B+}", "desc": "Move pane right", "action": "Move pane right", "source": "tmux" },
+      { "key": ":setw sync-panes", "desc": "Toggle sync panes", "action": "Toggle synchronize-panes", "source": "tmux" },
+      { "key": "C+B+Space", "desc": "Toggle pane layouts", "action": "Toggle pane layouts", "source": "tmux" },
+      { "key": "C+B+;", "desc": "Last active pane", "action": "Toggle last active pane", "source": "tmux" },
+      { "key": "C+B+O", "desc": "Switch to next pane", "action": "Switch to next pane", "source": "tmux" },
+      { "key": "C+B+Arrows", "desc": "Switch pane by direction", "action": "Switch pane by direction", "source": "tmux" },
+      { "key": "C+B+Q", "desc": "Show pane numbers", "action": "Show pane numbers", "source": "tmux" },
+      { "key": "C+B+C+Arrows", "desc": "Resize pane", "action": "Resize pane", "source": "tmux" }
     ],
     "Copy Mode": [
-      {
-        "key": "Ctrl+B+BracketLeft",
-        "desc": "Enter copy mode",
-        "action": "Enter copy mode",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Page_Up",
-        "desc": "Enter copy mode and scroll up",
-        "action": "Enter copy mode and scroll up",
-        "source": "tmux"
-      },
-      {
-        "key": "Q",
-        "desc": "Quit mode",
-        "action": "Quit mode",
-        "source": "tmux"
-      },
-      {
-        "key": ": setw -g mode-keys vi",
-        "desc": "Use vi keys in buffer",
-        "action": "Use vi keys in buffer",
-        "source": "tmux"
-      },
-      {
-        "key": "H",
-        "desc": "Move cursor",
-        "action": "Move cursor",
-        "source": "tmux"
-      },
-      {
-        "key": "W",
-        "desc": "Move cursor forward one word",
-        "action": "Move cursor forward one word",
-        "source": "tmux"
-      },
-      {
-        "key": "B",
-        "desc": "Move cursor backward one word",
-        "action": "Move cursor backward one word",
-        "source": "tmux"
-      },
-      {
-        "key": "G",
-        "desc": "Go to top line",
-        "action": "Go to top line",
-        "source": "tmux"
-      },
-      {
-        "key": "Shift+G",
-        "desc": "Go to bottom line",
-        "action": "Go to bottom line",
-        "source": "tmux"
-      },
-      {
-        "key": "Slash",
-        "desc": "Search forward",
-        "action": "Search forward",
-        "source": "tmux"
-      },
-      {
-        "key": "Question",
-        "desc": "Search backward",
-        "action": "Search backward",
-        "source": "tmux"
-      },
-      {
-        "key": "Space",
-        "desc": "Start selection",
-        "action": "Start selection",
-        "source": "tmux"
-      },
-      {
-        "key": "Esc",
-        "desc": "Clear selection",
-        "action": "Clear selection",
-        "source": "tmux"
-      },
-      {
-        "key": "Enter",
-        "desc": "Copy selection",
-        "action": "Copy selection",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+BracketRight",
-        "desc": "Paste contents of buffer_0",
-        "action": "Paste contents of buffer_0",
-        "source": "tmux"
-      },
-      {
-        "key": ": show-buffer",
-        "desc": "Display buffer_0 contents",
-        "action": "Display buffer_0 contents",
-        "source": "tmux"
-      },
-      {
-        "key": ": capture-pane",
-        "desc": "Copy visible pane to buffer",
-        "action": "Copy visible pane to buffer",
-        "source": "tmux"
-      },
-      {
-        "key": ": list-buffers",
-        "desc": "Show all buffers",
-        "action": "Show all buffers",
-        "source": "tmux"
-      },
-      {
-        "key": ": save-buffer buf.txt",
-        "desc": "Save buffer to buf.txt",
-        "action": "Save buffer to buf.txt",
-        "source": "tmux"
-      }
+      { "key": "C+B+[", "desc": "Enter copy mode", "action": "Enter copy mode", "source": "tmux" },
+      { "key": "C+B+PgUp", "desc": "Copy mode & scroll up", "action": "Enter copy mode and scroll up", "source": "tmux" },
+      { "key": "Q", "desc": "Quit mode", "action": "Quit mode", "source": "tmux" },
+      { "key": ":setw -g mode-keys vi", "desc": "Use vi keys in buffer", "action": "Use vi keys in buffer", "source": "tmux" },
+      { "key": "H", "desc": "Move cursor", "action": "Move cursor", "source": "tmux" },
+      { "key": "W", "desc": "Move forward one word", "action": "Move cursor forward one word", "source": "tmux" },
+      { "key": "B", "desc": "Move backward one word", "action": "Move cursor backward one word", "source": "tmux" },
+      { "key": "G", "desc": "Go to top line", "action": "Go to top line", "source": "tmux" },
+      { "key": "S+G", "desc": "Go to bottom line", "action": "Go to bottom line", "source": "tmux" },
+      { "key": "/", "desc": "Search forward", "action": "Search forward", "source": "tmux" },
+      { "key": "?", "desc": "Search backward", "action": "Search backward", "source": "tmux" },
+      { "key": "Space", "desc": "Start selection", "action": "Start selection", "source": "tmux" },
+      { "key": "Esc", "desc": "Clear selection", "action": "Clear selection", "source": "tmux" },
+      { "key": "Enter", "desc": "Copy selection", "action": "Copy selection", "source": "tmux" },
+      { "key": "C+B+]", "desc": "Paste buffer_0", "action": "Paste contents of buffer_0", "source": "tmux" },
+      { "key": ":show-buffer", "desc": "Display buffer_0", "action": "Display buffer_0 contents", "source": "tmux" },
+      { "key": ":capture-pane", "desc": "Copy pane to buffer", "action": "Copy visible pane to buffer", "source": "tmux" },
+      { "key": ":list-buffers", "desc": "Show all buffers", "action": "Show all buffers", "source": "tmux" },
+      { "key": ":save-buffer buf", "desc": "Save buffer to file", "action": "Save buffer to buf.txt", "source": "tmux" }
     ],
     "Misc and Help": [
-      {
-        "key": "Ctrl+B+Colon",
-        "desc": "Enter command mode",
-        "action": "Enter command mode",
-        "source": "tmux"
-      },
-      {
-        "key": ": set -g OPTION",
-        "desc": "Set OPTION for all sessions",
-        "action": "Set OPTION for all sessions",
-        "source": "tmux"
-      },
-      {
-        "key": ": setw -g OPTION",
-        "desc": "Set OPTION for all windows",
-        "action": "Set OPTION for all windows",
-        "source": "tmux"
-      },
-      {
-        "key": ": set mouse on",
-        "desc": "Enable mouse mode",
-        "action": "Enable mouse mode",
-        "source": "tmux"
-      },
-      {
-        "key": "Ctrl+B+Question",
-        "desc": "List key bindings",
-        "action": "List key bindings",
-        "source": "tmux"
-      },
-      {
-        "key": "$ tmux info",
-        "desc": "Show info for sessions and panes",
-        "action": "Show info for sessions and panes",
-        "source": "tmux"
-      }
+      { "key": "C+B+:", "desc": "Enter command mode", "action": "Enter command mode", "source": "tmux" },
+      { "key": ":set -g [OPT]", "desc": "Set session option", "action": "Set OPTION for all sessions", "source": "tmux" },
+      { "key": ":setw -g [OPT]", "desc": "Set window option", "action": "Set OPTION for all windows", "source": "tmux" },
+      { "key": ":set mouse on", "desc": "Enable mouse mode", "action": "Enable mouse mode", "source": "tmux" },
+      { "key": "C+B+?", "desc": "List key bindings", "action": "List key bindings", "source": "tmux" },
+      { "key": "tmux info", "desc": "Show session/pane info", "action": "Show info for sessions and panes", "source": "tmux" }
+    ],
+    "Legend": [
+      { "key": "C", "desc": "Ctrl (Control key)", "action": "Modifier", "source": "legend" },
+      { "key": "S", "desc": "Shift key", "action": "Modifier", "source": "legend" },
+      { "key": "C+B", "desc": "Ctrl+B (Default tmux prefix)", "action": "Prefix", "source": "legend" },
+      { "key": "PgUp", "desc": "Page Up", "action": "Key", "source": "legend" },
+      { "key": "OPT", "desc": "Option / Setting", "action": "Term", "source": "legend" }
     ]
   }
 }

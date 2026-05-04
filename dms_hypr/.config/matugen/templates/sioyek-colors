@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 # Automatically apply the custom colors on startup
-startup_commands             toggle_custom_color
+# startup_commands             toggle_custom_color
 
 # App Background (the space outside the document pages)
 background_color             {{colors.on_primary.default.hex}}
@@ -31,3 +31,6 @@ synctex_highlight_color      {{colors.primary.default.hex}}
 
 # Page separator
 page_separator_color         {{colors.on_primary.default.hex}}
+
+# Fix font rendering
+linear_filter 1
