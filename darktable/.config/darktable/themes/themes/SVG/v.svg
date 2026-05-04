@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="23.831795mm"
+   height="21.128382mm"
+   viewBox="0 0 23.831795 21.128382"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="v.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.5799102"
+     inkscape:cx="-8.5274286"
+     inkscape:cy="62.792883"
+     inkscape:window-width="1707"
+     inkscape:window-height="994"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:page
+       x="7.0552675e-22"
+       y="0"
+       width="23.831797"
+       height="21.128382"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-154.12519,-49.39141)">
+    <path
+       id="rect60"
+       style="opacity:1;fill:#445500;stroke:#2d3748;stroke-width:0.439972;fill-opacity:0.5"
+       class="key"
+       d="m 158.08788,49.611397 h 15.90644 c 2.07345,0 3.74269,1.669241 3.74269,3.742692 v 13.203027 c 0,2.073452 -1.66924,3.742693 -3.74269,3.742693 h -15.90644 c -2.07345,0 -3.7427,-1.669241 -3.7427,-3.742693 V 53.354089 c 0,-2.073451 1.66925,-3.742692 3.7427,-3.742692 z" />
+    <path
+       d="m 156.92088,68.896157 3.57011,-10.286992 h -1.397 l -2.85044,8.706549 -3.01977,-8.706549 h -1.41111 l 3.6971,10.286992 z"
+       id="text60"
+       style="font-size:14.1111px;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;dominant-baseline:middle;text-anchor:middle;fill:#ffffff;stroke-width:0.439972;opacity:1;fill-opacity:1"
+       class="key-text"
+       transform="scale(1.0633311,0.94044084)"
+       aria-label="V" />
+  </g>
+</svg>

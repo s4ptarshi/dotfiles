@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="23.831795mm"
+   height="21.128384mm"
+   viewBox="0 0 23.831795 21.128384"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="g.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="5.1598204"
+     inkscape:cx="22.578305"
+     inkscape:cy="53.296429"
+     inkscape:window-width="1707"
+     inkscape:window-height="994"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:page
+       x="7.6977401e-22"
+       y="0"
+       width="23.831797"
+       height="21.128384"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-168.16029,-24.56529)">
+    <path
+       id="rect49"
+       style="opacity:1;fill:#0044aa;stroke:#2d3748;stroke-width:0.439972;fill-opacity:0.5"
+       class="key"
+       d="m 172.12297,24.785276 h 15.90644 c 2.07346,0 3.7427,1.669241 3.7427,3.742693 v 13.203027 c 0,2.073451 -1.66924,3.742692 -3.7427,3.742692 h -15.90644 c -2.07345,0 -3.74269,-1.669241 -3.74269,-3.742692 V 28.527969 c 0,-2.073452 1.66924,-3.742693 3.74269,-3.742693 z" />
+    <path
+       d="m 174.04294,36.98737 h -4.28977 v 1.15711 h 3.13266 v 0.282222 c 0,1.834444 -1.35466,3.160887 -3.23144,3.160887 -1.04422,0 -1.98966,-0.381 -2.59644,-1.044221 -0.67733,-0.733778 -1.08656,-1.961443 -1.08656,-3.231442 0,-2.525887 1.43934,-4.190997 3.61244,-4.190997 1.56634,0 2.69522,0.804333 2.97745,2.130776 h 1.34055 c -0.36689,-2.088443 -1.94733,-3.287886 -4.30388,-3.287886 -1.25589,0 -2.27189,0.324555 -3.07622,0.987777 -1.19945,0.987777 -1.86267,2.582331 -1.86267,4.430885 0,3.160887 1.93322,5.362218 4.71311,5.362218 1.397,0 2.49766,-0.522111 3.51366,-1.636887 l 0.32456,1.368776 h 0.83255 z"
+       id="text49"
+       style="font-size:14.1111px;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;dominant-baseline:middle;text-anchor:middle;fill:#ffffff;stroke-width:0.439972;fill-opacity:1"
+       class="key-text"
+       transform="scale(1.0633311,0.94044084)"
+       aria-label="G" />
+  </g>
+</svg>

@@ -1,0 +1,83 @@
+.dt_icon {
+    background-image: url("SVG/default.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 2px;
+    margin-left: 4px;
+    min-height: 12px;
+    min-width: 24px;
+    opacity: 0.5;
+}
+
+/* Active Modules (Q) - Bleibt laut deiner Anweisung unverändert oder nutzt default */
+#iop-panel-icon-active {
+    background-image: url("SVG/default.svg");
+}
+
+/* Spalte 1 */
+#iop-panel-icon-atrous {
+    /* Contrast Equalizer */
+    background-image: url("SVG/w.svg");
+}
+
+#iop-panel-icon-colorbalancergb {
+    /* Color Balance RGB */
+    background-image: url("SVG/e.svg");
+}
+
+#iop-panel-icon-ashift {
+    /* Rotate & Persp. */
+    background-image: url("SVG/r.svg");
+}
+
+#iop-panel-icon-cacorrectrgb {
+    /* Raw Chrom. Abber. */
+    background-image: url("SVG/t.svg");
+}
+
+/* Spalte 2 */
+#iop-panel-icon-agx {
+    /* AgX (oft filmic Nachfolger) */
+    background-image: url("SVG/a.svg");
+}
+
+#iop-panel-icon-channelmixerrgb {
+    /* Color Calibration */
+    background-image: url("SVG/s.svg");
+}
+
+#iop-panel-icon-toneequal {
+    /* Tone Equalizer */
+    background-image: url("SVG/d.svg");
+}
+
+#iop-panel-icon-exposure {
+    /* Exposure */
+    background-image: url("SVG/f.svg");
+}
+
+/* Spalte 3 */
+#iop-panel-icon-retouch {
+    /* Retouch */
+    background-image: url("SVG/y.svg");
+}
+
+#iop-panel-icon-colorequal {
+    /* Color Equalizer */
+    background-image: url("SVG/x.svg");
+}
+
+#iop-panel-icon-crop {
+    /* Crop */
+    background-image: url("SVG/c.svg");
+}
+
+#iop-panel-icon-denoiseprofile {
+    /* Denoise (Profiled) */
+    background-image: url("SVG/v.svg");
+}
+
+#iop-panel-icon-lens {
+    /* Lens Corrections */
+    background-image: url("SVG/b.svg");
+}

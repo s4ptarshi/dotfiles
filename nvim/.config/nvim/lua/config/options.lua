@@ -14,4 +14,9 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.g.clipboard = "osc52"
+-- vim.g.clipboard = "osc52"
+vim.opt.clipboard = "unnamedplus"
+
+vim.g.vimtex_quickfix_ignore_filters = {
+    "Unknown document class",
+}
