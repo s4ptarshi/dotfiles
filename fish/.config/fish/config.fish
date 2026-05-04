@@ -1,3 +1,4 @@
+fish_add_path "$HOME/.ghcup/bin"
 if status is-interactive # Commands to run in interactive sessions can go here
 
     set -g fish_vi_force_cursor 1
@@ -94,3 +95,4 @@ function conda
     echo "No conda installation found in $CONDA_PATH"
 end
 # <<< conda initialize <<<
+devenv hook fish | source
