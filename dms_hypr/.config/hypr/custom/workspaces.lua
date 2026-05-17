@@ -1,0 +1,2 @@
+-- hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
+-- hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })

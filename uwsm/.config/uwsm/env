@@ -6,3 +6,7 @@ export TERMINAL=kitty
 export QT_QPA_PLATFORMTHEME=kde
 export QT_QPA_PLATFORMTHEME_QT6=kde
 export QT_STYLE_OVERRIDE=kvantum
+export HYPRCURSOR_THEME=Qogir
+export XCURSOR_THEME=Qogir
+export HYPRCURSOR_SIZE=30
+export XCURSOR_SIZE=30

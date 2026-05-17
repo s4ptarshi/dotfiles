@@ -1,0 +1,3 @@
+[submodule "dms_hypr/.config/hypr/hyprsplit"]
+	path = dms_hypr/.config/hypr/hyprsplit
+	url = git@github.com:shezdy/hyprsplit.git

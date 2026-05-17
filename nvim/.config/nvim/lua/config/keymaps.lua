@@ -5,8 +5,8 @@
 -- capital J in normal mode cursor stays in place
 vim.keymap.set("n", "J", "mzJ`z")
 -- half page up down cursor stays at center
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 --search terms stay in middle
 vim.keymap.set("n", "n", "nzzzv")
