@@ -39,6 +39,8 @@ hl.bind("F2", hl.dsp.focus({ monitor = "r" }))
 hl.bind("F1", hl.dsp.focus({ monitor = "l" }))
 hl.bind("SUPER + " .. "right", hs.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "r" }))
 hl.bind("SUPER + " .. "left", hs.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "l" }))
+hl.bind("SUPER + " .. "up", hs.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "u" }))
+hl.bind("SUPER + " .. "down", hs.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "d" }))
 -- ==============================
 -- Workspaces & hyprsplit
 -- ==============================
@@ -80,10 +82,10 @@ hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind("F4", hl.dsp.window.close())
 
 -- Move and Resize
-hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+-- hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 -- hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 -- hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
+-- hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 
 -- Repeating binds (formerly binde).
 -- (Using ["repeat"] syntax since 'repeat' is a reserved lua keyword)
