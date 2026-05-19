@@ -5,54 +5,118 @@ handle:close()
 ------------------
 ---- MONITORS ----
 ------------------
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+-- hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+-- -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+-- -- home
+-- if hostname == "vivobook" then
+-- 	hl.monitor({
+-- 		output = "eDP-1",
+-- 		mode = "2880x1800@90.00",
+-- 		position = "0x0",
+-- 		scale = "2",
+-- 	})
+-- 	hl.monitor({
+-- 		output = "",
+-- 		mode = "preferred",
+-- 		position = "auto",
+-- 		scale = "auto",
+-- 	})
+-- elseif hostname == "chadbook" then
+-- 	hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60.000", position = "1920x214", vrr = 0, scale = "1.5" })
+-- 	hl.monitor({ output = "eDP-1", mode = "1920x1080@120.003", position = "0x214", scale = "1", vrr = 1, bitdepth = 10 })
+-- 	hl.monitor({ output = "DP-1", mode = "1680x1050@59.954", position = "4480x0", scale = "1", transform = 1, vrr = 0 })
+-- 	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
+-- 	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })
+-- 	-- terminal room
+-- 	-- hl.monitor({
+-- 	-- 	output = "eDP-1",
+-- 	-- 	mode = "1920x1080@120.003",
+-- 	-- 	position = "auto-left",
+-- 	-- 	scale = 1,
+-- 	-- 	vrr = 1,
+-- 	-- 	bitdepth = 10,
+-- 	-- })
+-- 	-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
+-- 	--
+-- 	hl.monitor({
+-- 		output = "",
+-- 		mode = "preferred",
+-- 		position = "auto",
+-- 		scale = "auto",
+-- 	})
+-- else
+-- 	-- Fallback for any unknown devices
+-- 	hl.monitor({
+-- 		output = "",
+-- 		mode = "preferred",
+-- 		position = "auto",
+-- 		scale = "auto",
+-- 	})
+-- end
+-- terminal room
+-- hl.monitor({
+-- 	output = "eDP-1",
+-- 	mode = "1920x1080@120.003",
+-- 	position = "auto-left",
+-- 	scale = 1,
+-- 	vrr = 1,
+-- 	bitdepth = 10,
+-- })
+-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
 
--- See https://wiki.hypr.land/Configuring/Basics/Monitors/
--- home
-if hostname == "vivobook" then
+-- testing stdout
+hl.config({
+	debug = {
+		-- enable_stdout_logs = true,
+		disable_logs = false,
+	},
+})
+local monitors = hl.get_monitors()
+local has_dell = false
+
+-- 1. Scan all connected monitors first to check for the Dell monitor
+for _, monitor in ipairs(monitors) do
+	-- Using just "U2724DE" is safer, as dots (.) have special meanings in Lua patterns
+	if string.match(monitor.description, "U2724DE") then
+		has_dell = true
+		break -- Found it, we can stop looking
+	end
+end
+
+-- 2. Apply the layout configuration ONCE based on the entire system state
+if has_dell then
+	-- Dell Layout (Not Rotated)
 	hl.monitor({
 		output = "eDP-1",
-		mode = "2880x1800@90.00",
-		position = "0x0",
-		scale = "2",
+		mode = "1920x1080@120.003",
+		position = "auto-left",
+		scale = 1,
+		vrr = 1,
+		bitdepth = 10,
+	})
+	hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
+	os.execute("dms ipc call wallpaper setFor eDP-1 ~/Pictures/goldy/goldy.png")
+else
+	-- Fallback Layout (Rotated Monitor Setup)
+	hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60.000", position = "1920x214", vrr = 0, scale = "1.5" })
+	hl.monitor({
+		output = "eDP-1",
+		mode = "1920x1080@120.003",
+		position = "0x214",
+		scale = "1",
+		vrr = 1,
+		bitdepth = 10,
 	})
 	hl.monitor({
-		output = "",
-		mode = "preferred",
-		position = "auto",
-		scale = "auto",
+		output = "DP-1",
+		mode = "1680x1050@59.954",
+		position = "4480x0",
+		scale = "1",
+		transform = 1,
+		vrr = 0,
 	})
-elseif hostname == "chadbook" then
-	hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60.000", position = "1920x214", vrr = 0, scale = "1.5" })
-	hl.monitor({ output = "eDP-1", mode = "1920x1080@120.003", position = "0x214", scale = "1", vrr = 1, bitdepth = 10 })
-	hl.monitor({ output = "DP-1", mode = "1680x1050@59.954", position = "4480x0", scale = "1", transform = 1, vrr = 0 })
 	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
 	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })
-	-- terminal room
-	-- hl.monitor({
-	-- 	output = "eDP-1",
-	-- 	mode = "1920x1080@120.003",
-	-- 	position = "auto-left",
-	-- 	scale = 1,
-	-- 	vrr = 1,
-	-- 	bitdepth = 10,
-	-- })
-	-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
-	--
-	hl.monitor({
-		output = "",
-		mode = "preferred",
-		position = "auto",
-		scale = "auto",
-	})
-else
-	-- Fallback for any unknown devices
-	hl.monitor({
-		output = "",
-		mode = "preferred",
-		position = "auto",
-		scale = "auto",
-	})
 end
 
 -----------------------

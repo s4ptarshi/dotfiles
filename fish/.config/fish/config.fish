@@ -1,4 +1,6 @@
 fish_add_path "$HOME/.ghcup/bin"
+fish_add_path -g ~/.local/bin
+fish_add_path -g ~/.local/bin/nvim-linux-x86_64/bin
 if status is-interactive # Commands to run in interactive sessions can go here
 
     set -g fish_vi_force_cursor 1
@@ -43,10 +45,16 @@ if status is-interactive # Commands to run in interactive sessions can go here
     abbr -a kwininfo "qdbus org.kde.KWin /KWin queryWindowInfo"
 
     # File listing (lsd)
-    abbr -a ls 'lsd -A'
-    abbr -a la 'lsd -A'
-    abbr -a ll 'lsd -Al'
-    abbr -a lt 'lsd -A --tree'
+    if command -sq lsd
+        abbr -a ls 'lsd -A'
+        abbr -a la 'lsd -A'
+        abbr -a ll 'lsd -Al'
+        abbr -a lt 'lsd -A --tree'
+    else
+        abbr -a ls 'ls -A'
+        abbr -a la 'ls -A'
+        abbr -a ll 'ls -Al'
+    end
 
     # System utilities
     abbr -a grep 'grep --color=auto'
@@ -73,6 +81,10 @@ if status is-interactive # Commands to run in interactive sessions can go here
     # Logs
     abbr -a jctl "journalctl -p 3 -xb"
 
+    set -l host (hostname)
+    if contains $host login1 login2 login3
+        set --global hydro_symbol_prompt "dfki ❱"
+    end
 end
 
 # >>> conda initialize >>>

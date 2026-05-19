@@ -92,6 +92,8 @@ hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 -- move window to left or right monitor
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ monitor = "l", follow = true }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "r", follow = true }))
+hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ monitor = "u", follow = true }))
+hl.bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ monitor = "d", follow = true }))
 -- ==============================
 -- Mouse Binds (formerly bindm)
 -- ==============================
