@@ -94,5 +94,3 @@ function conda
     end
     echo "No conda installation found in $CONDA_PATH"
 end
-# <<< conda initialize <<<
-devenv hook fish | source

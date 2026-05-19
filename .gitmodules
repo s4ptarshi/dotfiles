@@ -1,6 +1,6 @@
 [submodule "dms_hypr/.config/hypr/hyprsplit"]
 	path = dms_hypr/.config/hypr/hyprsplit
-	url = git@github.com:shezdy/hyprsplit.git
+	url = https://github.com/shezdy/hyprsplit.git
 [submodule "tmux/.config/tmux/plugins/tmux-continuum"]
 	path = tmux/.config/tmux/plugins/tmux-continuum
 	url = https://github.com/tmux-plugins/tmux-continuum.git
