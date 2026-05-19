@@ -12,9 +12,13 @@ output_path = '~/.config/Kvantum/matugen/matugen.svg'
 input_path = "~/.config/matugen/templates/obsidian-shimmer.css"
 output_path = "~/gdrive/300 - Resources/Obsidian Vault/.obsidian/snippets/matugen.css"
 
-[templates.kde_export]
-input_path = "~/.config/DankMaterialShell/plugins/dms-kde-sync/color_template.txt"
-output_path = "~/.cache/dms-kde-sync/current_color.txt"
+[templates.kdeLight]
+input_path = "~/.config/matugen/templates/Matugen.colors"
+output_path = "~/.local/share/color-schemes/Matugena.colors"
+
+[templates.kdeDark]
+input_path = "~/.config/matugen/templates/Matugen.colors"
+output_path = "~/.local/share/color-schemes/Matugenb.colors"
 
 [templates.zathura]
 input_path = '~/.config/matugen/templates/zathura-colors'
