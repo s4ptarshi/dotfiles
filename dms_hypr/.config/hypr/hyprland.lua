@@ -98,25 +98,65 @@ if has_dell then
 	os.execute("dms ipc call wallpaper setFor eDP-1 ~/Pictures/goldy/goldy.png")
 else
 	-- Fallback Layout (Rotated Monitor Setup)
-	hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60.000", position = "1920x214", vrr = 0, scale = "1.5" })
-	hl.monitor({
-		output = "eDP-1",
-		mode = "1920x1080@120.003",
-		position = "0x214",
-		scale = "1",
-		vrr = 1,
-		bitdepth = 10,
-	})
-	hl.monitor({
-		output = "DP-1",
-		mode = "1680x1050@59.954",
-		position = "4480x0",
-		scale = "1",
-		transform = 1,
-		vrr = 0,
-	})
-	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
-	hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })
+	if hostname == "vivobook" then
+		hl.monitor({
+			output = "eDP-1",
+			mode = "2880x1800@90.00",
+			position = "0x0",
+			scale = "1.5",
+		})
+		hl.monitor({
+			output = "",
+			mode = "preferred",
+			position = "auto",
+			scale = "auto",
+		})
+	elseif hostname == "chadbook" then
+		hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60.000", position = "1920x214", vrr = 0, scale = "1.5" })
+		hl.monitor({
+			output = "eDP-1",
+			mode = "1920x1080@120.003",
+			position = "0x214",
+			scale = "1",
+			vrr = 1,
+			bitdepth = 10,
+		})
+		hl.monitor({
+			output = "DP-1",
+			mode = "1680x1050@59.954",
+			position = "4480x0",
+			scale = "1",
+			transform = 1,
+			vrr = 0,
+		})
+		hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
+		hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })
+		-- terminal room
+		-- hl.monitor({
+		-- 	output = "eDP-1",
+		-- 	mode = "1920x1080@120.003",
+		-- 	position = "auto-left",
+		-- 	scale = 1,
+		-- 	vrr = 1,
+		-- 	bitdepth = 10,
+		-- })
+		-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
+		--
+		hl.monitor({
+			output = "",
+			mode = "preferred",
+			position = "auto",
+			scale = "auto",
+		})
+	else
+		-- Fallback for any unknown devices
+		hl.monitor({
+			output = "",
+			mode = "preferred",
+			position = "auto",
+			scale = "auto",
+		})
+	end
 end
 
 -----------------------
