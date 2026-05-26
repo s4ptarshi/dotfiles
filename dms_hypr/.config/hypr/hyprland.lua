@@ -95,7 +95,7 @@ if has_dell then
 		bitdepth = 10,
 	})
 	hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
-	os.execute("dms ipc call wallpaper setFor eDP-1 ~/Pictures/goldy/goldy.png")
+	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/Goldy.png")
 else
 	-- Fallback Layout (Rotated Monitor Setup)
 	if hostname == "vivobook" then

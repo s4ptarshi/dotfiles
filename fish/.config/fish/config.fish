@@ -24,7 +24,11 @@ if status is-interactive # Commands to run in interactive sessions can go here
     #     starship init fish | source
     # end
 
-    alias file-manager='app2unit-open -S both . &'
+    # alias file-manager='app2unit-open -S both . &'
+    function file-manager
+        nohup app2unit-open -S both . $argv >/dev/null 2>&1 &
+        disown
+    end
     # Abbreviations (Space separated, no equals sign)
     abbr -a pamcan pacman
     abbr -a clear "printf '\033[2J\033[3J\033[1;1H'"
@@ -81,9 +85,10 @@ if status is-interactive # Commands to run in interactive sessions can go here
     # Logs
     abbr -a jctl "journalctl -p 3 -xb"
 
-    set -l host (hostname)
-    if contains $host login1 login2 login3
-        set --global hydro_symbol_prompt "dfki ❱"
+    if string match -q -r 'chadbook|vivobook' $hostname
+        set --global hydro_symbol_prompt "❱"
+    else
+        set --global hydro_symbol_prompt "$hostname ❱"
     end
 end
 
@@ -91,7 +96,7 @@ end
 # !! Contents within this block are managed by 'conda init' !!
 #
 # Uses the first conda installation found in the following list
-set -x CONDA_PATH /data/miniconda3/bin/conda $HOME/miniconda3/bin/conda
+set -x CONDA_PATH /data/miniconda3/bin/conda $HOME/miniconda3/bin/conda /netscratch/bhattach/miniconda3/bin/conda
 
 function conda
     echo "Lazy loading conda upon first invocation..."
