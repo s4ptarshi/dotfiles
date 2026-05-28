@@ -356,10 +356,16 @@ hl.config({
 })
 
 hl.gesture({
-	fingers = 3,
-	direction = "horizontal",
+	fingers = 4,
+	direction = "vertical",
 	action = "workspace",
 })
+hl.gesture({
+	fingers = 4,
+	direction = "horizontal",
+	action = "scroll_move",
+})
+hl.gesture({ fingers = 2, direction = "pinch", action = "cursorZoom", zoom_level = 1, mode = "live" })
 
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
