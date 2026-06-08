@@ -55,7 +55,7 @@ for i = 1, 10 do
 end
 -- Note: Unbinds (unbind = Super, 1) from the old config aren't necessary in Lua.
 -- You simply overwrite the binding by defining a new one or omitting defaults.
-
+hl.bind("SUPER + " .. "g", hs.dsp.grab_rogue_windows())
 -- ==============================
 -- Window & Layout Management
 -- ==============================
@@ -142,3 +142,4 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("dms ipc call audio decrement 3"
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("dms ipc call audio increment 3"), locked_repeat_opts)
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("dms ipc call brightness decrement 5 ''"), locked_repeat_opts)
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("dms ipc call brightness increment 5 ''"), locked_repeat_opts)
+hl.bind(mainMod .. " + P", hl.dsp.dpms())
