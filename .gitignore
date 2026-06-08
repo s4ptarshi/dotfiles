@@ -9,3 +9,9 @@ dms_hypr/.config/Kvantum/matugen/matugen.kvconfig
 dms_hypr/.config/Kvantum/matugen/matugen.svg
 .aider*
 .env
+/nvim/.config/nvim/lua/config/avante_opts.lua
+scripts/.local/bin/uv
+scripts/.local/bin/uvx
+scripts/.local/bin/iloader
+fish/.config/fish/fish_variables
+fish/.config/fish/fish_variables.bak
