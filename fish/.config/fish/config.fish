@@ -87,7 +87,11 @@ if status is-interactive # Commands to run in interactive sessions can go here
 
     if string match -q -r 'chadbook|vivobook' $hostname
         set --global hydro_symbol_prompt "❱"
+        direnv hook fish | source
+    else if string match -q -r 'login1|login2|login3' $hostname
+        set --global hydro_symbol_prompt "dfki ❱"
     else
+        ssh-unlock
         set --global hydro_symbol_prompt "$hostname ❱"
     end
 end
