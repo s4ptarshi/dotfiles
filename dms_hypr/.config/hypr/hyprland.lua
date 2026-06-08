@@ -305,6 +305,7 @@ hl.config({
 		focus_fit_method = 1,
 		column_width = 0.5, -- Default width of a column (0.1 to 1.0)
 		direction = "right", -- Direction new windows appear (left/right/up/down)
+		follow_focus = false,
 	},
 })
 
