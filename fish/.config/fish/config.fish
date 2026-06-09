@@ -1,6 +1,10 @@
 fish_add_path "$HOME/.ghcup/bin"
 fish_add_path -g ~/.local/bin
 fish_add_path -g ~/.local/bin/nvim-linux-x86_64/bin
+# Check for and source vars.fish from the fish config directory
+if test -f $__fish_config_dir/vars.fish
+    source $__fish_config_dir/vars.fish
+end
 if status is-interactive # Commands to run in interactive sessions can go here
 
     set -g fish_vi_force_cursor 1
