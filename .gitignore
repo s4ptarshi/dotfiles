@@ -13,5 +13,32 @@ dms_hypr/.config/Kvantum/matugen/matugen.svg
 scripts/.local/bin/uv
 scripts/.local/bin/uvx
 scripts/.local/bin/iloader
-fish/.config/fish/fish_variables
-fish/.config/fish/fish_variables.bak
+fish/.config/fish/vars.fish
+
+# Fish state & fisher auto-installed
+fish_variables*
+fish/.config/fish/conf.d/nvm.fish
+fish/.config/fish/functions/_nvm_*.fish
+fish/.config/fish/functions/nvm.fish
+fish/.config/fish/completions/nvm.fish
+
+# DMS auto-generated
+*.done
+dms_hypr/.config/niri/dms/colors.kdl
+
+# Backups
+*.bak
+*.backup*
+
+# Machine-specific
+dms_hypr/.config/hypr/dms/outputs.conf
+dms_hypr/.config/niri/dms/profiles/
+dms_hypr/.config/hypr/dms/profiles/
+uwsm/.config/uwsm/default-id
+
+# OS junk
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.netrwhist
