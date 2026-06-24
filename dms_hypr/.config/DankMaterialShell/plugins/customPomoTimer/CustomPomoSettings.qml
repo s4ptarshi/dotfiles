@@ -114,6 +114,152 @@ PluginSettings {
 
     StyledRect {
         width: parent.width
+        height: flexLabelsColumn.implicitHeight + Theme.spacingL * 2
+        radius: Theme.cornerRadius
+        color: Theme.surfaceContainerHigh
+
+        Column {
+            id: flexLabelsColumn
+            anchors.fill: parent
+            anchors.margins: Theme.spacingL
+            spacing: Theme.spacingM
+
+            property var labels:[]
+
+            function loadLabels() {
+                var json = root.loadValue("flexLabels", "")
+                if (json && json.length > 0) {
+                    try {
+                        labels = JSON.parse(json)
+                    } catch (e) {
+                        labels =["Math", "Physics", "Chemistry"]
+                    }
+                } else {
+                    labels =["Math", "Physics", "Chemistry"]
+                }
+            }
+
+            function persist() {
+                root.saveValue("flexLabels", JSON.stringify(labels))
+                var temp = labels
+                labels =[]
+                labels = temp
+            }
+
+            function addLabel(name) {
+                var trimmed = (name || "").trim()
+                if (trimmed === "" || labels.indexOf(trimmed) !== -1) return
+                labels.push(trimmed)
+                persist()
+            }
+
+            function removeLabel(name) {
+                var idx = labels.indexOf(name)
+                if (idx === -1) return
+                labels.splice(idx, 1)
+                persist()
+            }
+
+            Component.onCompleted: loadLabels()
+
+            Connections {
+                target: root
+                function onSettingChanged() { flexLabelsColumn.loadLabels() }
+            }
+
+            StyledText {
+                text: "Flexible Labels"
+                font.pixelSize: Theme.fontSizeMedium
+                font.weight: Font.Medium
+                color: Theme.surfaceText
+            }
+
+            StyledText {
+                width: parent.width
+                text: "Subjects used to tag flexible focus sessions (e.g. Math, Physics). You can also add labels directly from the widget."
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.surfaceVariantText
+                wrapMode: Text.WordWrap
+            }
+
+            Flow {
+                width: parent.width
+                spacing: Theme.spacingS
+
+                Repeater {
+                    model: flexLabelsColumn.labels
+
+                    Rectangle {
+                        height: 32
+                        width: chipRow.implicitWidth + Theme.spacingM * 2
+                        radius: Theme.cornerRadius
+                        color: Theme.surfaceContainerHighest
+
+                        Row {
+                            id: chipRow
+                            anchors.centerIn: parent
+                            spacing: Theme.spacingXS
+
+                            StyledText {
+                                text: modelData
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceText
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+
+                            DankIcon {
+                                name: "close"
+                                size: 16
+                                color: Theme.error
+                                anchors.verticalCenter: parent.verticalCenter
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: flexLabelsColumn.removeLabel(modelData)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingS
+
+                TextField {
+                    id: newLabelField
+                    width: parent.width - addLabelBtn.width - Theme.spacingS
+                    placeholderText: "Add a label"
+                    placeholderTextColor: Theme.surfaceVariantText
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.surfaceText
+                    background: Rectangle {
+                        color: Theme.surfaceContainerHighest
+                        radius: Theme.cornerRadiusSmall
+                    }
+                    onAccepted: {
+                        flexLabelsColumn.addLabel(text)
+                        text = ""
+                    }
+                }
+
+                DankButton {
+                    id: addLabelBtn
+                    iconName: "add"
+                    width: 40
+                    onClicked: {
+                        flexLabelsColumn.addLabel(newLabelField.text)
+                        newLabelField.text = ""
+                    }
+                }
+            }
+        }
+    }
+
+    StyledRect {
+        width: parent.width
         height: soundColumn.implicitHeight + Theme.spacingL * 2
         radius: Theme.cornerRadius
         color: Theme.surfaceContainerHigh

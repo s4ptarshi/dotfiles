@@ -34,6 +34,25 @@ PluginComponent {
     }
     // ---------------------------
 
+    // --- Flexible Mode Properties ---
+    property var flexLabels:[]                 // user-defined labels (Math, Physics, ...)
+    property var flexSessions:[]               // recorded session history (state file)
+    property string flexCurrentLabel: ""       // label of the in-progress session
+    property int flexPlannedSeconds: 0         // target duration of current session
+    property double flexStartTs: 0             // epoch ms when current session began
+    property var flexInsights: ({ byLabel: {}, byPeriod: {} })  // computed aggregates
+    property int flexHistoryCap: 500           // max retained session records
+    property int flexRecencyHalfLifeDays: 15   // recency weighting half-life
+    property int flexMinSamples: 5             // min sessions for a trusted suggestion
+    property var flexRecommendation: ({ workMin: 0, breakMin: 0, basis: "default", sampleCount: 0, rationale: "" })
+
+    function refreshFlexSessions() {
+        var temp = flexSessions
+        flexSessions =[]
+        flexSessions = temp
+    }
+    // --------------------------------
+
     onPluginServiceChanged: {
         if (pluginService) {
             currentDateKey = formatDateKey(new Date())
@@ -41,6 +60,20 @@ PluginComponent {
             globalWorkedSecondsToday.set(pluginService.loadPluginData("customPomoTimer", "workedSeconds-" + currentDateKey, 0)) // New line
             loadLast7Days()
             if (typeof loadTasks === "function") loadTasks()
+            if (typeof loadFlexData === "function") loadFlexData()
+        }
+    }
+
+    // Re-read labels when plugin settings change (e.g. added/removed in the
+    // Settings page). Sessions are NOT reloaded here to avoid clobbering
+    // in-progress insight state on every settings write.
+    Connections {
+        target: pluginService
+        enabled: pluginService !== null
+        function onPluginDataChanged(changedPluginId) {
+            if (changedPluginId === "customPomoTimer" && typeof loadFlexLabels === "function") {
+                loadFlexLabels()
+            }
         }
     }
 
@@ -103,6 +136,385 @@ PluginComponent {
     }
     // ----------------------
 
+    // --- Flexible Mode Functions ---
+    function loadFlexLabels() {
+        if (!pluginService) return
+        // Labels live in settings so the Settings page and popout stay in sync
+        var labelsJson = pluginService.loadPluginData("customPomoTimer", "flexLabels", "")
+        if (labelsJson && labelsJson.length > 0) {
+            try {
+                flexLabels = JSON.parse(labelsJson)
+            } catch (e) {
+                flexLabels =["Math", "Physics", "Chemistry"]
+            }
+        } else {
+            flexLabels =["Math", "Physics", "Chemistry"]
+        }
+        // Preserve the active selection if it still exists; otherwise fall back
+        // to the first available label.
+        if (flexCurrentLabel === "" || flexLabels.indexOf(flexCurrentLabel) === -1) {
+            flexCurrentLabel = flexLabels.length > 0 ? flexLabels[0] : ""
+        }
+    }
+
+    function loadFlexData() {
+        if (!pluginService) return
+        loadFlexLabels()
+        // Session history lives in the dedicated plugin state file
+        var sessions = pluginService.loadPluginState("customPomoTimer", "flexSessions", [])
+        if (Array.isArray(sessions)) {
+            flexSessions = sessions
+        } else {
+            flexSessions =[]
+        }
+        computeFlexInsights()
+    }
+
+    function saveFlexLabels() {
+        if (!pluginService) return
+        pluginService.savePluginData("customPomoTimer", "flexLabels", JSON.stringify(flexLabels))
+    }
+
+    function addFlexLabel(name) {
+        var trimmed = (name || "").trim()
+        if (trimmed === "") return
+        if (flexLabels.indexOf(trimmed) !== -1) return
+        flexLabels.push(trimmed)
+        var temp = flexLabels
+        flexLabels =[]
+        flexLabels = temp
+        saveFlexLabels()
+    }
+
+    function removeFlexLabel(name) {
+        var idx = flexLabels.indexOf(name)
+        if (idx === -1) return
+        flexLabels.splice(idx, 1)
+        var temp = flexLabels
+        flexLabels =[]
+        flexLabels = temp
+        if (flexCurrentLabel === name) {
+            flexCurrentLabel = flexLabels.length > 0 ? flexLabels[0] : ""
+        }
+        saveFlexLabels()
+    }
+
+    function periodForHour(hour) {
+        if (hour >= 5 && hour < 12) return "Morning"
+        if (hour >= 12 && hour < 17) return "Afternoon"
+        if (hour >= 17 && hour < 22) return "Evening"
+        return "Night"
+    }
+
+    // Begin a flexible session. type is "work" or "break".
+    function startFlex(label, plannedMinutes, type) {
+        var planned = Math.max(1, parseInt(plannedMinutes) || 0) * 60
+        globalFlexType.set(type)
+        globalFlexPlanned.set(planned)
+        flexPlannedSeconds = planned
+        globalFlexElapsed.set(0)
+        flexCurrentLabel = (type === "work") ? (label || flexCurrentLabel || "") : ""
+        flexStartTs = Date.now()
+        globalFlexAwaiting.set(false)
+        globalTimerOwnerId.set(root.instanceId)
+        // Flex takes over the shared timer owner; ensure the classic timer is paused
+        globalIsRunning.set(false)
+        globalFlexRunning.set(true)
+        if (root.autoSetDND && type === "work") {
+            SessionData.setDoNotDisturb(true)
+        }
+    }
+
+    function toggleFlex() {
+        if (globalFlexType.value === "idle") return
+        if (globalFlexRunning.value) {
+            // Pausing: persist progress immediately (without ending the session)
+            globalFlexRunning.set(false)
+            root.saveWorkedSeconds()
+            if (root.autoSetDND && globalFlexType.value === "work") {
+                SessionData.setDoNotDisturb(false)
+            }
+        } else {
+            globalTimerOwnerId.set(root.instanceId)
+            globalIsRunning.set(false)
+            globalFlexRunning.set(true)
+            if (root.autoSetDND && globalFlexType.value === "work") {
+                SessionData.setDoNotDisturb(true)
+            }
+        }
+    }
+
+    // Finalize the in-progress flex session into history.
+    function recordFlexSession() {
+        if (globalFlexType.value === "idle") return
+        var type = globalFlexType.value
+        var planned = flexPlannedSeconds > 0 ? flexPlannedSeconds : globalFlexPlanned.value
+        var actual = globalFlexElapsed.value
+        if (actual <= 0) return
+        var overtime = Math.max(0, actual - planned)
+        var now = new Date()
+        var startDate = flexStartTs > 0 ? new Date(flexStartTs) : now
+        var record = {
+            type: type,
+            label: type === "work" ? flexCurrentLabel : "",
+            planned: planned,
+            actual: actual,
+            overtime: overtime,
+            ranOver: overtime > 0,
+            startTs: startDate.getTime(),
+            endTs: now.getTime(),
+            hour: startDate.getHours(),
+            dateKey: formatDateKey(startDate)
+        }
+        flexSessions.push(record)
+        // Bound the history size
+        if (flexSessions.length > flexHistoryCap) {
+            flexSessions.splice(0, flexSessions.length - flexHistoryCap)
+        }
+        if (pluginService) {
+            pluginService.savePluginState("customPomoTimer", "flexSessions", flexSessions)
+        }
+        refreshFlexSessions()
+        computeFlexInsights()
+    }
+
+    // Accept the end-of-session transition: record current, start the opposite type.
+    function acceptFlexTransition() {
+        var finishedType = globalFlexType.value
+        recordFlexSession()
+        globalFlexAwaiting.set(false)
+        if (finishedType === "work") {
+            // Suggest a break using the classic short-break length as default
+            startFlex("", root.shortBreakDuration, "break")
+        } else {
+            startFlex(flexCurrentLabel, Math.round((flexPlannedSeconds || (root.workDuration * 60)) / 60), "work")
+        }
+    }
+
+    // Decline the transition: keep the current timer running as overtime.
+    function declineFlexTransition() {
+        globalFlexAwaiting.set(false)
+        // Timer keeps counting; nothing else to do.
+    }
+
+    // Stop the flex session entirely, recording whatever was done.
+    function stopFlex() {
+        recordFlexSession()
+        globalFlexRunning.set(false)
+        globalFlexAwaiting.set(false)
+        globalFlexType.set("idle")
+        globalFlexElapsed.set(0)
+        globalFlexPlanned.set(0)
+        flexPlannedSeconds = 0
+        flexStartTs = 0
+        if (root.autoSetDND) {
+            SessionData.setDoNotDisturb(false)
+        }
+    }
+
+    function fireFlexNotification(type) {
+        var title = type === "work" ? "Focus session done" : "Break done"
+        var body = type === "work" ? "Take a break? (declining keeps the timer running)" : "Back to work? (declining keeps the break running)"
+        var soundPath = type === "work" ? root.workSoundPath : root.breakSoundPath
+        var soundCmd = soundPath ? "paplay '" + soundPath + "' & " : ""
+        Quickshell.execDetached([
+            "sh", "-c",
+            soundCmd + "notify-send '" + title + "' '" + body + "' -u normal"
+        ])
+    }
+
+    // Compute per-label and per-period aggregates from the session history.
+    function computeFlexInsights() {
+        var byLabel = ({})
+        var byPeriod = ({})
+        function ensureBucket(map, key) {
+            if (!map[key]) {
+                map[key] = {
+                    workCount: 0, workSeconds: 0, workOvertime: 0,
+                    breakCount: 0, breakSeconds: 0
+                }
+            }
+            return map[key]
+        }
+        for (var i = 0; i < flexSessions.length; i++) {
+            var s = flexSessions[i]
+            var period = periodForHour(s.hour != null ? s.hour : 12)
+            var pb = ensureBucket(byPeriod, period)
+            if (s.type === "work") {
+                pb.workCount += 1
+                pb.workSeconds += s.actual
+                pb.workOvertime += (s.overtime || 0)
+                var lbl = s.label && s.label.length > 0 ? s.label : "Unlabeled"
+                var lb = ensureBucket(byLabel, lbl)
+                lb.workCount += 1
+                lb.workSeconds += s.actual
+                lb.workOvertime += (s.overtime || 0)
+            } else {
+                pb.breakCount += 1
+                pb.breakSeconds += s.actual
+            }
+        }
+        flexInsights = { byLabel: byLabel, byPeriod: byPeriod }
+    }
+
+    function avgMinutes(totalSeconds, count) {
+        if (!count || count <= 0) return 0
+        return Math.round((totalSeconds / count) / 60)
+    }
+
+    // --- Recommendation Engine ---
+    function flexMedian(values) {
+        if (!values || values.length === 0) return 0
+        var arr = values.slice().sort(function(a, b) { return a - b })
+        var mid = Math.floor(arr.length / 2)
+        return arr.length % 2 !== 0 ? arr[mid] : (arr[mid - 1] + arr[mid]) / 2
+    }
+
+    // Weighted median: sort by value, walk cumulative weight to the 50% mark.
+    function flexWeightedMedian(values, weights) {
+        if (!values || values.length === 0) return 0
+        if (values.length === 1) return values[0]
+        var pairs =[]
+        var totalWeight = 0
+        for (var i = 0; i < values.length; i++) {
+            var w = (weights && weights[i] > 0) ? weights[i] : 0
+            pairs.push({ v: values[i], w: w })
+            totalWeight += w
+        }
+        if (totalWeight <= 0) return flexMedian(values)
+        pairs.sort(function(a, b) { return a.v - b.v })
+        var half = totalWeight / 2
+        var cum = 0
+        for (var j = 0; j < pairs.length; j++) {
+            cum += pairs[j].w
+            if (cum >= half) return pairs[j].v
+        }
+        return pairs[pairs.length - 1].v
+    }
+
+    // Exponential recency decay with a configurable half-life (in days).
+    function recencyWeight(startTs, nowMs) {
+        if (!startTs) return 0.1
+        var ageDays = Math.max(0, (nowMs - startTs) / 86400000)
+        var w = Math.pow(0.5, ageDays / root.flexRecencyHalfLifeDays)
+        return Math.max(w, 0.05)   // floor so old data still counts a little
+    }
+
+    function clamp(value, lo, hi) {
+        return Math.max(lo, Math.min(hi, value))
+    }
+
+    // Weighted-median minutes of "actual" seconds over a set of sessions.
+    function flexSuggestMinutes(sessions, nowMs) {
+        if (!sessions || sessions.length === 0) return 0
+        var values =[]
+        var weights =[]
+        for (var i = 0; i < sessions.length; i++) {
+            values.push(sessions[i].actual)
+            weights.push(recencyWeight(sessions[i].startTs, nowMs))
+        }
+        return Math.round(flexWeightedMedian(values, weights) / 60)
+    }
+
+    // Resolve a recommendation for the given label + hour using a tiered
+    // fallback cascade. Each tier needs at least flexMinSamples work sessions.
+    function recommendFlex(label, hour) {
+        var nowMs = Date.now()
+        var period = periodForHour(hour)
+        var workSessions =[]
+        var breakSessions =[]
+        for (var i = 0; i < flexSessions.length; i++) {
+            var s = flexSessions[i]
+            if (s.type === "work") workSessions.push(s)
+            else breakSessions.push(s)
+        }
+
+        function filterWork(byLabel, byPeriod) {
+            var out =[]
+            for (var k = 0; k < workSessions.length; k++) {
+                var ws = workSessions[k]
+                var lbl = ws.label && ws.label.length > 0 ? ws.label : "Unlabeled"
+                if (byLabel && lbl !== label) continue
+                if (byPeriod && periodForHour(ws.hour != null ? ws.hour : 12) !== period) continue
+                out.push(ws)
+            }
+            return out
+        }
+
+        // Tier cascade: [filtered sessions, basis label]
+        var tiers =[
+            { set: filterWork(true, true), basis: "label+period" },
+            { set: filterWork(true, false), basis: "label" },
+            { set: filterWork(false, true), basis: "period" },
+            { set: workSessions, basis: "all" }
+        ]
+
+        var chosen = null
+        for (var t = 0; t < tiers.length; t++) {
+            if (tiers[t].set.length >= root.flexMinSamples) {
+                chosen = tiers[t]
+                break
+            }
+        }
+
+        if (!chosen) {
+            return {
+                workMin: root.workDuration,
+                breakMin: root.shortBreakDuration,
+                basis: "default",
+                sampleCount: workSessions.length,
+                rationale: "Not enough data yet — using default. Log at least " + root.flexMinSamples + " sessions to unlock recommendations."
+            }
+        }
+
+        var workMin = root.clamp(flexSuggestMinutes(chosen.set, nowMs), 5, 180)
+
+        // Break length: prefer same-period breaks, then all breaks, else preset.
+        var periodBreaks =[]
+        for (var b = 0; b < breakSessions.length; b++) {
+            if (periodForHour(breakSessions[b].hour != null ? breakSessions[b].hour : 12) === period) {
+                periodBreaks.push(breakSessions[b])
+            }
+        }
+        var breakMin
+        if (periodBreaks.length >= root.flexMinSamples) {
+            breakMin = root.clamp(flexSuggestMinutes(periodBreaks, nowMs), 1, 60)
+        } else if (breakSessions.length >= root.flexMinSamples) {
+            breakMin = root.clamp(flexSuggestMinutes(breakSessions, nowMs), 1, 60)
+        } else {
+            breakMin = root.shortBreakDuration
+        }
+
+        return {
+            workMin: workMin,
+            breakMin: breakMin,
+            basis: chosen.basis,
+            sampleCount: chosen.set.length,
+            rationale: recommendationRationale(chosen.basis, chosen.set.length, label, period)
+        }
+    }
+
+    function recommendationRationale(basis, count, label, period) {
+        var lbl = (label && label.length > 0) ? label : "unlabeled"
+        if (basis === "label+period")
+            return "Based on " + count + " " + lbl + " sessions in the " + period.toLowerCase() + " (median)"
+        if (basis === "label")
+            return "Based on " + count + " " + lbl + " sessions (median)"
+        if (basis === "period")
+            return "Based on " + count + " sessions in the " + period.toLowerCase() + " (median)"
+        if (basis === "all")
+            return "Based on your overall average of " + count + " sessions (median)"
+        return ""
+    }
+
+    function refreshFlexRecommendation() {
+        flexRecommendation = recommendFlex(root.flexCurrentLabel, new Date().getHours())
+    }
+
+    onFlexCurrentLabelChanged: refreshFlexRecommendation()
+    onFlexSessionsChanged: refreshFlexRecommendation()
+    // --------------------------------
+
     Timer {
         id: dateCheckTimer
         interval: 60000
@@ -118,6 +530,8 @@ PluginComponent {
                     loadLast7Days()
                 }
             }
+            // Keep the recommendation aligned with the current time-of-day period
+            refreshFlexRecommendation()
         }
     }
 
@@ -267,7 +681,67 @@ PluginComponent {
         defaultValue: ""
     }
 
+    // --- Flexible Mode Globals ---
+    PluginGlobalVar {
+        id: globalFlexType
+        varName: "flexType"
+        defaultValue: "idle"   // idle | work | break
+    }
+
+    PluginGlobalVar {
+        id: globalFlexElapsed
+        varName: "flexElapsed"
+        defaultValue: 0
+    }
+
+    PluginGlobalVar {
+        id: globalFlexPlanned
+        varName: "flexPlanned"
+        defaultValue: 0
+    }
+
+    PluginGlobalVar {
+        id: globalFlexRunning
+        varName: "flexRunning"
+        defaultValue: false
+    }
+
+    PluginGlobalVar {
+        id: globalFlexAwaiting
+        varName: "flexAwaiting"
+        defaultValue: false   // true when planned mark reached, awaiting accept/decline
+    }
+    // -----------------------------
+
     property string instanceId: Math.random().toString(36).substring(2)
+
+    // Flexible count-up timer
+    Timer {
+        id: flexTimer
+        interval: 1000
+        repeat: true
+        running: globalFlexRunning.value && globalFlexType.value !== "idle" && globalTimerOwnerId.value === root.instanceId
+        onTriggered: {
+            globalFlexElapsed.set(globalFlexElapsed.value + 1)
+
+            // Flex work time feeds the shared daily worked-seconds + chart
+            if (globalFlexType.value === "work") {
+                globalWorkedSecondsToday.set(globalWorkedSecondsToday.value + 1)
+                if (globalWorkedSecondsToday.value % 10 === 0) {
+                    root.saveWorkedSeconds()
+                }
+                if (globalWorkedSecondsToday.value % 60 === 0) {
+                    root.loadLast7Days()
+                }
+            }
+
+            // Fire the end-of-session prompt exactly once when planned mark is hit
+            if (!globalFlexAwaiting.value && globalFlexElapsed.value === globalFlexPlanned.value) {
+                globalFlexAwaiting.set(true)
+                root.fireFlexNotification(globalFlexType.value)
+            }
+        }
+    }
 
     Timer {
         id: pomodoroTimer
@@ -355,6 +829,9 @@ PluginComponent {
         globalTotalSeconds.set(root.workDuration * 60)
         globalRemainingSeconds.set(globalTotalSeconds.value)
         if (autoStart) {
+            if (globalFlexRunning.value) {
+                root.stopFlex()
+            }
             globalTimerOwnerId.set(root.instanceId)
 
             if (root.autoSetDND) {
@@ -372,6 +849,9 @@ PluginComponent {
         globalTotalSeconds.set(root.shortBreakDuration * 60)
         globalRemainingSeconds.set(globalTotalSeconds.value)
         if (autoStart) {
+            if (globalFlexRunning.value) {
+                root.stopFlex()
+            }
             globalTimerOwnerId.set(root.instanceId)
         }
         globalIsRunning.set(autoStart ?? false)
@@ -385,13 +865,69 @@ PluginComponent {
         globalTotalSeconds.set(root.longBreakDuration * 60)
         globalRemainingSeconds.set(globalTotalSeconds.value)
         if (autoStart) {
+            if (globalFlexRunning.value) {
+                root.stopFlex()
+            }
             globalTimerOwnerId.set(root.instanceId)
         }
         globalIsRunning.set(autoStart ?? false)
     }
 
+    function skipSession() {
+        if (globalTimerState.value === "work") {
+            // Log exactly one full work duration regardless of elapsed time:
+            // the ticking timer already added (total - remaining) seconds, so
+            // adding the remaining seconds completes a full work duration.
+            const remaining = Math.max(0, globalRemainingSeconds.value)
+            globalWorkedSecondsToday.set(globalWorkedSecondsToday.value + remaining)
+            root.saveWorkedSeconds()
+            globalRemainingSeconds.set(0)
+            // Reuse the normal completion path: increments count, credits the
+            // active task, fires notification, refreshes chart, advances to break.
+            root.timerComplete()
+        } else {
+            // On a break, just advance to the next work session without stats.
+            root.startWork(false)
+        }
+    }
+
+    function addManualWork(pomodoros, minutes) {
+        const addPomodoros = Math.max(0, parseInt(pomodoros) || 0)
+        const addMinutes = Math.max(0, parseInt(minutes) || 0)
+        if (addPomodoros === 0 && addMinutes === 0) return
+
+        if (addPomodoros > 0) {
+            globalCompletedPomodoros.set(globalCompletedPomodoros.value + addPomodoros)
+            if (pluginService) {
+                pluginService.savePluginData("customPomoTimer", "completedPomodoros-" + root.currentDateKey, globalCompletedPomodoros.value)
+            }
+            // Credit the active task, mirroring timerComplete()
+            if (activeTaskId !== "") {
+                for (var i = 0; i < taskList.length; i++) {
+                    if (taskList[i].id === activeTaskId) {
+                        taskList[i].completed += addPomodoros
+                        saveTasks()
+                        break
+                    }
+                }
+            }
+        }
+
+        if (addMinutes > 0) {
+            globalWorkedSecondsToday.set(globalWorkedSecondsToday.value + addMinutes * 60)
+            root.saveWorkedSeconds()
+        }
+
+        root.loadLast7Days()
+    }
+
     function toggleTimer() {
         if (!globalIsRunning.value) {
+            // Starting the classic timer: stop any running flexible session first
+            // so the two timers can never tick simultaneously.
+            if (globalFlexRunning.value) {
+                root.stopFlex()
+            }
             globalTimerOwnerId.set(root.instanceId)
         } else {
             // We are pausing the timer. Save exact progress instantly.
@@ -541,6 +1077,24 @@ PluginComponent {
                 width: parent.width
                 spacing: Theme.spacingM
 
+                property int activeTab: 0
+
+                DankTabBar {
+                    width: parent.width
+                    currentIndex: popoutContentColumn.activeTab
+                    model:[
+                        { text: "Timer", icon: "timer" },
+                        { text: "Flexible", icon: "tune" }
+                    ]
+                    onTabClicked: function(index) { popoutContentColumn.activeTab = index }
+                }
+
+                Column {
+                    id: timerTab
+                    width: parent.width
+                    spacing: Theme.spacingM
+                    visible: popoutContentColumn.activeTab === 0
+
                 Item {
                     width: parent.width
                     height: 180
@@ -671,7 +1225,118 @@ PluginComponent {
                             onClicked: root.resetTimer()
                         }
                     }
+
+                    Rectangle {
+                        width: 64
+                        height: 64
+                        radius: 32
+                        color: skipArea.containsMouse ? Theme.surfaceContainerHighest : "transparent"
+
+                        DankIcon {
+                            anchors.centerIn: parent
+                            name: "skip_next"
+                            size: 24
+                            color: Theme.surfaceText
+                        }
+
+                        MouseArea {
+                            id: skipArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.skipSession()
+                        }
+                    }
                 }
+
+                // --- MANUAL ADD (LOG TIME ELSEWHERE) ---
+                Column {
+                    id: manualAddColumn
+                    width: parent.width
+                    spacing: Theme.spacingS
+
+                    property bool showManualAdd: false
+
+                    // Toggle row
+                    Row {
+                        spacing: Theme.spacingXS
+
+                        DankIcon {
+                            name: "more_time"
+                            size: 18
+                            color: Theme.surfaceVariantText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        StyledText {
+                            text: "Log time manually"
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceVariantText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        DankIcon {
+                            name: manualAddColumn.showManualAdd ? "expand_less" : "expand_more"
+                            size: 18
+                            color: Theme.surfaceVariantText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: manualAddColumn.showManualAdd = !manualAddColumn.showManualAdd
+                        }
+                    }
+
+                    // Inputs (revealed when expanded)
+                    RowLayout {
+                        width: parent.width
+                        spacing: Theme.spacingS
+                        visible: manualAddColumn.showManualAdd
+
+                        TextField {
+                            id: manualPomodoros
+                            Layout.fillWidth: true
+                            placeholderText: "Pomodoros"
+                            placeholderTextColor: Theme.surfaceVariantText
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceText
+                            inputMethodHints: Qt.ImhDigitsOnly
+                            horizontalAlignment: Text.AlignHCenter
+                            background: Rectangle {
+                                color: Theme.surfaceContainerHighest
+                                radius: Theme.cornerRadiusSmall
+                            }
+                        }
+
+                        TextField {
+                            id: manualMinutes
+                            Layout.fillWidth: true
+                            placeholderText: "Minutes"
+                            placeholderTextColor: Theme.surfaceVariantText
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceText
+                            inputMethodHints: Qt.ImhDigitsOnly
+                            horizontalAlignment: Text.AlignHCenter
+                            background: Rectangle {
+                                color: Theme.surfaceContainerHighest
+                                radius: Theme.cornerRadiusSmall
+                            }
+                        }
+
+                        DankButton {
+                            text: "Add"
+                            onClicked: {
+                                root.addManualWork(manualPomodoros.text, manualMinutes.text)
+                                manualPomodoros.text = ""
+                                manualMinutes.text = ""
+                                manualAddColumn.showManualAdd = false
+                            }
+                        }
+                    }
+                }
+                // ----------------------------------------
 
                 Column {
                     width: parent.width
@@ -1120,6 +1785,308 @@ PluginComponent {
                         }
                     }
                 }
+                } // end timerTab
+
+                // ===================== FLEXIBLE TAB =====================
+                Column {
+                    id: flexTab
+                    width: parent.width
+                    spacing: Theme.spacingM
+                    visible: popoutContentColumn.activeTab === 1
+
+                    // --- SETUP (idle) ---
+                    StyledRect {
+                        width: parent.width
+                        height: flexSetupColumn.implicitHeight + Theme.spacingM * 2
+                        radius: Theme.cornerRadius
+                        color: Theme.surfaceContainerHigh
+                        visible: globalFlexType.value === "idle"
+
+                        Column {
+                            id: flexSetupColumn
+                            anchors.fill: parent
+                            anchors.margins: Theme.spacingM
+                            spacing: Theme.spacingS
+
+                            StyledText {
+                                text: "Start a focus session"
+                                font.pixelSize: Theme.fontSizeMedium
+                                font.weight: Font.Medium
+                                color: Theme.surfaceText
+                            }
+
+                            DankDropdown {
+                                width: parent.width
+                                text: "Label"
+                                currentValue: root.flexCurrentLabel
+                                options: root.flexLabels
+                                enableFuzzySearch: true
+                                onValueChanged: function(value) { root.flexCurrentLabel = value }
+                            }
+
+                            RowLayout {
+                                width: parent.width
+                                spacing: Theme.spacingS
+
+                                TextField {
+                                    id: flexNewLabel
+                                    Layout.fillWidth: true
+                                    placeholderText: "Add new label"
+                                    placeholderTextColor: Theme.surfaceVariantText
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceText
+                                    background: Rectangle {
+                                        color: Theme.surfaceContainerHighest
+                                        radius: Theme.cornerRadiusSmall
+                                    }
+                                }
+
+                                DankButton {
+                                    iconName: "add"
+                                    Layout.preferredWidth: 40
+                                    onClicked: {
+                                        root.addFlexLabel(flexNewLabel.text)
+                                        root.flexCurrentLabel = flexNewLabel.text.trim()
+                                        flexNewLabel.text = ""
+                                    }
+                                }
+                            }
+
+                            RowLayout {
+                                width: parent.width
+                                spacing: Theme.spacingS
+
+                                StyledText {
+                                    text: "Duration (min)"
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceVariantText
+                                    Layout.fillWidth: true
+                                }
+
+                                TextField {
+                                    id: flexDuration
+                                    Layout.preferredWidth: 70
+                                    text: "25"
+                                    placeholderText: "25"
+                                    placeholderTextColor: Theme.surfaceVariantText
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceText
+                                    inputMethodHints: Qt.ImhDigitsOnly
+                                    horizontalAlignment: Text.AlignHCenter
+                                    background: Rectangle {
+                                        color: Theme.surfaceContainerHighest
+                                        radius: Theme.cornerRadiusSmall
+                                    }
+                                }
+                            }
+
+                            DankButton {
+                                width: parent.width
+                                text: "Start Focus"
+                                iconName: "play_arrow"
+                                onClicked: root.startFlex(root.flexCurrentLabel, flexDuration.text, "work")
+                            }
+                        }
+                    }
+
+                    // --- ACTIVE SESSION ---
+                    StyledRect {
+                        width: parent.width
+                        height: flexActiveColumn.implicitHeight + Theme.spacingM * 2
+                        radius: Theme.cornerRadius
+                        color: Theme.surfaceContainerHigh
+                        visible: globalFlexType.value !== "idle"
+
+                        Column {
+                            id: flexActiveColumn
+                            anchors.fill: parent
+                            anchors.margins: Theme.spacingM
+                            spacing: Theme.spacingS
+
+                            StyledText {
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: globalFlexType.value === "work"
+                                      ? (root.flexCurrentLabel.length > 0 ? root.flexCurrentLabel : "Focus")
+                                      : "Break"
+                                font.pixelSize: Theme.fontSizeMedium
+                                font.weight: Font.Medium
+                                color: globalFlexAwaiting.value ? Theme.warning
+                                       : (globalFlexType.value === "work" ? Theme.primary : Theme.info)
+                            }
+
+                            StyledText {
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: root.formatTime(globalFlexElapsed.value)
+                                font.pixelSize: 40
+                                font.weight: Font.Bold
+                                color: globalFlexElapsed.value > globalFlexPlanned.value ? Theme.warning : Theme.surfaceText
+                            }
+
+                            StyledText {
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: {
+                                    var planned = Math.floor(globalFlexPlanned.value / 60)
+                                    var over = globalFlexElapsed.value - globalFlexPlanned.value
+                                    if (over > 0) return "Target " + planned + "m • +" + root.formatTime(over) + " overtime"
+                                    return "Target " + planned + "m"
+                                }
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceVariantText
+                            }
+
+                            // Decision prompt (planned mark reached)
+                            RowLayout {
+                                width: parent.width
+                                spacing: Theme.spacingS
+                                visible: globalFlexAwaiting.value
+
+                                DankButton {
+                                    Layout.fillWidth: true
+                                    text: globalFlexType.value === "work" ? "Take Break" : "Back to Work"
+                                    iconName: "check"
+                                    onClicked: root.acceptFlexTransition()
+                                }
+
+                                DankButton {
+                                    Layout.fillWidth: true
+                                    text: "Keep Going"
+                                    iconName: "fast_forward"
+                                    onClicked: root.declineFlexTransition()
+                                }
+                            }
+
+                            // Pause / Stop controls
+                            RowLayout {
+                                width: parent.width
+                                spacing: Theme.spacingS
+                                visible: !globalFlexAwaiting.value
+
+                                DankButton {
+                                    Layout.fillWidth: true
+                                    text: globalFlexRunning.value ? "Pause" : "Resume"
+                                    iconName: globalFlexRunning.value ? "pause" : "play_arrow"
+                                    onClicked: root.toggleFlex()
+                                }
+
+                                DankButton {
+                                    Layout.fillWidth: true
+                                    text: "Stop"
+                                    iconName: "stop"
+                                    onClicked: root.stopFlex()
+                                }
+                            }
+                        }
+                    }
+
+                    // --- INSIGHTS ---
+                    StyledRect {
+                        width: parent.width
+                        height: flexInsightsColumn.implicitHeight + Theme.spacingM * 2
+                        radius: Theme.cornerRadius
+                        color: Theme.surfaceContainerHigh
+
+                        Column {
+                            id: flexInsightsColumn
+                            anchors.fill: parent
+                            anchors.margins: Theme.spacingM
+                            spacing: Theme.spacingS
+
+                            StyledText {
+                                text: "Insights"
+                                font.pixelSize: Theme.fontSizeMedium
+                                font.weight: Font.Medium
+                                color: Theme.surfaceText
+                            }
+
+                            StyledText {
+                                width: parent.width
+                                text: "Complete a few flexible sessions to see your focus patterns by subject and time of day."
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceVariantText
+                                wrapMode: Text.WordWrap
+                                visible: root.flexSessions.length === 0
+                            }
+
+                            // By label
+                            StyledText {
+                                text: "By subject"
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: Font.Medium
+                                color: Theme.surfaceVariantText
+                                visible: Object.keys(root.flexInsights.byLabel).length > 0
+                            }
+
+                            Repeater {
+                                model: Object.keys(root.flexInsights.byLabel)
+
+                                RowLayout {
+                                    width: parent.width
+                                    spacing: Theme.spacingS
+
+                                    property var entry: root.flexInsights.byLabel[modelData]
+
+                                    StyledText {
+                                        Layout.fillWidth: true
+                                        text: modelData
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceText
+                                        elide: Text.ElideRight
+                                    }
+
+                                    StyledText {
+                                        text: parent.entry.workCount + "x • avg " + root.avgMinutes(parent.entry.workSeconds, parent.entry.workCount) + "m"
+                                        font.pixelSize: Theme.fontSizeXSmall
+                                        color: Theme.surfaceVariantText
+                                    }
+                                }
+                            }
+
+                            // By period of day
+                            StyledText {
+                                text: "By time of day"
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: Font.Medium
+                                color: Theme.surfaceVariantText
+                                topPadding: Theme.spacingXS
+                                visible: Object.keys(root.flexInsights.byPeriod).length > 0
+                            }
+
+                            Repeater {
+                                model: Object.keys(root.flexInsights.byPeriod)
+
+                                RowLayout {
+                                    width: parent.width
+                                    spacing: Theme.spacingS
+
+                                    property var entry: root.flexInsights.byPeriod[modelData]
+
+                                    StyledText {
+                                        Layout.fillWidth: true
+                                        text: modelData
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceText
+                                    }
+
+                                    StyledText {
+                                        text: {
+                                            var e = parent.entry
+                                            var parts =[]
+                                            if (e.workCount > 0) parts.push("focus avg " + root.avgMinutes(e.workSeconds, e.workCount) + "m")
+                                            if (e.breakCount > 0) parts.push("break avg " + root.avgMinutes(e.breakSeconds, e.breakCount) + "m")
+                                            return parts.join(" • ")
+                                        }
+                                        font.pixelSize: Theme.fontSizeXSmall
+                                        color: Theme.surfaceVariantText
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // =================== END FLEXIBLE TAB ===================
             }
         }
     }
