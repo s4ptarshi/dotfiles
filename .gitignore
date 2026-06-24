@@ -45,3 +45,4 @@ Thumbs.db
 
 # Dependencies
 node_modules/
+scripts/.local/bin/agy
