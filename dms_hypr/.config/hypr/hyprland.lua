@@ -36,7 +36,7 @@ handle:close()
 -- 	-- 	vrr = 1,
 -- 	-- 	bitdepth = 10,
 -- 	-- })
--- 	-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
+-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
 -- 	--
 -- 	hl.monitor({
 -- 		output = "",
@@ -94,8 +94,8 @@ if has_dell then
 		vrr = 1,
 		bitdepth = 10,
 	})
-	hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
-	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/Goldy.png")
+	hl.monitor({ output = "DP-1", mode = "highres", position = "auto-right", scale = 1.25 })
+-- 	os.execute("~/.local/bin/fix_wallpaper.sh -h &")
 else
 	-- Fallback Layout (Rotated Monitor Setup)
 	if hostname == "vivobook" then
@@ -129,8 +129,36 @@ else
 			transform = 1,
 			vrr = 0,
 		})
+		-- local function get_cmd_output(cmd)
+		-- 	local handle = io.popen(cmd)
+		-- 	if not handle then
+		-- 		return ""
+		-- 	end
+		-- 	local result = handle:read("*a")
+		-- 	handle:close()
+		-- 	-- Trim whitespace/newlines from the output
+		-- 	return result:gsub("%s+", "")
+		-- end
+		--
+		-- -- Get the current theme mode
+		-- local mode = get_cmd_output("dms ipc theme getMode")
+		--
+		-- if mode == "light" then
+		-- 	-- It's currently light, so set the light wallpaper and toggle to dark
+		-- 	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/goldy_portrait.png")
+		-- 	os.execute("dms ipc theme toggle")
+		-- 	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/goldy_portrait_dark.png")
+		-- 	os.execute("dms ipc theme toggle")
+		-- else
+		-- 	-- It's currently dark (or anything else), so set the dark wallpaper and toggle to light
+		-- 	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/goldy_portrait_dark.png")
+		-- 	os.execute("dms ipc theme toggle")
+		-- 	os.execute("dms ipc call wallpaper setFor DP-1 ~/Pictures/goldy/goldy_portrait.png")
+		-- 	os.execute("dms ipc theme toggle")
+		-- end
 		hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { orientation = "top" } })
 		hl.workspace_rule({ workspace = "m[DP-1]", layout_opts = { direction = "down" } })
+		-- os.execute("~/.local/bin/fix_wallpaper.sh -v &")
 		-- terminal room
 		-- hl.monitor({
 		-- 	output = "eDP-1",
@@ -140,7 +168,7 @@ else
 		-- 	vrr = 1,
 		-- 	bitdepth = 10,
 		-- })
-		-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto", scale = 1.25 })
+		-- hl.monitor({ output = "DP-1", mode = "highres", position = "auto-left", scale = 1.00 })
 		--
 		hl.monitor({
 			output = "",
@@ -199,7 +227,7 @@ hl.config({
 		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
 		allow_tearing = false,
 
-		layout = "scrolling",
+		layout = "master",
 	},
 
 	decoration = {
@@ -294,7 +322,7 @@ hl.config({
 -- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
 hl.config({
 	master = {
-		new_status = "master",
+		new_status = "slave",
 	},
 })
 
