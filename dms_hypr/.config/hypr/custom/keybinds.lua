@@ -78,6 +78,8 @@ elseif hl.get_config("general.layout") == "master" then
 	hl.bind(mainMod .. " + comma", hl.dsp.layout("addmaster"))
 	hl.bind(mainMod .. " + period", hl.dsp.layout("removemaster"))
 	hl.bind(mainMod .. "+ SHIFT + return", hl.dsp.layout("swapwithmaster"))
+	hl.bind(mainMod .. " + R", hl.dsp.layout("mfact +0.05"))
+	hl.bind(mainMod .. " + SHIFT + R", hl.dsp.layout("mfact -0.05"))
 end
 
 -- hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("~/.config/hypr/custom/scripts/toggle_fullscreen.sh"))
