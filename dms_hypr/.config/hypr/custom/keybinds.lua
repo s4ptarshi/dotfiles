@@ -66,12 +66,16 @@ if hl.get_config("general.layout") == "scrolling" then
 	hl.bind(mainMod .. " + bracketleft", hl.dsp.layout("consume_or_expel prev"))
 	hl.bind(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"))
 	hl.bind(mainMod .. " + P", hl.dsp.layout("promote"))
+elseif hl.get_config("general.layout") == "master" then
+	hl.bind(mainMod .. "+ H", hl.dsp.focus({ direction = "left" }))
+	hl.bind(mainMod .. "+ L", hl.dsp.focus({ direction = "right" }))
+	hl.bind(mainMod .. "+ J", hl.dsp.focus({ direction = "down" }))
+	hl.bind(mainMod .. "+ K", hl.dsp.focus({ direction = "up" }))
+	hl.bind(mainMod .. "+ SHIFT + H", hl.dsp.window.swap({ direction = "left" }))
+	hl.bind(mainMod .. "+ SHIFT + L", hl.dsp.window.swap({ direction = "right" }))
+	hl.bind(mainMod .. "+ SHIFT + J", hl.dsp.window.swap({ direction = "down" }))
+	hl.bind(mainMod .. "+ SHIFT + K", hl.dsp.window.swap({ direction = "up" }))
 end
-
-hl.bind(mainMod .. " + L", hl.dsp.layout("focus right"))
-hl.bind(mainMod .. " + H", hl.dsp.layout("focus left"))
-hl.bind(mainMod .. " + J", hl.dsp.layout("focus down"))
-hl.bind(mainMod .. " + K", hl.dsp.layout("focus up"))
 
 -- hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("~/.config/hypr/custom/scripts/toggle_fullscreen.sh"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
