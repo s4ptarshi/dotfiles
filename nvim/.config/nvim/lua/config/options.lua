@@ -20,8 +20,26 @@ vim.opt.clipboard = "unnamedplus"
 vim.g.vimtex_quickfix_ignore_filters = {
     "Unknown document class",
 }
-vim.g.molten_image_provider = "image.nvim"
+-- vim.g.molten_image_provider = "image.nvim"
+--
+-- Force built-in OSC 52 clipboard provider
+vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+        ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+        ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+        ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+        ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+}
+
+-- Sync all yanks/deletes with system clipboard
+vim.opt.clipboard = "unnamedplus"
+
 vim.opt.conceallevel = 2
+vim.opt.mouse = "a"
 -- Only run this configuration if Neovide is the active UI
 if vim.g.neovide then
     -- 1. Font Styling (Requires a Nerd Font installed on your system)
