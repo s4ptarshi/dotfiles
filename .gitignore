@@ -31,7 +31,7 @@ dms_hypr/.config/niri/dms/colors.kdl
 *.backup*
 
 # Machine-specific
-dms_hypr/.config/hypr/dms/outputs.conf
+dms_hypr/.config/hypr/dms/*
 dms_hypr/.config/niri/dms/profiles/
 dms_hypr/.config/hypr/dms/profiles/
 uwsm/.config/uwsm/default-id
