@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+kitty +kitten diff "$2" "$5"
