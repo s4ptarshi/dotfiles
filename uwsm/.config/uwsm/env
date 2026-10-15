@@ -11,3 +11,4 @@ export XCURSOR_THEME=Qogir
 export HYPRCURSOR_SIZE=30
 export XCURSOR_SIZE=30
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+export PATH="$HOME/.local/npm/bin:/home/s4ptarshi/.cargo/bin:$PATH"
