@@ -6,7 +6,30 @@ if test -f $__fish_config_dir/vars.fish
     source $__fish_config_dir/vars.fish
 end
 if status is-interactive # Commands to run in interactive sessions can go here
+    # if type -q flatpak
+    #     for app in (flatpak list --app --columns=application)
+    #         set name (string lower (string split '.' $app)[-1])
+    #         abbr --add $name "flatpak run $app"
+    #     end
+    # end
+    function spf
+        set os $(uname -s)
 
+        if test "$os" = Linux
+            set spf_last_dir "$HOME/.local/state/superfile/lastdir"
+        end
+
+        if test "$os" = Darwin
+            set spf_last_dir "$HOME/Library/Application Support/superfile/lastdir"
+        end
+
+        command spf $argv
+
+        if test -f "$spf_last_dir"
+            source "$spf_last_dir"
+            rm -f -- "$spf_last_dir" >>/dev/null
+        end
+    end
     set -g fish_vi_force_cursor 1
     # Set the cursor shapes for the different vi modes.
     set fish_cursor_default block blink
@@ -125,7 +148,6 @@ else
         echo "No conda installation found."
     end
 end
-
 
 # Added by Antigravity CLI installer
 set -gx PATH "/home/s4ptarshi/.local/bin" $PATH
