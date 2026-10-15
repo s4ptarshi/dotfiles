@@ -5,6 +5,9 @@ function dfki_mount --description 'Mount DFKI netscratch and home with performan
     # cache_timeout: how many seconds to cache attributes/entries
     set -l opts "allow_other,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,idmap=user,kernel_cache,cache=yes,cache_timeout=60,attr_timeout=60"
 
+    echo "Connecting to dfki vpn..."
+    nmcli connection up DFKI-KL
+
     echo "Mounting netscratch..."
     sshfs bhattach@login2.pegasus.kl.dfki.de:/netscratch/bhattach/ ~/mnt/netscratch_dir/ -o $opts
 
