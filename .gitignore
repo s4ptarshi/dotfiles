@@ -28,6 +28,7 @@ dms_hypr/.config/niri/dms/colors.kdl
 
 # Backups
 *.bak
+*.bak.*
 *.backup*
 
 # Machine-specific
