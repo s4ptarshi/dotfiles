@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# rclone-status: one-glance state of the gdrive bisync.
+#   rclone-status          human readable
+#   rclone-status --short  icon + state, for bars
+#   rclone-status --state  bare state word: synced|syncing|failed|paused|stale
+
+log=$HOME/.config/rclone/rclone.log
+stale_after=1800 # seconds without a finished sync before we call it stale
+
+# The log is huge and mostly NOTICE spam, so only scan the tail.
+recent=$(tail -c 8M "$log" 2>/dev/null)
+last_of() { grep -E "$1" <<<"$recent" | tail -n1; }
+
+started=$(last_of ' Sync started$')
+done_=$(last_of ' Sync done$')
+failed=$(last_of ' Sync (failed|skipped)')
+metered=$(last_of 'Metered connection detected' | cut -d' ' -f1-6)
+
+ts() { [[ -n $1 ]] && date -d "$(sed -E 's#^([0-9]{4})/([0-9]{2})/([0-9]{2}) #\1-\2-\3 #' <<<"${1%% Sync*}")" +%s 2>/dev/null; }
+ago() {
+    local s=$(($(date +%s) - $1))
+    if ((s < 90)); then echo "${s}s ago"; elif ((s < 5400)); then echo "$((s / 60))m ago"; else echo "$((s / 3600))h ago"; fi
+}
+
+running=
+pgrep -x rclone >/dev/null && pgrep -af 'rclone bisync' | grep -q gdrive && running=1
+
+last_ok_start=$(awk '
+    / Sync started$/ { prev = cur; cur = $1 " " $2 }
+    / Sync skipped/  { cur = prev }
+    / Sync done$/    { ok = cur }
+    END { print ok }' <<<"$recent")
+start_ts=$(ts "$last_ok_start Sync")
+done_ts=$(ts "$done_")
+fail_ts=$(ts "$failed")
+now=$(date +%s)
+
+if [[ -n $running ]]; then
+    state=syncing icon=󰓦
+elif [[ -n $fail_ts && ( -z $done_ts || $fail_ts -gt $done_ts ) ]]; then
+    state=failed icon=󰅙
+elif nmcli -p -f GENERAL.METERED dev show 2>/dev/null | grep -qi yes; then
+    state=paused icon=󰏤
+elif [[ -z $done_ts || $((now - done_ts)) -gt $stale_after ]]; then
+    state=stale icon=󰀦
+else
+    state=synced icon=󰄬
+fi
+
+case ${1:-} in
+--short)
+    echo "$icon $state"
+    exit 0
+    ;;
+--state)
+    echo "$state"
+    exit 0
+    ;;
+esac
+
+echo "$icon  $state"
+[[ -n $done_ts ]] && echo "last success : $(ago "$done_ts")"
+[[ -n $fail_ts ]] && echo "last problem : $(ago "$fail_ts")  (${failed#* Sync })"
+[[ $state == paused ]] && echo "metered link : bisync skipped"
+
+# Newest local file vs. the start of the last good sync. Paths from filters.txt are skipped.
+newest=$(find "$HOME/gdrive" -type f \
+    -not -name .directory -not -name .DS_Store -not -name '*.pyc' \
+    -not -path '*/.git/*' -not -path '*/venv/*' -not -path '*/.venv/*' \
+    -not -path '*/__pycache__/*' -not -path '*/.cache/*' -not -path '*/node_modules/*' \
+    -not -path '*/Lecture_Datasets/*' -printf '%T@\t%P\n' 2>/dev/null | sort -rn | head -n1)
+if [[ -n $newest && -n $start_ts ]]; then
+    n_mtime=${newest%%.*}
+    n_name=$(basename -- "${newest#*$'\t'}")
+    if [[ $state == syncing ]]; then
+        echo "newest file  : $n_name (sync in progress)"
+    elif ((n_mtime <= start_ts)); then
+        echo "all synced   : newest file '$n_name' ($(ago "$n_mtime")) is uploaded"
+    else
+        echo "pending      : '$n_name' changed $(ago "$n_mtime"), after the last sync began"
+    fi
+fi
+
+watchers=$(pgrep -xc inotifywait)
+((watchers > 1)) && echo "warning      : $watchers inotify watchers running (expected 1)"
+echo "log size     : $(du -h "$log" | cut -f1)"
+
+if [[ $state == failed || $state == stale ]]; then
+    echo "--- last errors ---"
+    grep -E 'ERROR|CRITICAL' <<<"$recent" | tail -n3 | cut -c1-160
+fi

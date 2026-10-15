@@ -1,0 +1,14 @@
+{
+    "id": "rcloneStatus",
+    "name": "Drive Sync Status",
+    "description": "Shows whether the rclone gdrive bisync is synced, syncing, paused or failing",
+    "version": "1.0.0",
+    "license": "",
+    "author": "Saptarshi",
+    "icon": "cloud_sync",
+    "firstParty": false,
+    "component": "./RcloneStatus.qml",
+    "permissions": [
+        "settings_read"
+    ]
+}
