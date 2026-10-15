@@ -227,7 +227,7 @@ hl.config({
 		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
 		allow_tearing = false,
 
-		layout = "master",
+		layout = "scrolling",
 	},
 
 	decoration = {
@@ -334,7 +334,8 @@ hl.config({
 		focus_fit_method = 1,
 		column_width = 0.5, -- Default width of a column (0.1 to 1.0)
 		direction = "right", -- Direction new windows appear (left/right/up/down)
-		follow_focus = false,
+		follow_focus = true,
+		follow_min_visible = 0.0, -- hover scrolls a window into view even if mostly offscreen
 	},
 })
 

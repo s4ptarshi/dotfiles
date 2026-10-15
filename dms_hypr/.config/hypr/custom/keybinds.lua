@@ -56,51 +56,56 @@ end
 -- Note: Unbinds (unbind = Super, 1) from the old config aren't necessary in Lua.
 -- You simply overwrite the binding by defining a new one or omitting defaults.
 hl.bind("SUPER + " .. "g", hs.dsp.grab_rogue_windows())
+
 -- ==============================
 -- Window & Layout Management
 -- ==============================
-if hl.get_config("general.layout") == "scrolling" then
-	hl.bind(mainMod .. " + SHIFT + L", hl.dsp.layout("swapcol r"))
-	hl.bind(mainMod .. " + SHIFT + H", hl.dsp.layout("swapcol l"))
-	hl.bind(mainMod .. " + R", hl.dsp.layout("colresize +conf"))
-	hl.bind(mainMod .. " + bracketleft", hl.dsp.layout("consume_or_expel prev"))
-	hl.bind(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"))
-	hl.bind(mainMod .. " + P", hl.dsp.layout("promote"))
-elseif hl.get_config("general.layout") == "master" then
-	hl.bind(mainMod .. "+ H", hl.dsp.focus({ direction = "left" }))
-	hl.bind(mainMod .. "+ L", hl.dsp.focus({ direction = "right" }))
-	hl.bind(mainMod .. "+ J", hl.dsp.focus({ direction = "down" }))
-	hl.bind(mainMod .. "+ K", hl.dsp.focus({ direction = "up" }))
-	hl.bind(mainMod .. "+ SHIFT + H", hl.dsp.window.swap({ direction = "left" }))
-	hl.bind(mainMod .. "+ SHIFT + L", hl.dsp.window.swap({ direction = "right" }))
-	hl.bind(mainMod .. "+ SHIFT + J", hl.dsp.window.swap({ direction = "down" }))
-	hl.bind(mainMod .. "+ SHIFT + K", hl.dsp.window.swap({ direction = "up" }))
-	hl.bind(mainMod .. " + comma", hl.dsp.layout("addmaster"))
-	hl.bind(mainMod .. " + period", hl.dsp.layout("removemaster"))
-	hl.bind(mainMod .. "+ SHIFT + return", hl.dsp.layout("swapwithmaster"))
-	hl.bind(mainMod .. " + R", hl.dsp.layout("mfact +0.05"))
-	hl.bind(mainMod .. " + SHIFT + R", hl.dsp.layout("mfact -0.05"))
-end
 
--- hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("~/.config/hypr/custom/scripts/toggle_fullscreen.sh"))
+-- Scrolling Layout Binds
+-- Focus: H/L move between columns, J/K move within a column
+hl.bind(mainMod .. " + H", hl.dsp.layout("focus l"))
+hl.bind(mainMod .. " + L", hl.dsp.layout("focus r"))
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
+
+-- Reorder: columns with H/L, windows within a column with J/K
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.layout("swapcol r"))
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.swap({ direction = "down" }))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.swap({ direction = "up" }))
+
+-- Pan the viewport without changing focus
+hl.bind(mainMod .. " + CTRL + H", hl.dsp.layout("move -col"))
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.layout("move +col"))
+hl.bind(mainMod .. " + I", hl.dsp.layout("inhibit_scroll")) -- toggle
+
+-- Column width
+hl.bind(mainMod .. " + R", hl.dsp.layout("colresize +conf"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.layout("colresize -conf"))
+hl.bind(mainMod .. " + equal", hl.dsp.layout("colresize +0.1"), { ["repeat"] = true })
+hl.bind(mainMod .. " + minus", hl.dsp.layout("colresize -0.1"), { ["repeat"] = true })
+
+-- Fit
+hl.bind(mainMod .. " + C", hl.dsp.layout("fit_into_view"))
+hl.bind(mainMod .. " + CTRL + F", hl.dsp.layout("fit expand"))
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.layout("fit all"))
+
+-- Column membership
+hl.bind(mainMod .. " + bracketleft", hl.dsp.layout("consume_or_expel prev"))
+hl.bind(mainMod .. " + bracketright", hl.dsp.layout("consume_or_expel next"))
+hl.bind(mainMod .. " + ALT + P", hl.dsp.layout("promote")) -- Changed to ALT + P so it doesn't conflict with DPMS
+
+-- Rename current workspace
+hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd("rename-workspace"))
+
+-- General Window Management
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
--- hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind("F4", hl.dsp.window.close())
 
--- Move and Resize
--- hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
--- hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
--- hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
--- hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
-
--- Repeating binds (formerly binde).
--- (Using ["repeat"] syntax since 'repeat' is a reserved lua keyword)
--- hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("colresize +0.05"), { ["repeat"] = true })
--- hl.bind(mainMod .. " + SHIFT + left", hl.dsp.layout("colresize -0.05"), { ["repeat"] = true })
--- move window to left or right monitor
+-- Monitor Moves
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.window.move({ monitor = "l", follow = true }))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "r", follow = true }))
 hl.bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ monitor = "u", follow = true }))
