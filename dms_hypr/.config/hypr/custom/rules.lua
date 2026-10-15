@@ -17,6 +17,9 @@ hl.window_rule({ match = { class = "^(xdg-desktop-portal)$" }, float = true })
 
 hl.window_rule({ match = { class = "^(firefox)$", title = "^(Picture-in-Picture)$" }, float = true })
 hl.window_rule({ match = { class = "^(app\\.zen_browser\\.zen)$", title = "^(Picture-in-Picture)$" }, float = true })
+-- Browser extension popups report initial_title as "_crx_<extension_id>" (Bitwarden and every other
+-- Chromium extension popup)
+hl.window_rule({ match = { initial_title = "^_crx_" }, float = true })
 hl.window_rule({ match = { class = "^(zoom)$" }, float = true })
 
 -- Floating
@@ -106,3 +109,44 @@ hl.layer_rule({
 	dim_around = false,
 	ignore_alpha = 0,
 })
+
+-- BRAVE POPUPS
+-- Chromium gives every one of its windows the same class ("brave-browser"), does not mark a popup as
+-- a child of the window that opened it, and titles popups just like the main window ("Sign in –
+-- Google accounts - Brave"). What separates them is size: a Chromium popup is a fixed-size window
+-- and keeps the size it asked for, the main window is resizable and takes whatever the layout gives
+-- it. That size only survives while the window is floating — tiled, a popup is 948px wide like the
+-- main window — so every Brave window is floated as it maps, and tiled again if it turns out to be
+-- main-window sized.
+local window_width = function(w)
+	local size = w.size
+	if type(size) == "table" then
+		return size[1] or size.x
+	end
+	return size
+end
+
+-- Windows that must not be tiled back even if they open large
+local known_popup = function(w)
+	local title, initial = w.title or "", w.initial_title or ""
+	return initial:find("^_crx_") ~= nil -- extension popup
+		or title:find("DevTools") ~= nil
+		or title:find("^[Pp]icture[%-%s]?[Ii]n[%-%s]?[Pp]icture") ~= nil
+end
+
+-- no_anim: the float -> tile above would otherwise show as a slide while the window opens
+hl.window_rule({ match = { class = "^brave-browser$" }, float = true, no_anim = true })
+
+hl.on("window.open", function(w)
+	if w == nil or w.class ~= "brave-browser" or known_popup(w) then
+		return
+	end
+
+	local monitor = w.monitor or hl.get_active_monitor()
+	local width = window_width(w)
+	-- The main window maps at the full width of its monitor, a popup stays far below that
+	if type(width) ~= "number" or monitor == nil or width < monitor.width * 0.5 then
+		return
+	end
+	hl.dispatch(hl.dsp.window.float({ window = "address:" .. w.address, action = "off" }))
+end)
