@@ -4,7 +4,7 @@
 -- =========================================================================
 
 local mainMod = "SUPER"
-local browser = "uwsm app flatpak run app.zen_browser.zen"
+local browser = "uwsm app flatpak run com.brave.Browser"
 local file_manager = "uwsm app dolphin"
 local hs = require("../hyprsplit")
 
@@ -25,8 +25,8 @@ hl.config({
 -- ==============================
 -- Applications
 -- ==============================
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser)) -- Zen Browser
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser)) -- Zen Browser
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser)) -- Brave
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(browser)) -- Brave
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(file_manager)) -- Dolphin
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("uwsm app kitty")) -- Terminal
 hl.bind("XF86Launch1", hl.dsp.exec_cmd("uwsm app rog-control-center"))
