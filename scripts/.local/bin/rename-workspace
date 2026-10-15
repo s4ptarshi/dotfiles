@@ -1,0 +1,9 @@
+#!/bin/sh
+# Prompt for a name and rename the active Hyprland workspace.
+# An empty name is ignored.
+
+name=$(fuzzel --dmenu --lines 0 --prompt "rename: " </dev/null | tr -d '"\\')
+[ -n "$name" ] || exit 0
+
+id=$(hyprctl activeworkspace -j | jq .id)
+hyprctl dispatch "hl.dsp.workspace.rename({ workspace = $id, name = \"$name\" })"
