@@ -28,6 +28,7 @@ stow ghostty
 stow nvim
 stow tmux
 stow scripts
+stow kde
 stow dms_hypr
 stow uwsm
 stow rclone
@@ -47,7 +48,8 @@ The `.stowrc` file sets `--target=$HOME`, so running `stow <name>` from the repo
 | `tmux/` | Tmux config with vi-mode keys, tokyo-night theme, continuum/resurrect plugins |
 | `dms_hypr/` | Hyprland + Niri config with [Dank Material Shell](https://github.com/s4ptarshi/Dank-Material-Shell), matugen color generation |
 | `end4_hyprland/` | Alternative Hyprland config (end-4 dots style) |
-| `scripts/` | Custom scripts (`mp3con`, rclone sync helpers, KDE theme updater, PATH setup) |
+| `scripts/` | Custom scripts (`mp3con`, rclone sync helpers, KDE theme updater, `brew-xdg-integration`, PATH setup) |
+| `kde/` | KDE Plasma config, keybind cheatsheets, Homebrew session env (`plasma-workspace/env/brew.sh`) |
 | `rclone/` | Rclone filter rules and systemd/cron management scripts |
 | `darktable/` | Darktable themes and shortcuts |
 | `asus_g14/` | ASUS G14 laptop configs (udev key remapping, Anime Matrix LED, ROG control) |
@@ -84,7 +86,28 @@ tmux source ~/.config/tmux/tmux.conf
 
 # Neovim (LazyVim bootstraps on first launch)
 nvim
+
+# Desktop entries/icons for Homebrew casks (Linux only)
+brew-xdg-integration
 ```
+
+### Homebrew apps in KDE (Linux)
+
+Homebrew casks only link their binaries, so GUI apps such as `kitty` are not
+visible to KRunner or the application menu. `~/.config/plasma-workspace/env/brew.sh`
+adds the Homebrew prefix to the Plasma session `PATH`, and
+`brew-xdg-integration` generates `.desktop` entries with absolute `Exec=`
+paths in `~/.local/share/applications`, copies their icons, and refreshes the
+KDE cache.
+
+Run `brew-xdg-integration` after installing or upgrading casks:
+
+```bash
+brew install --cask kitty
+brew-xdg-integration
+```
+
+Log out and back in once after stowing `kde` so Plasma picks up the new `PATH`.
 
 Generate DMS color schemes if needed:
 
